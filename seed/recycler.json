@@ -1,0 +1,9 @@
+{
+  "levels": [
+    { "id": 1, "probabilityDenominator": 1, "prizes": [ "eco_chair1", "eco_chair2", "eco_chair3", "eco_table1", "eco_table2", "eco_table3", "eco_cactus1", "eco_cactus2", "eco_cactus3" ] },
+    { "id": 2, "probabilityDenominator": 4, "prizes": [ "eco_lamp1", "eco_lamp2", "eco_lamp3", "eco_fruits1", "eco_fruits2", "eco_fruits3", "eco_mush1", "eco_mush2" ] },
+    { "id": 3, "probabilityDenominator": 40, "prizes": [ "eco_sofa1", "eco_sofa2", "eco_sofa3", "eco_curtains1", "eco_curtains2", "eco_curtains3" ] },
+    { "id": 4, "probabilityDenominator": 200, "prizes": [ "eco_light1", "eco_light2", "eco_light3", "eco_tree1" ] },
+    { "id": 5, "probabilityDenominator": 2000, "prizes": [ "eco_tree2", "bed_armas_one" ] }
+  ]
+}

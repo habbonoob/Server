@@ -1,0 +1,2592 @@
+{
+ "parts": [
+  {
+   "id": 1,
+   "kind": "Base",
+   "fileName": "base_basic_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 2,
+   "kind": "Base",
+   "fileName": "base_basic_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 3,
+   "kind": "Base",
+   "fileName": "base_basic_3.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 4,
+   "kind": "Base",
+   "fileName": "base_basic_4.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 5,
+   "kind": "Base",
+   "fileName": "base_basic_5.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 6,
+   "kind": "Base",
+   "fileName": "base_advanced_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 7,
+   "kind": "Base",
+   "fileName": "base_advanced_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 8,
+   "kind": "Base",
+   "fileName": "base_advanced_3.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 9,
+   "kind": "Base",
+   "fileName": "base_advanced_4.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 10,
+   "kind": "Base",
+   "fileName": "base_gold_1_part2.gif",
+   "maskFileName": "base_gold_1_part1.gif"
+  },
+  {
+   "id": 11,
+   "kind": "Base",
+   "fileName": "base_gold_2_part2.gif",
+   "maskFileName": "base_gold_2_part1.gif"
+  },
+  {
+   "id": 12,
+   "kind": "Base",
+   "fileName": "base_pin_part2.gif",
+   "maskFileName": "base_pin_part1.gif"
+  },
+  {
+   "id": 13,
+   "kind": "Base",
+   "fileName": "base_gradient_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 14,
+   "kind": "Base",
+   "fileName": "base_gradient_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 15,
+   "kind": "Base",
+   "fileName": "base_circles_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 16,
+   "kind": "Base",
+   "fileName": "base_circles_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 17,
+   "kind": "Base",
+   "fileName": "base_ornament_1_part2.gif",
+   "maskFileName": "base_ornament_1_part1.gif"
+  },
+  {
+   "id": 18,
+   "kind": "Base",
+   "fileName": "base_ornament_2_part2.gif",
+   "maskFileName": "base_ornament_2_part1.gif"
+  },
+  {
+   "id": 19,
+   "kind": "Base",
+   "fileName": "base_misc_1_part2.gif",
+   "maskFileName": "base_misc_1_part1.gif"
+  },
+  {
+   "id": 20,
+   "kind": "Base",
+   "fileName": "base_misc_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 65,
+   "kind": "Base",
+   "fileName": "base_beams_part2.gif",
+   "maskFileName": "base_beams_part1.gif"
+  },
+  {
+   "id": 66,
+   "kind": "Base",
+   "fileName": "base_ring.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 67,
+   "kind": "Base",
+   "fileName": "base_simplestar_part2.gif",
+   "maskFileName": "base_simplestar_part1.gif"
+  },
+  {
+   "id": 68,
+   "kind": "Base",
+   "fileName": "base_spiral.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 118,
+   "kind": "Base",
+   "fileName": "base_book.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 119,
+   "kind": "Base",
+   "fileName": "base_egg.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 120,
+   "kind": "Base",
+   "fileName": "base_ornament.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 121,
+   "kind": "Base",
+   "fileName": "base_shield_part2.gif",
+   "maskFileName": "base_shield_part1.gif"
+  },
+  {
+   "id": 21,
+   "kind": "Symbol",
+   "fileName": "symbol_background_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 22,
+   "kind": "Symbol",
+   "fileName": "symbol_background_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 23,
+   "kind": "Symbol",
+   "fileName": "symbol_background_3_part2.gif",
+   "maskFileName": "symbol_background_3_part1.gif"
+  },
+  {
+   "id": 24,
+   "kind": "Symbol",
+   "fileName": "symbol_ball_1_part2.gif",
+   "maskFileName": "symbol_ball_1_part1.gif"
+  },
+  {
+   "id": 25,
+   "kind": "Symbol",
+   "fileName": "symbol_ball_2_part2.gif",
+   "maskFileName": "symbol_ball_2_part1.gif"
+  },
+  {
+   "id": 26,
+   "kind": "Symbol",
+   "fileName": "symbol_bobba.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 27,
+   "kind": "Symbol",
+   "fileName": "symbol_bomb_part2.gif",
+   "maskFileName": "symbol_bomb_part1.gif"
+  },
+  {
+   "id": 28,
+   "kind": "Symbol",
+   "fileName": "symbol_bow.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 29,
+   "kind": "Symbol",
+   "fileName": "symbol_box_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 30,
+   "kind": "Symbol",
+   "fileName": "symbol_box_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 31,
+   "kind": "Symbol",
+   "fileName": "symbol_bunting_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 32,
+   "kind": "Symbol",
+   "fileName": "symbol_bunting_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 33,
+   "kind": "Symbol",
+   "fileName": "symbol_butterfly_part2.gif",
+   "maskFileName": "symbol_butterfly_part1.gif"
+  },
+  {
+   "id": 34,
+   "kind": "Symbol",
+   "fileName": "symbol_cowskull_part2.gif",
+   "maskFileName": "symbol_cowskull_part1.gif"
+  },
+  {
+   "id": 35,
+   "kind": "Symbol",
+   "fileName": "symbol_cross.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 36,
+   "kind": "Symbol",
+   "fileName": "symbol_diamond.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 37,
+   "kind": "Symbol",
+   "fileName": "symbol_diploma_part2.gif",
+   "maskFileName": "symbol_diploma_part1.gif"
+  },
+  {
+   "id": 38,
+   "kind": "Symbol",
+   "fileName": "symbol_eyeball_part2.gif",
+   "maskFileName": "symbol_eyeball_part1.gif"
+  },
+  {
+   "id": 39,
+   "kind": "Symbol",
+   "fileName": "symbol_fist.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 40,
+   "kind": "Symbol",
+   "fileName": "symbol_flame_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 41,
+   "kind": "Symbol",
+   "fileName": "symbol_flame_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 42,
+   "kind": "Symbol",
+   "fileName": "symbol_flash.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 43,
+   "kind": "Symbol",
+   "fileName": "symbol_flower_1_part2.gif",
+   "maskFileName": "symbol_flower_1_part1.gif"
+  },
+  {
+   "id": 44,
+   "kind": "Symbol",
+   "fileName": "symbol_flower_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 45,
+   "kind": "Symbol",
+   "fileName": "symbol_flower_3.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 46,
+   "kind": "Symbol",
+   "fileName": "symbol_flower_4.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 47,
+   "kind": "Symbol",
+   "fileName": "symbol_football.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 48,
+   "kind": "Symbol",
+   "fileName": "symbol_heart_1_part2.gif",
+   "maskFileName": "symbol_heart_1_part1.gif"
+  },
+  {
+   "id": 49,
+   "kind": "Symbol",
+   "fileName": "symbol_heart_2_part2.gif",
+   "maskFileName": "symbol_heart_2_part1.gif"
+  },
+  {
+   "id": 50,
+   "kind": "Symbol",
+   "fileName": "symbol_jingjang_part2.gif",
+   "maskFileName": "symbol_jingjang_part1.gif"
+  },
+  {
+   "id": 51,
+   "kind": "Symbol",
+   "fileName": "symbol_lips_part2.gif",
+   "maskFileName": "symbol_lips_part1.gif"
+  },
+  {
+   "id": 52,
+   "kind": "Symbol",
+   "fileName": "symbol_note.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 53,
+   "kind": "Symbol",
+   "fileName": "symbol_peace.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 54,
+   "kind": "Symbol",
+   "fileName": "symbol_planet_part2.gif",
+   "maskFileName": "symbol_planet_part1.gif"
+  },
+  {
+   "id": 55,
+   "kind": "Symbol",
+   "fileName": "symbol_rainbow_part2.gif",
+   "maskFileName": "symbol_rainbow_part1.gif"
+  },
+  {
+   "id": 56,
+   "kind": "Symbol",
+   "fileName": "symbol_rosete.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 57,
+   "kind": "Symbol",
+   "fileName": "symbol_shape.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 58,
+   "kind": "Symbol",
+   "fileName": "symbol_star_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 59,
+   "kind": "Symbol",
+   "fileName": "symbol_star_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 60,
+   "kind": "Symbol",
+   "fileName": "symbol_sword_1_part2.gif",
+   "maskFileName": "symbol_sword_1_part1.gif"
+  },
+  {
+   "id": 61,
+   "kind": "Symbol",
+   "fileName": "symbol_sword_2_part2.gif",
+   "maskFileName": "symbol_sword_2_part1.gif"
+  },
+  {
+   "id": 62,
+   "kind": "Symbol",
+   "fileName": "symbol_sword_3_part2.gif",
+   "maskFileName": "symbol_sword_3_part1.gif"
+  },
+  {
+   "id": 63,
+   "kind": "Symbol",
+   "fileName": "symbol_wings_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 64,
+   "kind": "Symbol",
+   "fileName": "symbol_wings_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 69,
+   "kind": "Symbol",
+   "fileName": "symbol_arrow_down.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 70,
+   "kind": "Symbol",
+   "fileName": "symbol_arrow_left.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 71,
+   "kind": "Symbol",
+   "fileName": "symbol_arrow_right.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 72,
+   "kind": "Symbol",
+   "fileName": "symbol_arrow_up.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 73,
+   "kind": "Symbol",
+   "fileName": "symbol_arrowbig_up.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 74,
+   "kind": "Symbol",
+   "fileName": "symbol_axe_part2.gif",
+   "maskFileName": "symbol_axe_part1.gif"
+  },
+  {
+   "id": 75,
+   "kind": "Symbol",
+   "fileName": "symbol_bug_part2.gif",
+   "maskFileName": "symbol_bug_part1.gif"
+  },
+  {
+   "id": 76,
+   "kind": "Symbol",
+   "fileName": "symbol_capsbig_part2.gif",
+   "maskFileName": "symbol_capsbig_part1.gif"
+  },
+  {
+   "id": 77,
+   "kind": "Symbol",
+   "fileName": "symbol_capssmall_part2.gif",
+   "maskFileName": "symbol_capssmall_part1.gif"
+  },
+  {
+   "id": 78,
+   "kind": "Symbol",
+   "fileName": "symbol_cloud.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 79,
+   "kind": "Symbol",
+   "fileName": "symbol_crown_part2.gif",
+   "maskFileName": "symbol_crown_part1.gif"
+  },
+  {
+   "id": 80,
+   "kind": "Symbol",
+   "fileName": "symbol_diamsmall2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 81,
+   "kind": "Symbol",
+   "fileName": "symbol_diamsmall.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 82,
+   "kind": "Symbol",
+   "fileName": "symbol_drop.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 83,
+   "kind": "Symbol",
+   "fileName": "symbol_fingersheavy.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 84,
+   "kind": "Symbol",
+   "fileName": "symbol_fingersv.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 85,
+   "kind": "Symbol",
+   "fileName": "symbol_gtr_part2.gif",
+   "maskFileName": "symbol_gtr_part1.gif"
+  },
+  {
+   "id": 86,
+   "kind": "Symbol",
+   "fileName": "symbol_hat.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 87,
+   "kind": "Symbol",
+   "fileName": "symbol_oval_part2.gif",
+   "maskFileName": "symbol_oval_part1.gif"
+  },
+  {
+   "id": 88,
+   "kind": "Symbol",
+   "fileName": "symbol_pawprint.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 89,
+   "kind": "Symbol",
+   "fileName": "symbol_screw.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 90,
+   "kind": "Symbol",
+   "fileName": "symbol_stickL_part2.gif",
+   "maskFileName": "symbol_stickL_part1.gif"
+  },
+  {
+   "id": 91,
+   "kind": "Symbol",
+   "fileName": "symbol_stickR_part2.gif",
+   "maskFileName": "symbol_stickR_part1.gif"
+  },
+  {
+   "id": 122,
+   "kind": "Symbol",
+   "fileName": "symbol_alligator.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 123,
+   "kind": "Symbol",
+   "fileName": "symbol_americanfootball_part2.gif",
+   "maskFileName": "symbol_americanfootball_part1.gif"
+  },
+  {
+   "id": 124,
+   "kind": "Symbol",
+   "fileName": "symbol_award_part2.gif",
+   "maskFileName": "symbol_award_part1.gif"
+  },
+  {
+   "id": 125,
+   "kind": "Symbol",
+   "fileName": "symbol_bananapeel.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 126,
+   "kind": "Symbol",
+   "fileName": "symbol_battleball.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 127,
+   "kind": "Symbol",
+   "fileName": "symbol_biohazard.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 128,
+   "kind": "Symbol",
+   "fileName": "symbol_bird.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 129,
+   "kind": "Symbol",
+   "fileName": "symbol_bishop.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 130,
+   "kind": "Symbol",
+   "fileName": "symbol_coalion.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 131,
+   "kind": "Symbol",
+   "fileName": "symbol_cocoamug.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 132,
+   "kind": "Symbol",
+   "fileName": "symbol_dashflag.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 133,
+   "kind": "Symbol",
+   "fileName": "symbol_diamondring_part2.gif",
+   "maskFileName": "symbol_diamondring_part1.gif"
+  },
+  {
+   "id": 134,
+   "kind": "Symbol",
+   "fileName": "symbol_discoball_part2.gif",
+   "maskFileName": "symbol_discoball_part1.gif"
+  },
+  {
+   "id": 135,
+   "kind": "Symbol",
+   "fileName": "symbol_dog.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 136,
+   "kind": "Symbol",
+   "fileName": "symbol_electricguitarh_part2.gif",
+   "maskFileName": "symbol_electricguitarh_part1.gif"
+  },
+  {
+   "id": 137,
+   "kind": "Symbol",
+   "fileName": "symbol_electricguitarv_part2.gif",
+   "maskFileName": "symbol_electricguitarv_part1.gif"
+  },
+  {
+   "id": 138,
+   "kind": "Symbol",
+   "fileName": "symbol_film.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 139,
+   "kind": "Symbol",
+   "fileName": "symbol_flame_part2.gif",
+   "maskFileName": "symbol_flame_part1.gif"
+  },
+  {
+   "id": 140,
+   "kind": "Symbol",
+   "fileName": "symbol_gamepad.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 141,
+   "kind": "Symbol",
+   "fileName": "symbol_gem1_part2.gif",
+   "maskFileName": "symbol_gem1_part1.gif"
+  },
+  {
+   "id": 142,
+   "kind": "Symbol",
+   "fileName": "symbol_gem2_part2.gif",
+   "maskFileName": "symbol_gem2_part1.gif"
+  },
+  {
+   "id": 143,
+   "kind": "Symbol",
+   "fileName": "symbol_gem3_part2.gif",
+   "maskFileName": "symbol_gem3_part1.gif"
+  },
+  {
+   "id": 144,
+   "kind": "Symbol",
+   "fileName": "symbol_hawk.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 145,
+   "kind": "Symbol",
+   "fileName": "symbol_hearts_down.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 146,
+   "kind": "Symbol",
+   "fileName": "symbol_hearts_up.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 147,
+   "kind": "Symbol",
+   "fileName": "symbol_horseshoe.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 148,
+   "kind": "Symbol",
+   "fileName": "symbol_inksplatter.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 149,
+   "kind": "Symbol",
+   "fileName": "symbol_leaf.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 150,
+   "kind": "Symbol",
+   "fileName": "symbol_micstand.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 151,
+   "kind": "Symbol",
+   "fileName": "symbol_mirror_part2.gif",
+   "maskFileName": "symbol_mirror_part1.gif"
+  },
+  {
+   "id": 152,
+   "kind": "Symbol",
+   "fileName": "symbol_monkeywrench.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 153,
+   "kind": "Symbol",
+   "fileName": "symbol_note1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 154,
+   "kind": "Symbol",
+   "fileName": "symbol_note2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 155,
+   "kind": "Symbol",
+   "fileName": "symbol_note3.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 156,
+   "kind": "Symbol",
+   "fileName": "symbol_nursecross.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 157,
+   "kind": "Symbol",
+   "fileName": "symbol_pencil_part2.gif",
+   "maskFileName": "symbol_pencil_part1.gif"
+  },
+  {
+   "id": 158,
+   "kind": "Symbol",
+   "fileName": "symbol_queen.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 159,
+   "kind": "Symbol",
+   "fileName": "symbol_rock.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 160,
+   "kind": "Symbol",
+   "fileName": "symbol_rook.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 161,
+   "kind": "Symbol",
+   "fileName": "symbol_skate.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 162,
+   "kind": "Symbol",
+   "fileName": "symbol_smallring_part2.gif",
+   "maskFileName": "symbol_smallring_part1.gif"
+  },
+  {
+   "id": 163,
+   "kind": "Symbol",
+   "fileName": "symbol_snowstorm_part2.gif",
+   "maskFileName": "symbol_snowstorm_part1.gif"
+  },
+  {
+   "id": 164,
+   "kind": "Symbol",
+   "fileName": "symbol_sphere.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 165,
+   "kind": "Symbol",
+   "fileName": "symbol_spraycan_part2.gif",
+   "maskFileName": "symbol_spraycan_part1.gif"
+  },
+  {
+   "id": 166,
+   "kind": "Symbol",
+   "fileName": "symbol_stars1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 167,
+   "kind": "Symbol",
+   "fileName": "symbol_stars2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 168,
+   "kind": "Symbol",
+   "fileName": "symbol_stars3.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 169,
+   "kind": "Symbol",
+   "fileName": "symbol_stars4.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 170,
+   "kind": "Symbol",
+   "fileName": "symbol_stars5.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 171,
+   "kind": "Symbol",
+   "fileName": "symbol_waterdrop_part2.gif",
+   "maskFileName": "symbol_waterdrop_part1.gif"
+  },
+  {
+   "id": 172,
+   "kind": "Symbol",
+   "fileName": "symbol_wolverine.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 173,
+   "kind": "Symbol",
+   "fileName": "symbol_0.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 174,
+   "kind": "Symbol",
+   "fileName": "symbol_1.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 175,
+   "kind": "Symbol",
+   "fileName": "symbol_2.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 176,
+   "kind": "Symbol",
+   "fileName": "symbol_3.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 177,
+   "kind": "Symbol",
+   "fileName": "symbol_4.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 178,
+   "kind": "Symbol",
+   "fileName": "symbol_5.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 179,
+   "kind": "Symbol",
+   "fileName": "symbol_6.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 180,
+   "kind": "Symbol",
+   "fileName": "symbol_7.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 181,
+   "kind": "Symbol",
+   "fileName": "symbol_8.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 182,
+   "kind": "Symbol",
+   "fileName": "symbol_9.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 183,
+   "kind": "Symbol",
+   "fileName": "symbol_a.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 184,
+   "kind": "Symbol",
+   "fileName": "symbol_b.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 185,
+   "kind": "Symbol",
+   "fileName": "symbol_c.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 186,
+   "kind": "Symbol",
+   "fileName": "symbol_d.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 187,
+   "kind": "Symbol",
+   "fileName": "symbol_e.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 188,
+   "kind": "Symbol",
+   "fileName": "symbol_f.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 189,
+   "kind": "Symbol",
+   "fileName": "symbol_g.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 190,
+   "kind": "Symbol",
+   "fileName": "symbol_h.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 191,
+   "kind": "Symbol",
+   "fileName": "symbol_i.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 192,
+   "kind": "Symbol",
+   "fileName": "symbol_j.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 193,
+   "kind": "Symbol",
+   "fileName": "symbol_k.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 194,
+   "kind": "Symbol",
+   "fileName": "symbol_l.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 195,
+   "kind": "Symbol",
+   "fileName": "symbol_m.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 196,
+   "kind": "Symbol",
+   "fileName": "symbol_n.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 197,
+   "kind": "Symbol",
+   "fileName": "symbol_o.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 198,
+   "kind": "Symbol",
+   "fileName": "symbol_p.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 199,
+   "kind": "Symbol",
+   "fileName": "symbol_q.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 200,
+   "kind": "Symbol",
+   "fileName": "symbol_r.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 201,
+   "kind": "Symbol",
+   "fileName": "symbol_s.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 202,
+   "kind": "Symbol",
+   "fileName": "symbol_t.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 203,
+   "kind": "Symbol",
+   "fileName": "symbol_u.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 204,
+   "kind": "Symbol",
+   "fileName": "symbol_v.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 205,
+   "kind": "Symbol",
+   "fileName": "symbol_w.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 206,
+   "kind": "Symbol",
+   "fileName": "symbol_x.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 207,
+   "kind": "Symbol",
+   "fileName": "symbol_y.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 208,
+   "kind": "Symbol",
+   "fileName": "symbol_z.gif",
+   "maskFileName": ""
+  },
+  {
+   "id": 209,
+   "kind": "Symbol",
+   "fileName": "symbol_pixel_part2.gif",
+   "maskFileName": "symbol_pixel_part1.gif"
+  },
+  {
+   "id": 210,
+   "kind": "Symbol",
+   "fileName": "symbol_credit_part2.gif",
+   "maskFileName": "symbol_credit_part1.gif"
+  },
+  {
+   "id": 211,
+   "kind": "Symbol",
+   "fileName": "symbol_hc_part2.gif",
+   "maskFileName": "symbol_hc_part1.gif"
+  },
+  {
+   "id": 212,
+   "kind": "Symbol",
+   "fileName": "symbol_vip_part2.gif",
+   "maskFileName": "symbol_vip_part1.gif"
+  }
+ ],
+ "colors": [
+  {
+   "id": 1,
+   "kind": "Badge",
+   "hex": "ffd601"
+  },
+  {
+   "id": 11,
+   "kind": "Badge",
+   "hex": "ffffff"
+  },
+  {
+   "id": 2,
+   "kind": "Badge",
+   "hex": "ec7600"
+  },
+  {
+   "id": 3,
+   "kind": "Badge",
+   "hex": "84de00"
+  },
+  {
+   "id": 4,
+   "kind": "Badge",
+   "hex": "589a00"
+  },
+  {
+   "id": 18,
+   "kind": "Badge",
+   "hex": "aaff7d"
+  },
+  {
+   "id": 5,
+   "kind": "Badge",
+   "hex": "50c1fb"
+  },
+  {
+   "id": 19,
+   "kind": "Badge",
+   "hex": "87e6c8"
+  },
+  {
+   "id": 6,
+   "kind": "Badge",
+   "hex": "006fcf"
+  },
+  {
+   "id": 16,
+   "kind": "Badge",
+   "hex": "c2eaff"
+  },
+  {
+   "id": 7,
+   "kind": "Badge",
+   "hex": "ff98e3"
+  },
+  {
+   "id": 8,
+   "kind": "Badge",
+   "hex": "f334bf"
+  },
+  {
+   "id": 9,
+   "kind": "Badge",
+   "hex": "ff2d2d"
+  },
+  {
+   "id": 20,
+   "kind": "Badge",
+   "hex": "9844e7"
+  },
+  {
+   "id": 21,
+   "kind": "Badge",
+   "hex": "dea9ff"
+  },
+  {
+   "id": 10,
+   "kind": "Badge",
+   "hex": "af0a0a"
+  },
+  {
+   "id": 22,
+   "kind": "Badge",
+   "hex": "ffb579"
+  },
+  {
+   "id": 17,
+   "kind": "Badge",
+   "hex": "fff165"
+  },
+  {
+   "id": 14,
+   "kind": "Badge",
+   "hex": "fbe7ac"
+  },
+  {
+   "id": 23,
+   "kind": "Badge",
+   "hex": "c3aa6e"
+  },
+  {
+   "id": 15,
+   "kind": "Badge",
+   "hex": "977641"
+  },
+  {
+   "id": 12,
+   "kind": "Badge",
+   "hex": "c0c0c0"
+  },
+  {
+   "id": 24,
+   "kind": "Badge",
+   "hex": "7a7a7a"
+  },
+  {
+   "id": 13,
+   "kind": "Badge",
+   "hex": "373737"
+  },
+  {
+   "id": 1,
+   "kind": "Primary",
+   "hex": "ffffff"
+  },
+  {
+   "id": 2,
+   "kind": "Primary",
+   "hex": "ebebeb"
+  },
+  {
+   "id": 3,
+   "kind": "Primary",
+   "hex": "d4d4d4"
+  },
+  {
+   "id": 4,
+   "kind": "Primary",
+   "hex": "bdbdbd"
+  },
+  {
+   "id": 5,
+   "kind": "Primary",
+   "hex": "a6a6a6"
+  },
+  {
+   "id": 6,
+   "kind": "Primary",
+   "hex": "8f8f8f"
+  },
+  {
+   "id": 7,
+   "kind": "Primary",
+   "hex": "787878"
+  },
+  {
+   "id": 8,
+   "kind": "Primary",
+   "hex": "616161"
+  },
+  {
+   "id": 9,
+   "kind": "Primary",
+   "hex": "4c4c4c"
+  },
+  {
+   "id": 10,
+   "kind": "Primary",
+   "hex": "589a00"
+  },
+  {
+   "id": 11,
+   "kind": "Primary",
+   "hex": "518e00"
+  },
+  {
+   "id": 12,
+   "kind": "Primary",
+   "hex": "498000"
+  },
+  {
+   "id": 13,
+   "kind": "Primary",
+   "hex": "417200"
+  },
+  {
+   "id": 14,
+   "kind": "Primary",
+   "hex": "396400"
+  },
+  {
+   "id": 15,
+   "kind": "Primary",
+   "hex": "315600"
+  },
+  {
+   "id": 16,
+   "kind": "Primary",
+   "hex": "294800"
+  },
+  {
+   "id": 17,
+   "kind": "Primary",
+   "hex": "213b00"
+  },
+  {
+   "id": 18,
+   "kind": "Primary",
+   "hex": "1a2e00"
+  },
+  {
+   "id": 19,
+   "kind": "Primary",
+   "hex": "84de00"
+  },
+  {
+   "id": 20,
+   "kind": "Primary",
+   "hex": "7acd00"
+  },
+  {
+   "id": 21,
+   "kind": "Primary",
+   "hex": "6eb900"
+  },
+  {
+   "id": 22,
+   "kind": "Primary",
+   "hex": "62a500"
+  },
+  {
+   "id": 23,
+   "kind": "Primary",
+   "hex": "569100"
+  },
+  {
+   "id": 24,
+   "kind": "Primary",
+   "hex": "4a7c00"
+  },
+  {
+   "id": 25,
+   "kind": "Primary",
+   "hex": "3e6800"
+  },
+  {
+   "id": 26,
+   "kind": "Primary",
+   "hex": "325400"
+  },
+  {
+   "id": 27,
+   "kind": "Primary",
+   "hex": "274200"
+  },
+  {
+   "id": 28,
+   "kind": "Primary",
+   "hex": "c2eaff"
+  },
+  {
+   "id": 29,
+   "kind": "Primary",
+   "hex": "b3d8eb"
+  },
+  {
+   "id": 30,
+   "kind": "Primary",
+   "hex": "a1c3d4"
+  },
+  {
+   "id": 31,
+   "kind": "Primary",
+   "hex": "90adbd"
+  },
+  {
+   "id": 32,
+   "kind": "Primary",
+   "hex": "7e98a6"
+  },
+  {
+   "id": 33,
+   "kind": "Primary",
+   "hex": "6d838f"
+  },
+  {
+   "id": 34,
+   "kind": "Primary",
+   "hex": "5b6e78"
+  },
+  {
+   "id": 35,
+   "kind": "Primary",
+   "hex": "4a5961"
+  },
+  {
+   "id": 36,
+   "kind": "Primary",
+   "hex": "3a464c"
+  },
+  {
+   "id": 37,
+   "kind": "Primary",
+   "hex": "50c1fb"
+  },
+  {
+   "id": 38,
+   "kind": "Primary",
+   "hex": "4ab2e7"
+  },
+  {
+   "id": 39,
+   "kind": "Primary",
+   "hex": "43a0d1"
+  },
+  {
+   "id": 40,
+   "kind": "Primary",
+   "hex": "3b8fba"
+  },
+  {
+   "id": 41,
+   "kind": "Primary",
+   "hex": "347ea3"
+  },
+  {
+   "id": 42,
+   "kind": "Primary",
+   "hex": "2d6c8d"
+  },
+  {
+   "id": 43,
+   "kind": "Primary",
+   "hex": "265b76"
+  },
+  {
+   "id": 44,
+   "kind": "Primary",
+   "hex": "1e495f"
+  },
+  {
+   "id": 45,
+   "kind": "Primary",
+   "hex": "183a4b"
+  },
+  {
+   "id": 46,
+   "kind": "Primary",
+   "hex": "006fcf"
+  },
+  {
+   "id": 47,
+   "kind": "Primary",
+   "hex": "0066bf"
+  },
+  {
+   "id": 48,
+   "kind": "Primary",
+   "hex": "005cac"
+  },
+  {
+   "id": 49,
+   "kind": "Primary",
+   "hex": "005299"
+  },
+  {
+   "id": 50,
+   "kind": "Primary",
+   "hex": "004887"
+  },
+  {
+   "id": 51,
+   "kind": "Primary",
+   "hex": "003e74"
+  },
+  {
+   "id": 52,
+   "kind": "Primary",
+   "hex": "003461"
+  },
+  {
+   "id": 53,
+   "kind": "Primary",
+   "hex": "002a4f"
+  },
+  {
+   "id": 54,
+   "kind": "Primary",
+   "hex": "00213e"
+  },
+  {
+   "id": 55,
+   "kind": "Primary",
+   "hex": "9844e7"
+  },
+  {
+   "id": 56,
+   "kind": "Primary",
+   "hex": "8c3fd5"
+  },
+  {
+   "id": 57,
+   "kind": "Primary",
+   "hex": "7e39c0"
+  },
+  {
+   "id": 58,
+   "kind": "Primary",
+   "hex": "7132ab"
+  },
+  {
+   "id": 59,
+   "kind": "Primary",
+   "hex": "632c96"
+  },
+  {
+   "id": 60,
+   "kind": "Primary",
+   "hex": "552682"
+  },
+  {
+   "id": 61,
+   "kind": "Primary",
+   "hex": "48206d"
+  },
+  {
+   "id": 62,
+   "kind": "Primary",
+   "hex": "3a1a58"
+  },
+  {
+   "id": 63,
+   "kind": "Primary",
+   "hex": "2d1445"
+  },
+  {
+   "id": 64,
+   "kind": "Primary",
+   "hex": "dea9ff"
+  },
+  {
+   "id": 65,
+   "kind": "Primary",
+   "hex": "cd9ceb"
+  },
+  {
+   "id": 66,
+   "kind": "Primary",
+   "hex": "b98dd4"
+  },
+  {
+   "id": 67,
+   "kind": "Primary",
+   "hex": "a57dbd"
+  },
+  {
+   "id": 68,
+   "kind": "Primary",
+   "hex": "916ea6"
+  },
+  {
+   "id": 69,
+   "kind": "Primary",
+   "hex": "7c5f8f"
+  },
+  {
+   "id": 70,
+   "kind": "Primary",
+   "hex": "685078"
+  },
+  {
+   "id": 71,
+   "kind": "Primary",
+   "hex": "544061"
+  },
+  {
+   "id": 72,
+   "kind": "Primary",
+   "hex": "42324c"
+  },
+  {
+   "id": 73,
+   "kind": "Primary",
+   "hex": "ff98e3"
+  },
+  {
+   "id": 74,
+   "kind": "Primary",
+   "hex": "eb8cd1"
+  },
+  {
+   "id": 75,
+   "kind": "Primary",
+   "hex": "d47ebd"
+  },
+  {
+   "id": 76,
+   "kind": "Primary",
+   "hex": "bd71a8"
+  },
+  {
+   "id": 77,
+   "kind": "Primary",
+   "hex": "a66394"
+  },
+  {
+   "id": 78,
+   "kind": "Primary",
+   "hex": "8f557f"
+  },
+  {
+   "id": 79,
+   "kind": "Primary",
+   "hex": "78486b"
+  },
+  {
+   "id": 80,
+   "kind": "Primary",
+   "hex": "613a56"
+  },
+  {
+   "id": 81,
+   "kind": "Primary",
+   "hex": "4c2d44"
+  },
+  {
+   "id": 82,
+   "kind": "Primary",
+   "hex": "f334bf"
+  },
+  {
+   "id": 83,
+   "kind": "Primary",
+   "hex": "e030b0"
+  },
+  {
+   "id": 84,
+   "kind": "Primary",
+   "hex": "ca2b9f"
+  },
+  {
+   "id": 85,
+   "kind": "Primary",
+   "hex": "b4278e"
+  },
+  {
+   "id": 86,
+   "kind": "Primary",
+   "hex": "9e227c"
+  },
+  {
+   "id": 87,
+   "kind": "Primary",
+   "hex": "881d6b"
+  },
+  {
+   "id": 88,
+   "kind": "Primary",
+   "hex": "72185a"
+  },
+  {
+   "id": 89,
+   "kind": "Primary",
+   "hex": "5c1449"
+  },
+  {
+   "id": 90,
+   "kind": "Primary",
+   "hex": "480f39"
+  },
+  {
+   "id": 91,
+   "kind": "Primary",
+   "hex": "ff2d2d"
+  },
+  {
+   "id": 92,
+   "kind": "Primary",
+   "hex": "eb2929"
+  },
+  {
+   "id": 93,
+   "kind": "Primary",
+   "hex": "d42525"
+  },
+  {
+   "id": 94,
+   "kind": "Primary",
+   "hex": "bd2121"
+  },
+  {
+   "id": 95,
+   "kind": "Primary",
+   "hex": "a61d1d"
+  },
+  {
+   "id": 96,
+   "kind": "Primary",
+   "hex": "8f1919"
+  },
+  {
+   "id": 97,
+   "kind": "Primary",
+   "hex": "781515"
+  },
+  {
+   "id": 98,
+   "kind": "Primary",
+   "hex": "611111"
+  },
+  {
+   "id": 99,
+   "kind": "Primary",
+   "hex": "4c0d0d"
+  },
+  {
+   "id": 100,
+   "kind": "Primary",
+   "hex": "ffb579"
+  },
+  {
+   "id": 101,
+   "kind": "Primary",
+   "hex": "eba770"
+  },
+  {
+   "id": 102,
+   "kind": "Primary",
+   "hex": "d49665"
+  },
+  {
+   "id": 103,
+   "kind": "Primary",
+   "hex": "bd865a"
+  },
+  {
+   "id": 104,
+   "kind": "Primary",
+   "hex": "a6764f"
+  },
+  {
+   "id": 105,
+   "kind": "Primary",
+   "hex": "8f6644"
+  },
+  {
+   "id": 106,
+   "kind": "Primary",
+   "hex": "785539"
+  },
+  {
+   "id": 107,
+   "kind": "Primary",
+   "hex": "61452e"
+  },
+  {
+   "id": 108,
+   "kind": "Primary",
+   "hex": "4c3624"
+  },
+  {
+   "id": 109,
+   "kind": "Primary",
+   "hex": "ec7600"
+  },
+  {
+   "id": 110,
+   "kind": "Primary",
+   "hex": "d96d00"
+  },
+  {
+   "id": 111,
+   "kind": "Primary",
+   "hex": "c46200"
+  },
+  {
+   "id": 112,
+   "kind": "Primary",
+   "hex": "af5700"
+  },
+  {
+   "id": 113,
+   "kind": "Primary",
+   "hex": "9a4d00"
+  },
+  {
+   "id": 114,
+   "kind": "Primary",
+   "hex": "844200"
+  },
+  {
+   "id": 115,
+   "kind": "Primary",
+   "hex": "6f3800"
+  },
+  {
+   "id": 116,
+   "kind": "Primary",
+   "hex": "5a2d00"
+  },
+  {
+   "id": 117,
+   "kind": "Primary",
+   "hex": "462300"
+  },
+  {
+   "id": 118,
+   "kind": "Primary",
+   "hex": "ffd601"
+  },
+  {
+   "id": 119,
+   "kind": "Primary",
+   "hex": "ebc501"
+  },
+  {
+   "id": 120,
+   "kind": "Primary",
+   "hex": "d4b201"
+  },
+  {
+   "id": 121,
+   "kind": "Primary",
+   "hex": "bd9f01"
+  },
+  {
+   "id": 122,
+   "kind": "Primary",
+   "hex": "a68b01"
+  },
+  {
+   "id": 123,
+   "kind": "Primary",
+   "hex": "8f7801"
+  },
+  {
+   "id": 124,
+   "kind": "Primary",
+   "hex": "786500"
+  },
+  {
+   "id": 125,
+   "kind": "Primary",
+   "hex": "615100"
+  },
+  {
+   "id": 126,
+   "kind": "Primary",
+   "hex": "4c4000"
+  },
+  {
+   "id": 127,
+   "kind": "Primary",
+   "hex": "c3aa6e"
+  },
+  {
+   "id": 128,
+   "kind": "Primary",
+   "hex": "b49d65"
+  },
+  {
+   "id": 129,
+   "kind": "Primary",
+   "hex": "a28d5b"
+  },
+  {
+   "id": 130,
+   "kind": "Primary",
+   "hex": "917e52"
+  },
+  {
+   "id": 131,
+   "kind": "Primary",
+   "hex": "7f6f48"
+  },
+  {
+   "id": 132,
+   "kind": "Primary",
+   "hex": "6d5f3e"
+  },
+  {
+   "id": 133,
+   "kind": "Primary",
+   "hex": "5c5034"
+  },
+  {
+   "id": 134,
+   "kind": "Primary",
+   "hex": "4a412a"
+  },
+  {
+   "id": 135,
+   "kind": "Primary",
+   "hex": "3a3321"
+  },
+  {
+   "id": 136,
+   "kind": "Primary",
+   "hex": "977641"
+  },
+  {
+   "id": 137,
+   "kind": "Primary",
+   "hex": "8b6d3c"
+  },
+  {
+   "id": 138,
+   "kind": "Primary",
+   "hex": "7e6236"
+  },
+  {
+   "id": 139,
+   "kind": "Primary",
+   "hex": "705730"
+  },
+  {
+   "id": 140,
+   "kind": "Primary",
+   "hex": "624d2a"
+  },
+  {
+   "id": 141,
+   "kind": "Primary",
+   "hex": "554224"
+  },
+  {
+   "id": 142,
+   "kind": "Primary",
+   "hex": "47381f"
+  },
+  {
+   "id": 143,
+   "kind": "Primary",
+   "hex": "392d19"
+  },
+  {
+   "id": 144,
+   "kind": "Primary",
+   "hex": "2d2313"
+  },
+  {
+   "id": 145,
+   "kind": "Primary",
+   "hex": "c0c0c0"
+  },
+  {
+   "id": 146,
+   "kind": "Primary",
+   "hex": "b1b1b1"
+  },
+  {
+   "id": 147,
+   "kind": "Primary",
+   "hex": "a0a0a0"
+  },
+  {
+   "id": 148,
+   "kind": "Primary",
+   "hex": "8e8e8e"
+  },
+  {
+   "id": 149,
+   "kind": "Primary",
+   "hex": "7d7d7d"
+  },
+  {
+   "id": 150,
+   "kind": "Primary",
+   "hex": "6c6c6c"
+  },
+  {
+   "id": 151,
+   "kind": "Primary",
+   "hex": "5a5a5a"
+  },
+  {
+   "id": 152,
+   "kind": "Primary",
+   "hex": "494949"
+  },
+  {
+   "id": 153,
+   "kind": "Primary",
+   "hex": "393939"
+  },
+  {
+   "id": 154,
+   "kind": "Primary",
+   "hex": "7a7a7a"
+  },
+  {
+   "id": 155,
+   "kind": "Primary",
+   "hex": "707070"
+  },
+  {
+   "id": 156,
+   "kind": "Primary",
+   "hex": "656565"
+  },
+  {
+   "id": 157,
+   "kind": "Primary",
+   "hex": "5a5a5a"
+  },
+  {
+   "id": 158,
+   "kind": "Primary",
+   "hex": "4f4f4f"
+  },
+  {
+   "id": 159,
+   "kind": "Primary",
+   "hex": "444444"
+  },
+  {
+   "id": 160,
+   "kind": "Primary",
+   "hex": "393939"
+  },
+  {
+   "id": 161,
+   "kind": "Primary",
+   "hex": "2e2e2e"
+  },
+  {
+   "id": 162,
+   "kind": "Primary",
+   "hex": "242424"
+  },
+  {
+   "id": 1,
+   "kind": "Secondary",
+   "hex": "ffffff"
+  },
+  {
+   "id": 2,
+   "kind": "Secondary",
+   "hex": "e5e5e5"
+  },
+  {
+   "id": 3,
+   "kind": "Secondary",
+   "hex": "bfbfbf"
+  },
+  {
+   "id": 4,
+   "kind": "Secondary",
+   "hex": "999999"
+  },
+  {
+   "id": 5,
+   "kind": "Secondary",
+   "hex": "737373"
+  },
+  {
+   "id": 6,
+   "kind": "Secondary",
+   "hex": "4c4c4c"
+  },
+  {
+   "id": 7,
+   "kind": "Secondary",
+   "hex": "589a00"
+  },
+  {
+   "id": 8,
+   "kind": "Secondary",
+   "hex": "4f8a00"
+  },
+  {
+   "id": 9,
+   "kind": "Secondary",
+   "hex": "427300"
+  },
+  {
+   "id": 10,
+   "kind": "Secondary",
+   "hex": "355c00"
+  },
+  {
+   "id": 11,
+   "kind": "Secondary",
+   "hex": "284500"
+  },
+  {
+   "id": 12,
+   "kind": "Secondary",
+   "hex": "1a2e00"
+  },
+  {
+   "id": 13,
+   "kind": "Secondary",
+   "hex": "84de00"
+  },
+  {
+   "id": 14,
+   "kind": "Secondary",
+   "hex": "77c700"
+  },
+  {
+   "id": 15,
+   "kind": "Secondary",
+   "hex": "63a600"
+  },
+  {
+   "id": 16,
+   "kind": "Secondary",
+   "hex": "4f8500"
+  },
+  {
+   "id": 17,
+   "kind": "Secondary",
+   "hex": "3c6400"
+  },
+  {
+   "id": 18,
+   "kind": "Secondary",
+   "hex": "274200"
+  },
+  {
+   "id": 19,
+   "kind": "Secondary",
+   "hex": "c2eaff"
+  },
+  {
+   "id": 20,
+   "kind": "Secondary",
+   "hex": "aed2e5"
+  },
+  {
+   "id": 21,
+   "kind": "Secondary",
+   "hex": "91afbf"
+  },
+  {
+   "id": 22,
+   "kind": "Secondary",
+   "hex": "748c99"
+  },
+  {
+   "id": 23,
+   "kind": "Secondary",
+   "hex": "576a73"
+  },
+  {
+   "id": 24,
+   "kind": "Secondary",
+   "hex": "3a464c"
+  },
+  {
+   "id": 25,
+   "kind": "Secondary",
+   "hex": "50c1fb"
+  },
+  {
+   "id": 26,
+   "kind": "Secondary",
+   "hex": "48ade1"
+  },
+  {
+   "id": 27,
+   "kind": "Secondary",
+   "hex": "3c91bc"
+  },
+  {
+   "id": 28,
+   "kind": "Secondary",
+   "hex": "307497"
+  },
+  {
+   "id": 29,
+   "kind": "Secondary",
+   "hex": "245771"
+  },
+  {
+   "id": 30,
+   "kind": "Secondary",
+   "hex": "183a4b"
+  },
+  {
+   "id": 31,
+   "kind": "Secondary",
+   "hex": "006fcf"
+  },
+  {
+   "id": 32,
+   "kind": "Secondary",
+   "hex": "0064ba"
+  },
+  {
+   "id": 33,
+   "kind": "Secondary",
+   "hex": "00539b"
+  },
+  {
+   "id": 34,
+   "kind": "Secondary",
+   "hex": "00437c"
+  },
+  {
+   "id": 35,
+   "kind": "Secondary",
+   "hex": "00325d"
+  },
+  {
+   "id": 36,
+   "kind": "Secondary",
+   "hex": "00213e"
+  },
+  {
+   "id": 37,
+   "kind": "Secondary",
+   "hex": "9844e7"
+  },
+  {
+   "id": 38,
+   "kind": "Secondary",
+   "hex": "893dcf"
+  },
+  {
+   "id": 39,
+   "kind": "Secondary",
+   "hex": "7233ad"
+  },
+  {
+   "id": 40,
+   "kind": "Secondary",
+   "hex": "5b298b"
+  },
+  {
+   "id": 41,
+   "kind": "Secondary",
+   "hex": "451f68"
+  },
+  {
+   "id": 42,
+   "kind": "Secondary",
+   "hex": "2d1445"
+  },
+  {
+   "id": 43,
+   "kind": "Secondary",
+   "hex": "dea9ff"
+  },
+  {
+   "id": 44,
+   "kind": "Secondary",
+   "hex": "c798e5"
+  },
+  {
+   "id": 45,
+   "kind": "Secondary",
+   "hex": "a67fbf"
+  },
+  {
+   "id": 46,
+   "kind": "Secondary",
+   "hex": "856599"
+  },
+  {
+   "id": 47,
+   "kind": "Secondary",
+   "hex": "644c73"
+  },
+  {
+   "id": 48,
+   "kind": "Secondary",
+   "hex": "42324c"
+  },
+  {
+   "id": 49,
+   "kind": "Secondary",
+   "hex": "ff98e3"
+  },
+  {
+   "id": 50,
+   "kind": "Secondary",
+   "hex": "e589cc"
+  },
+  {
+   "id": 51,
+   "kind": "Secondary",
+   "hex": "bf72aa"
+  },
+  {
+   "id": 52,
+   "kind": "Secondary",
+   "hex": "995b88"
+  },
+  {
+   "id": 53,
+   "kind": "Secondary",
+   "hex": "734566"
+  },
+  {
+   "id": 54,
+   "kind": "Secondary",
+   "hex": "4c2d44"
+  },
+  {
+   "id": 55,
+   "kind": "Secondary",
+   "hex": "f334bf"
+  },
+  {
+   "id": 56,
+   "kind": "Secondary",
+   "hex": "da2fac"
+  },
+  {
+   "id": 57,
+   "kind": "Secondary",
+   "hex": "b6278f"
+  },
+  {
+   "id": 58,
+   "kind": "Secondary",
+   "hex": "921f73"
+  },
+  {
+   "id": 59,
+   "kind": "Secondary",
+   "hex": "6e1756"
+  },
+  {
+   "id": 60,
+   "kind": "Secondary",
+   "hex": "480f39"
+  },
+  {
+   "id": 61,
+   "kind": "Secondary",
+   "hex": "ff2d2d"
+  },
+  {
+   "id": 62,
+   "kind": "Secondary",
+   "hex": "e52828"
+  },
+  {
+   "id": 63,
+   "kind": "Secondary",
+   "hex": "bf2222"
+  },
+  {
+   "id": 64,
+   "kind": "Secondary",
+   "hex": "991b1b"
+  },
+  {
+   "id": 65,
+   "kind": "Secondary",
+   "hex": "731414"
+  },
+  {
+   "id": 66,
+   "kind": "Secondary",
+   "hex": "4c0d0d"
+  },
+  {
+   "id": 67,
+   "kind": "Secondary",
+   "hex": "ffb579"
+  },
+  {
+   "id": 68,
+   "kind": "Secondary",
+   "hex": "e5a36d"
+  },
+  {
+   "id": 69,
+   "kind": "Secondary",
+   "hex": "bf885b"
+  },
+  {
+   "id": 70,
+   "kind": "Secondary",
+   "hex": "996d49"
+  },
+  {
+   "id": 71,
+   "kind": "Secondary",
+   "hex": "735237"
+  },
+  {
+   "id": 72,
+   "kind": "Secondary",
+   "hex": "4c3624"
+  },
+  {
+   "id": 73,
+   "kind": "Secondary",
+   "hex": "ec7600"
+  },
+  {
+   "id": 74,
+   "kind": "Secondary",
+   "hex": "d46a00"
+  },
+  {
+   "id": 75,
+   "kind": "Secondary",
+   "hex": "b15800"
+  },
+  {
+   "id": 76,
+   "kind": "Secondary",
+   "hex": "8e4700"
+  },
+  {
+   "id": 77,
+   "kind": "Secondary",
+   "hex": "6a3500"
+  },
+  {
+   "id": 78,
+   "kind": "Secondary",
+   "hex": "462300"
+  },
+  {
+   "id": 79,
+   "kind": "Secondary",
+   "hex": "ffd601"
+  },
+  {
+   "id": 80,
+   "kind": "Secondary",
+   "hex": "e5c001"
+  },
+  {
+   "id": 81,
+   "kind": "Secondary",
+   "hex": "bfa001"
+  },
+  {
+   "id": 82,
+   "kind": "Secondary",
+   "hex": "998001"
+  },
+  {
+   "id": 83,
+   "kind": "Secondary",
+   "hex": "736100"
+  },
+  {
+   "id": 84,
+   "kind": "Secondary",
+   "hex": "4c4000"
+  },
+  {
+   "id": 85,
+   "kind": "Secondary",
+   "hex": "c3aa6e"
+  },
+  {
+   "id": 86,
+   "kind": "Secondary",
+   "hex": "af9963"
+  },
+  {
+   "id": 87,
+   "kind": "Secondary",
+   "hex": "927f52"
+  },
+  {
+   "id": 88,
+   "kind": "Secondary",
+   "hex": "756642"
+  },
+  {
+   "id": 89,
+   "kind": "Secondary",
+   "hex": "584d32"
+  },
+  {
+   "id": 90,
+   "kind": "Secondary",
+   "hex": "3a3321"
+  },
+  {
+   "id": 91,
+   "kind": "Secondary",
+   "hex": "977641"
+  },
+  {
+   "id": 92,
+   "kind": "Secondary",
+   "hex": "886a3a"
+  },
+  {
+   "id": 93,
+   "kind": "Secondary",
+   "hex": "715831"
+  },
+  {
+   "id": 94,
+   "kind": "Secondary",
+   "hex": "5b4727"
+  },
+  {
+   "id": 95,
+   "kind": "Secondary",
+   "hex": "44351d"
+  },
+  {
+   "id": 96,
+   "kind": "Secondary",
+   "hex": "2d2313"
+  },
+  {
+   "id": 97,
+   "kind": "Secondary",
+   "hex": "c0c0c0"
+  },
+  {
+   "id": 98,
+   "kind": "Secondary",
+   "hex": "acacac"
+  },
+  {
+   "id": 99,
+   "kind": "Secondary",
+   "hex": "909090"
+  },
+  {
+   "id": 100,
+   "kind": "Secondary",
+   "hex": "737373"
+  },
+  {
+   "id": 101,
+   "kind": "Secondary",
+   "hex": "575757"
+  },
+  {
+   "id": 102,
+   "kind": "Secondary",
+   "hex": "393939"
+  },
+  {
+   "id": 103,
+   "kind": "Secondary",
+   "hex": "7a7a7a"
+  },
+  {
+   "id": 104,
+   "kind": "Secondary",
+   "hex": "6e6e6e"
+  },
+  {
+   "id": 105,
+   "kind": "Secondary",
+   "hex": "5b5b5b"
+  },
+  {
+   "id": 106,
+   "kind": "Secondary",
+   "hex": "494949"
+  },
+  {
+   "id": 107,
+   "kind": "Secondary",
+   "hex": "373737"
+  },
+  {
+   "id": 108,
+   "kind": "Secondary",
+   "hex": "242424"
+  }
+ ]
+}

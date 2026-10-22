@@ -1,0 +1,11 @@
+{
+  "altars": [
+    {
+      "altar": "ranch_c26_workbench",
+      "recipes": [
+        { "code": "ranch_c26_lightgate", "product": "ranch_c26_lightgate", "secret": false, "ingredients": [ { "className": "ranch_c26_dustpath", "count": 2 } ] },
+        { "code": "ranch_c26_darkgate", "product": "ranch_c26_darkgate", "secret": true, "ingredients": [ { "className": "ranch_c26_dustpath", "count": 1 }, { "className": "ranch_c26_lightgate", "count": 1 } ] }
+      ]
+    }
+  ]
+}

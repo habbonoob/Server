@@ -1,0 +1,22 @@
+bin/
+obj/
+.vs/
+.idea/
+logs/
+*.user
+*.suo
+*.DotSettings.user
+
+# local-only settings (the RSA handshake key) and captured packet logs
+appsettings.Local.json
+habbo-packetlogs/
+__pycache__/
+
+# the asset mirror's default output (Habbo.Tools mirror)
+habbo-assets/
+
+# the camera's rendered photos and room thumbnails (PhotoStore)
+habbo-photos/
+
+# a deployment's real secrets (deploy/production/secrets.example.yaml lists them)
+deploy/**/secrets.local.yaml

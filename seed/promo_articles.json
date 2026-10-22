@@ -1,0 +1,4 @@
+{
+  "comment": "The articles the landing view promotes, in the order listed. linkType 0 opens linkContent as a web page, 1 follows it as a link inside the client, 2 shows no button. Empty until the hotel writes some.",
+  "articles": []
+}

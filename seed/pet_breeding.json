@@ -1,0 +1,250 @@
+{
+ "comment": "Nest breeding: for each kind of baby pet, its breeds by rarity category, rarest first (epic, rare, uncommon, common). A category's chance, in percent, is its chance plus chancePerLevel times the parents' average level; the last category takes whatever is left. The nests themselves come from furnidata (pet_breeding_*: adult kind, -, baby kind).",
+ "babies": [
+  {
+   "type": 24,
+   "categories": [
+    {
+     "chance": 1,
+     "chancePerLevel": 0.2,
+     "palettes": [
+      18,
+      19
+     ]
+    },
+    {
+     "chance": 5,
+     "chancePerLevel": 0.5,
+     "palettes": [
+      14,
+      15,
+      16,
+      17
+     ]
+    },
+    {
+     "chance": 20,
+     "chancePerLevel": 1.0,
+     "palettes": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+     ]
+    },
+    {
+     "chance": 0,
+     "chancePerLevel": 0,
+     "palettes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+     ]
+    }
+   ]
+  },
+  {
+   "type": 25,
+   "categories": [
+    {
+     "chance": 1,
+     "chancePerLevel": 0.2,
+     "palettes": [
+      18,
+      19
+     ]
+    },
+    {
+     "chance": 5,
+     "chancePerLevel": 0.5,
+     "palettes": [
+      14,
+      15,
+      16,
+      17
+     ]
+    },
+    {
+     "chance": 20,
+     "chancePerLevel": 1.0,
+     "palettes": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+     ]
+    },
+    {
+     "chance": 0,
+     "chancePerLevel": 0,
+     "palettes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+     ]
+    }
+   ]
+  },
+  {
+   "type": 28,
+   "categories": [
+    {
+     "chance": 1,
+     "chancePerLevel": 0.2,
+     "palettes": [
+      19,
+      20
+     ]
+    },
+    {
+     "chance": 5,
+     "chancePerLevel": 0.5,
+     "palettes": [
+      15,
+      16,
+      17,
+      18
+     ]
+    },
+    {
+     "chance": 20,
+     "chancePerLevel": 1.0,
+     "palettes": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+     ]
+    },
+    {
+     "chance": 0,
+     "chancePerLevel": 0,
+     "palettes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+     ]
+    }
+   ]
+  },
+  {
+   "type": 29,
+   "categories": [
+    {
+     "chance": 1,
+     "chancePerLevel": 0.2,
+     "palettes": [
+      19,
+      20
+     ]
+    },
+    {
+     "chance": 5,
+     "chancePerLevel": 0.5,
+     "palettes": [
+      15,
+      16,
+      17,
+      18
+     ]
+    },
+    {
+     "chance": 20,
+     "chancePerLevel": 1.0,
+     "palettes": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+     ]
+    },
+    {
+     "chance": 0,
+     "chancePerLevel": 0,
+     "palettes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+     ]
+    }
+   ]
+  },
+  {
+   "type": 30,
+   "categories": [
+    {
+     "chance": 1,
+     "chancePerLevel": 0.2,
+     "palettes": [
+      19,
+      20
+     ]
+    },
+    {
+     "chance": 5,
+     "chancePerLevel": 0.5,
+     "palettes": [
+      15,
+      16,
+      17,
+      18
+     ]
+    },
+    {
+     "chance": 20,
+     "chancePerLevel": 1.0,
+     "palettes": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+     ]
+    },
+    {
+     "chance": 0,
+     "chancePerLevel": 0,
+     "palettes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+     ]
+    }
+   ]
+  }
+ ]
+}

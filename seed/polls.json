@@ -1,0 +1,4 @@
+{
+  "comment": "Polls the hotel runs: offered once to each player entering the poll's room (roomId null: any room). A question is free text (type 0), one choice (1) or several (2); a choice's value is what is stored, its text what is shown. Questions may have follow-ups, shown under them. Empty until the hotel writes some.",
+  "polls": []
+}

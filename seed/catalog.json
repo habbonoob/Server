@@ -1,0 +1,121 @@
+{
+  "pages": [
+    {
+      "id": 1,
+      "parentId": null,
+      "pageName": "root",
+      "localization": "",
+      "icon": 0,
+      "visible": true,
+      "layoutCode": "",
+      "orderIndex": 0,
+      "images": [],
+      "texts": [],
+      "offers": []
+    },
+    {
+      "id": 10,
+      "parentId": 1,
+      "pageName": "seating",
+      "localization": "Seating",
+      "icon": 8,
+      "visible": true,
+      "layoutCode": "default_3x3",
+      "orderIndex": 1,
+      "images": [],
+      "texts": ["Seating", "Somewhere to sit down."],
+      "offers": [
+        { "id": 100, "localizationId": "chair_silo", "priceInCredits": 5, "products": [{ "className": "chair_silo", "amount": 1 }] },
+        { "id": 101, "localizationId": "chair_polyfon", "priceInCredits": 5, "products": [{ "className": "chair_polyfon", "amount": 1 }] },
+        { "id": 102, "localizationId": "sofachair_silo", "priceInCredits": 8, "products": [{ "className": "sofachair_silo", "amount": 1 }] },
+        { "id": 103, "localizationId": "sofa_silo", "priceInCredits": 12, "products": [{ "className": "sofa_silo", "amount": 1 }] },
+        { "id": 104, "localizationId": "bar_basic", "priceInCredits": 10, "products": [{ "className": "bar_basic", "amount": 1 }] }
+      ]
+    },
+    {
+      "id": 11,
+      "parentId": 1,
+      "pageName": "tables",
+      "localization": "Tables",
+      "icon": 9,
+      "visible": true,
+      "layoutCode": "default_3x3",
+      "orderIndex": 2,
+      "images": [],
+      "texts": ["Tables", "Something to put things on."],
+      "offers": [
+        { "id": 110, "localizationId": "table_silo_small", "priceInCredits": 6, "products": [{ "className": "table_silo_small", "amount": 1 }] },
+        { "id": 111, "localizationId": "table_plasto_4leg", "priceInCredits": 9, "products": [{ "className": "table_plasto_4leg", "extraParam": "1", "amount": 1 }] }
+      ]
+    },
+    {
+      "id": 12,
+      "parentId": 1,
+      "pageName": "floors_and_walls",
+      "localization": "Floors & Walls",
+      "icon": 15,
+      "visible": true,
+      "layoutCode": "default_3x3",
+      "orderIndex": 3,
+      "images": [],
+      "texts": ["Floors & Walls", "Rugs, mats and things to hang."],
+      "offers": [
+        { "id": 120, "localizationId": "doormat_love", "priceInCredits": 3, "products": [{ "className": "doormat_love", "amount": 1 }] },
+        { "id": 121, "localizationId": "carpet_standard", "priceInCredits": 7, "products": [{ "className": "carpet_standard", "amount": 1 }] },
+        { "id": 122, "localizationId": "poster", "priceInCredits": 2, "products": [{ "className": "poster", "amount": 1 }] },
+        { "id": 123, "localizationId": "window_basic", "priceInCredits": 4, "products": [{ "className": "window_basic", "amount": 1 }] }
+      ]
+    },
+    {
+      "id": 13,
+      "parentId": 1,
+      "pageName": "decoration",
+      "localization": "Decoration",
+      "icon": 21,
+      "visible": true,
+      "layoutCode": "default_3x3",
+      "orderIndex": 4,
+      "images": [],
+      "texts": ["Decoration", "Plants, lamps and the rest."],
+      "offers": [
+        { "id": 130, "localizationId": "plant_yukka", "priceInCredits": 4, "products": [{ "className": "plant_yukka", "amount": 1 }] },
+        { "id": 131, "localizationId": "lamp_basic", "priceInCredits": 4, "products": [{ "className": "lamp_basic", "amount": 1 }] },
+        { "id": 132, "localizationId": "bath", "priceInCredits": 11, "products": [{ "className": "bath", "amount": 1 }] },
+        { "id": 133, "localizationId": "toilet_red", "priceInCredits": 6, "products": [{ "className": "toilet_red", "amount": 1 }] }
+      ]
+    },
+    {
+      "id": 14,
+      "parentId": 1,
+      "pageName": "bundles",
+      "localization": "Bundles",
+      "icon": 30,
+      "visible": true,
+      "layoutCode": "default_3x3",
+      "orderIndex": 5,
+      "images": [],
+      "texts": ["Bundles", "Several things, one price."],
+      "offers": [
+        {
+          "id": 140,
+          "localizationId": "bundle_dining",
+          "priceInCredits": 20,
+          "products": [
+            { "className": "table_plasto_4leg", "extraParam": "1", "amount": 1 },
+            { "className": "chair_silo", "amount": 4 }
+          ]
+        },
+        {
+          "id": 141,
+          "localizationId": "bundle_bedroom",
+          "priceInCredits": 18,
+          "products": [
+            { "className": "bed_budget", "amount": 1 },
+            { "className": "plant_yukka", "amount": 2 },
+            { "className": "lamp_basic", "amount": 1 }
+          ]
+        }
+      ]
+    }
+  ]
+}

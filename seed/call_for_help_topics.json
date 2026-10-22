@@ -1,0 +1,25 @@
+[
+  {
+    "name": "help.cfh.topic.1",
+    "topics": [
+      { "name": "help.cfh.topic.10", "consequence": "" },
+      { "name": "help.cfh.topic.11", "consequence": "" },
+      { "name": "help.cfh.topic.12", "consequence": "" }
+    ]
+  },
+  {
+    "name": "help.cfh.topic.2",
+    "topics": [
+      { "name": "help.cfh.topic.20", "consequence": "" },
+      { "name": "help.cfh.topic.21", "consequence": "" },
+      { "name": "help.cfh.topic.22", "consequence": "" }
+    ]
+  },
+  {
+    "name": "help.cfh.topic.3",
+    "topics": [
+      { "name": "help.cfh.topic.30", "consequence": "" },
+      { "name": "help.cfh.topic.31", "consequence": "" }
+    ]
+  }
+]

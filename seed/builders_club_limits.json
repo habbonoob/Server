@@ -1,0 +1,5 @@
+[
+  { "productName": "builders_club", "furniLimit": 50, "maxFurniLimit": 500, "graceDays": 7 },
+  { "productName": "builders_club_plus", "furniLimit": 100, "maxFurniLimit": 500, "graceDays": 7 },
+  { "productName": "builders_club_pro", "furniLimit": 500, "maxFurniLimit": 500, "graceDays": 7 }
+]

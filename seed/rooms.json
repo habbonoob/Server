@@ -1,0 +1,39 @@
+{
+  "models": [
+    {
+      "name": "model_a",
+      "doorX": 3,
+      "doorY": 1,
+      "doorDirection": 2,
+      "heightmap": [
+        "xxxxxxxxxxxx",
+        "xxx000000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxx00000000",
+        "xxxxxxxxxxxx",
+        "xxxxxxxxxxxx"
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "name": "Welcome Room",
+      "description": "The first room.",
+      "modelName": "model_a",
+      "floorType": "101",
+      "wallpaper": "101",
+      "landscape": "1.1",
+      "isStaffPick": true
+    }
+  ]
+}

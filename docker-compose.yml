@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: habbo
+      POSTGRES_USER: habbo
+      POSTGRES_PASSWORD: habbo
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - habbo_pgdata:/var/lib/postgresql/data
+
+volumes:
+  habbo_pgdata:

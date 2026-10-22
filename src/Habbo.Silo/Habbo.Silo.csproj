@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Orleans.Sdk" Version="10.3.1">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Orleans.Runtime" Version="10.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Habbo.Silo.Abstractions\Habbo.Silo.Abstractions.csproj" />
+    <ProjectReference Include="..\Habbo.Domain\Habbo.Domain.csproj" />
+    <ProjectReference Include="..\Habbo.Infrastructure\Habbo.Infrastructure.csproj" />
+    <ProjectReference Include="..\Habbo.Protocol\Habbo.Protocol.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Habbo.Silo.Tests" />
+  </ItemGroup>
+</Project>

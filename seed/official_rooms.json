@@ -1,0 +1,49 @@
+{
+  "entries": [
+    {
+      "type": "Folder",
+      "popupCaption": "Official Rooms",
+      "open": true,
+      "children": [
+        {
+          "type": "Room",
+          "roomName": "Welcome Room",
+          "popupCaption": "Welcome Room",
+          "popupDescription": "Where every new Habbo starts. Say hello!",
+          "showDetails": true
+        }
+      ]
+    },
+    {
+      "type": "Folder",
+      "popupCaption": "Hotel favourites",
+      "open": false,
+      "children": [
+        { "type": "Tag", "tag": "party", "popupCaption": "Parties", "popupDescription": "Rooms tagged for a party." },
+        { "type": "Tag", "tag": "games", "popupCaption": "Games", "popupDescription": "Rooms tagged for games." }
+      ]
+    }
+  ],
+  "ads": [
+    {
+      "type": "Room",
+      "roomName": "Welcome Room",
+      "popupCaption": "New here?",
+      "popupDescription": "Meet other new Habbos in the Welcome Room.",
+      "showDetails": true
+    }
+  ],
+  "networks": [
+    { "id": 1, "name": "Welcome", "rooms": [ "Welcome Room" ] }
+  ],
+  "promotedCategories": [
+    { "code": "friendlyRoom", "rooms": [ "Welcome Room" ] }
+  ],
+  "liftedRooms": [
+    { "room": "Welcome Room", "areaId": 0, "image": "", "caption": "Say hello in the Welcome Room" }
+  ],
+  "forwardRooms": {
+    "predefined_noob_lobby": "Welcome Room",
+    "predefined_group_lobby": "Welcome Room"
+  }
+}

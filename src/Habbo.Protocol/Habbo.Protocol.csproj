@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!-- Write the generated writers to disk so they can be read and stepped into. -->
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>obj/generated</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Habbo.Silo.Abstractions\Habbo.Silo.Abstractions.csproj" />
+    <ProjectReference Include="..\Habbo.Protocol.Wire\Habbo.Protocol.Wire.csproj" />
+    <ProjectReference Include="..\Habbo.Protocol.Generator\Habbo.Protocol.Generator.csproj"
+                      OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Each client release's message ids (ReleaseHeaders), written by Habbo.Tools release-headers. -->
+    <EmbeddedResource Include="Releases\*.json" LogicalName="Releases/%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>

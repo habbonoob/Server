@@ -1,0 +1,466 @@
+{
+ "comment": "The hotel's own SnowStorm arenas. Each has a field type (the client names it by snowwar.field.name.N), a floor (x: none; a digit: floor), its furni by class name (dimensions and heights come from furnidata; a furni with a gameObject is also a tree to throw at, a pile or a machine to take snowballs from), and where each team starts. The official layouts are on the capture wishlist; this one was made for the hotel.",
+ "arenas": [
+  {
+   "fieldType": 8,
+   "width": 50,
+   "height": 50,
+   "heightMap": [
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxx00000000000000000000000000000000000000xxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   ],
+   "furni": [
+    {
+     "className": "s_snowball_machine",
+     "x": 11,
+     "y": 11,
+     "direction": 0,
+     "gameObject": {
+      "type": "machine",
+      "snowballs": 3,
+      "maxSnowballs": 5
+     }
+    },
+    {
+     "className": "s_snowball_machine",
+     "x": 38,
+     "y": 38,
+     "direction": 0,
+     "gameObject": {
+      "type": "machine",
+      "snowballs": 3,
+      "maxSnowballs": 5
+     }
+    },
+    {
+     "className": "s_snowball_machine",
+     "x": 11,
+     "y": 38,
+     "direction": 0,
+     "gameObject": {
+      "type": "machine",
+      "snowballs": 3,
+      "maxSnowballs": 5
+     }
+    },
+    {
+     "className": "s_snowball_machine",
+     "x": 38,
+     "y": 11,
+     "direction": 0,
+     "gameObject": {
+      "type": "machine",
+      "snowballs": 3,
+      "maxSnowballs": 5
+     }
+    },
+    {
+     "className": "snst_ballpile",
+     "x": 25,
+     "y": 14,
+     "direction": 0,
+     "gameObject": {
+      "type": "pile",
+      "snowballs": 12,
+      "maxSnowballs": 12
+     }
+    },
+    {
+     "className": "snst_ballpile",
+     "x": 25,
+     "y": 35,
+     "direction": 0,
+     "gameObject": {
+      "type": "pile",
+      "snowballs": 12,
+      "maxSnowballs": 12
+     }
+    },
+    {
+     "className": "snst_ballpile",
+     "x": 17,
+     "y": 25,
+     "direction": 0,
+     "gameObject": {
+      "type": "pile",
+      "snowballs": 12,
+      "maxSnowballs": 12
+     }
+    },
+    {
+     "className": "snst_ballpile",
+     "x": 32,
+     "y": 25,
+     "direction": 0,
+     "gameObject": {
+      "type": "pile",
+      "snowballs": 12,
+      "maxSnowballs": 12
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 15,
+     "y": 19,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 15,
+     "y": 31,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 34,
+     "y": 19,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 34,
+     "y": 31,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 21,
+     "y": 21,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 28,
+     "y": 28,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 21,
+     "y": 28,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 28,
+     "y": 21,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 25,
+     "y": 9,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 25,
+     "y": 40,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 9,
+     "y": 25,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_tree1",
+     "x": 40,
+     "y": 25,
+     "direction": 0,
+     "gameObject": {
+      "type": "tree",
+      "maxHits": 3
+     }
+    },
+    {
+     "className": "snst_iceblock",
+     "x": 13,
+     "y": 22,
+     "direction": 0
+    },
+    {
+     "className": "snst_iceblock",
+     "x": 36,
+     "y": 22,
+     "direction": 0
+    },
+    {
+     "className": "snst_iceblock",
+     "x": 13,
+     "y": 23,
+     "direction": 0
+    },
+    {
+     "className": "snst_iceblock",
+     "x": 36,
+     "y": 23,
+     "direction": 0
+    },
+    {
+     "className": "snst_iceblock",
+     "x": 13,
+     "y": 26,
+     "direction": 0
+    },
+    {
+     "className": "snst_iceblock",
+     "x": 36,
+     "y": 26,
+     "direction": 0
+    },
+    {
+     "className": "snst_iceblock",
+     "x": 13,
+     "y": 27,
+     "direction": 0
+    },
+    {
+     "className": "snst_iceblock",
+     "x": 36,
+     "y": 27,
+     "direction": 0
+    },
+    {
+     "className": "snst_block1",
+     "x": 19,
+     "y": 13,
+     "direction": 0
+    },
+    {
+     "className": "snst_block1",
+     "x": 30,
+     "y": 13,
+     "direction": 0
+    },
+    {
+     "className": "snst_block1",
+     "x": 19,
+     "y": 36,
+     "direction": 0
+    },
+    {
+     "className": "snst_block1",
+     "x": 30,
+     "y": 36,
+     "direction": 0
+    },
+    {
+     "className": "snst_block1",
+     "x": 24,
+     "y": 24,
+     "direction": 0
+    },
+    {
+     "className": "snst_block1",
+     "x": 25,
+     "y": 25,
+     "direction": 0
+    }
+   ],
+   "spawns": {
+    "1": [
+     [
+      8,
+      18
+     ],
+     [
+      8,
+      20
+     ],
+     [
+      8,
+      22
+     ],
+     [
+      8,
+      24
+     ],
+     [
+      8,
+      26
+     ],
+     [
+      8,
+      28
+     ],
+     [
+      8,
+      30
+     ],
+     [
+      10,
+      19
+     ],
+     [
+      10,
+      21
+     ],
+     [
+      10,
+      23
+     ],
+     [
+      10,
+      25
+     ],
+     [
+      10,
+      27
+     ],
+     [
+      10,
+      29
+     ]
+    ],
+    "2": [
+     [
+      41,
+      18
+     ],
+     [
+      41,
+      20
+     ],
+     [
+      41,
+      22
+     ],
+     [
+      41,
+      24
+     ],
+     [
+      41,
+      26
+     ],
+     [
+      41,
+      28
+     ],
+     [
+      41,
+      30
+     ],
+     [
+      39,
+      19
+     ],
+     [
+      39,
+      21
+     ],
+     [
+      39,
+      23
+     ],
+     [
+      39,
+      25
+     ],
+     [
+      39,
+      27
+     ],
+     [
+      39,
+      29
+     ]
+    ]
+   }
+  }
+ ]
+}

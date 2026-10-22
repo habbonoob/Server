@@ -1,0 +1,309 @@
+{
+  "contexts": [
+    {
+      "searchCode": "official_view",
+      "quickLinks": []
+    },
+    {
+      "searchCode": "hotel_view",
+      "quickLinks": []
+    },
+    {
+      "searchCode": "roomads_view",
+      "quickLinks": []
+    },
+    {
+      "searchCode": "myworld_view",
+      "quickLinks": []
+    }
+  ],
+  "blocks": [
+    {
+      "requestCode": "official_view",
+      "blockCode": "official",
+      "text": "",
+      "query": "OfficialFolders",
+      "actionAllowed": 0,
+      "viewMode": 1,
+      "maxResults": 50,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "hotel_view",
+      "blockCode": "hot",
+      "text": "",
+      "query": "Popular",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 12,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "hotel_view",
+      "blockCode": "popular",
+      "text": "",
+      "query": "Popular",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 12,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "hotel_view",
+      "blockCode": "recommended",
+      "text": "",
+      "query": "Recommended",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 7,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "hotel_view",
+      "blockCode": "category",
+      "text": "",
+      "query": "Categories",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 9,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "hotel_view",
+      "blockCode": "query",
+      "text": "",
+      "query": "Search",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 12,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "roomads_view",
+      "blockCode": "top_promotions",
+      "text": "",
+      "query": "Promoted",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 8,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "roomads_view",
+      "blockCode": "eventcategory",
+      "text": "",
+      "query": "EventCategories",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 6,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "myworld_view",
+      "blockCode": "my",
+      "text": "",
+      "query": "Owned",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 50,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "myworld_view",
+      "blockCode": "favorites",
+      "text": "",
+      "query": "Favourites",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 50,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "myworld_view",
+      "blockCode": "my_groups",
+      "text": "",
+      "query": "MyGroupBases",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 50,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "myworld_view",
+      "blockCode": "history",
+      "text": "",
+      "query": "History",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 9,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "myworld_view",
+      "blockCode": "friends_rooms",
+      "text": "",
+      "query": "FriendsRooms",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 9,
+      "forceClosed": false
+    },
+    {
+      "requestCode": "myworld_view",
+      "blockCode": "history_freq",
+      "text": "",
+      "query": "FrequentHistory",
+      "actionAllowed": 0,
+      "viewMode": 0,
+      "maxResults": 9,
+      "forceClosed": false
+    }
+  ],
+  "categories": [
+    {
+      "nodeName": "My rooms",
+      "visible": true,
+      "automatic": true,
+      "automaticCategoryKey": "my_rooms",
+      "globalCategoryKey": "my_rooms",
+      "staffOnly": false
+    },
+    {
+      "nodeName": "Personal Space",
+      "visible": true,
+      "automatic": false,
+      "automaticCategoryKey": "",
+      "globalCategoryKey": "PERSONAL",
+      "staffOnly": false
+    },
+    {
+      "nodeName": "Chat and discussion",
+      "visible": true,
+      "automatic": false,
+      "automaticCategoryKey": "",
+      "globalCategoryKey": "CHAT",
+      "staffOnly": false
+    },
+    {
+      "nodeName": "Party",
+      "visible": true,
+      "automatic": false,
+      "automaticCategoryKey": "",
+      "globalCategoryKey": "PARTY",
+      "staffOnly": false
+    },
+    {
+      "nodeName": "Games",
+      "visible": true,
+      "automatic": false,
+      "automaticCategoryKey": "",
+      "globalCategoryKey": "GAMES",
+      "staffOnly": false
+    },
+    {
+      "nodeName": "Trading",
+      "visible": true,
+      "automatic": false,
+      "automaticCategoryKey": "",
+      "globalCategoryKey": "TRADING",
+      "staffOnly": false
+    },
+    {
+      "nodeName": "Building and decoration",
+      "visible": true,
+      "automatic": false,
+      "automaticCategoryKey": "",
+      "globalCategoryKey": "BUILDING",
+      "staffOnly": false
+    },
+    {
+      "nodeName": "Role Play",
+      "visible": true,
+      "automatic": false,
+      "automaticCategoryKey": "",
+      "globalCategoryKey": "RolePlaying",
+      "staffOnly": false
+    },
+    {
+      "nodeName": "Agencies",
+      "visible": true,
+      "automatic": false,
+      "automaticCategoryKey": "",
+      "globalCategoryKey": "Agencies",
+      "staffOnly": false
+    },
+    {
+      "nodeName": "Help Centers",
+      "visible": true,
+      "automatic": false,
+      "automaticCategoryKey": "",
+      "globalCategoryKey": "HELP",
+      "staffOnly": false
+    },
+    {
+      "nodeName": "Official Rooms",
+      "visible": true,
+      "automatic": false,
+      "automaticCategoryKey": "",
+      "globalCategoryKey": "OFFICIAL",
+      "staffOnly": true
+    }
+  ],
+  "eventCategories": [
+    {
+      "id": 1,
+      "name": "Hottest Events",
+      "visible": true
+    },
+    {
+      "id": 2,
+      "name": "Parties & Music",
+      "visible": true
+    },
+    {
+      "id": 3,
+      "name": "Role Play",
+      "visible": true
+    },
+    {
+      "id": 4,
+      "name": "Help Desk",
+      "visible": true
+    },
+    {
+      "id": 5,
+      "name": "Trading",
+      "visible": true
+    },
+    {
+      "id": 6,
+      "name": "Games",
+      "visible": true
+    },
+    {
+      "id": 7,
+      "name": "Debates & Discussions",
+      "visible": true
+    },
+    {
+      "id": 8,
+      "name": "Grand Openings",
+      "visible": true
+    },
+    {
+      "id": 9,
+      "name": "Friending",
+      "visible": true
+    },
+    {
+      "id": 10,
+      "name": "Jobs",
+      "visible": true
+    },
+    {
+      "id": 11,
+      "name": "Group Events",
+      "visible": true
+    }
+  ]
+}

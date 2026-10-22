@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Habbo.Camera\Habbo.Camera.csproj" />
+    <ProjectReference Include="..\Habbo.Domain\Habbo.Domain.csproj" />
+    <ProjectReference Include="..\Habbo.Infrastructure\Habbo.Infrastructure.csproj" />
+    <ProjectReference Include="..\Habbo.Silo.Abstractions\Habbo.Silo.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

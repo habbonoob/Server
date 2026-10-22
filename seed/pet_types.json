@@ -1,0 +1,6311 @@
+{
+ "types": [
+  {
+   "id": 0,
+   "code": "dog",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": true,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": true,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": true,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": true,
+     "breed": 18,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": true,
+     "breed": 19,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 20,
+     "sellable": true,
+     "breed": 20,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 21,
+     "sellable": true,
+     "breed": 21,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 22,
+     "sellable": true,
+     "breed": 22,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 23,
+     "sellable": true,
+     "breed": 23,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 24,
+     "sellable": true,
+     "breed": 24,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "head"
+    },
+    {
+     "id": 2,
+     "tag": "tail"
+    },
+    {
+     "id": 3,
+     "tag": "emoticon"
+    }
+   ],
+   "postures": [
+    "std",
+    "beg",
+    "bnd",
+    "ded",
+    "eat",
+    "jmp",
+    "lay",
+    "pla",
+    "rdy",
+    "scr",
+    "sit",
+    "snf",
+    "spk",
+    "mv"
+   ],
+   "gestures": [
+    "agr",
+    "crz",
+    "eyb",
+    "joy",
+    "mis",
+    "puz",
+    "sad",
+    "sml",
+    "srp",
+    "tng",
+    "wav"
+   ]
+  },
+  {
+   "id": 1,
+   "code": "cat",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": true,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": true,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": true,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": true,
+     "breed": 18,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": true,
+     "breed": 19,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 20,
+     "sellable": true,
+     "breed": 20,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 21,
+     "sellable": true,
+     "breed": 21,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 22,
+     "sellable": true,
+     "breed": 22,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 23,
+     "sellable": true,
+     "breed": 23,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 24,
+     "sellable": true,
+     "breed": 24,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "head"
+    },
+    {
+     "id": 2,
+     "tag": "tail"
+    },
+    {
+     "id": 3,
+     "tag": "emoticon"
+    }
+   ],
+   "postures": [
+    "std",
+    "beg",
+    "bnd",
+    "ded",
+    "eat",
+    "jmp",
+    "lay",
+    "pla",
+    "rdy",
+    "scr",
+    "sit",
+    "snf",
+    "spk",
+    "mv"
+   ],
+   "gestures": [
+    "agr",
+    "crz",
+    "eyb",
+    "joy",
+    "mis",
+    "puz",
+    "sad",
+    "sml",
+    "srp",
+    "tng",
+    "wav"
+   ]
+  },
+  {
+   "id": 2,
+   "code": "croco",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "head"
+    },
+    {
+     "id": 2,
+     "tag": "tail"
+    },
+    {
+     "id": 3,
+     "tag": "emoticon"
+    }
+   ],
+   "postures": [
+    "std",
+    "beg",
+    "bnd",
+    "ded",
+    "eat",
+    "jmp",
+    "lay",
+    "pla",
+    "rdy",
+    "scr",
+    "sit",
+    "snf",
+    "spk",
+    "mv"
+   ],
+   "gestures": [
+    "agr",
+    "crz",
+    "eyb",
+    "joy",
+    "mis",
+    "puz",
+    "sad",
+    "sml",
+    "srp",
+    "tng",
+    "wav"
+   ]
+  },
+  {
+   "id": 3,
+   "code": "terrier",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "head"
+    },
+    {
+     "id": 2,
+     "tag": "tail"
+    },
+    {
+     "id": 3,
+     "tag": "emoticon"
+    }
+   ],
+   "postures": [
+    "std",
+    "beg",
+    "bnd",
+    "ded",
+    "eat",
+    "jmp",
+    "lay",
+    "pla",
+    "rdy",
+    "scr",
+    "sit",
+    "snf",
+    "spk",
+    "mv"
+   ],
+   "gestures": [
+    "agr",
+    "crz",
+    "eyb",
+    "joy",
+    "mis",
+    "puz",
+    "sad",
+    "sml",
+    "srp",
+    "tng",
+    "wav"
+   ]
+  },
+  {
+   "id": 4,
+   "code": "bear",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "head"
+    },
+    {
+     "id": 2,
+     "tag": "tail"
+    },
+    {
+     "id": 3,
+     "tag": "emoticon"
+    }
+   ],
+   "postures": [
+    "std",
+    "beg",
+    "bnd",
+    "ded",
+    "eat",
+    "jmp",
+    "lay",
+    "pla",
+    "rdy",
+    "scr",
+    "sit",
+    "snf",
+    "spk",
+    "mv"
+   ],
+   "gestures": [
+    "agr",
+    "crz",
+    "eyb",
+    "joy",
+    "mis",
+    "puz",
+    "sad",
+    "sml",
+    "srp",
+    "tng",
+    "wav"
+   ]
+  },
+  {
+   "id": 5,
+   "code": "pig",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "head"
+    },
+    {
+     "id": 2,
+     "tag": "tail"
+    },
+    {
+     "id": 3,
+     "tag": "emoticon"
+    }
+   ],
+   "postures": [
+    "std",
+    "beg",
+    "bnd",
+    "ded",
+    "eat",
+    "jmp",
+    "lay",
+    "pla",
+    "rdy",
+    "scr",
+    "sit",
+    "snf",
+    "spk",
+    "mv"
+   ],
+   "gestures": [
+    "agr",
+    "crz",
+    "eyb",
+    "joy",
+    "mis",
+    "puz",
+    "sad",
+    "sml",
+    "srp",
+    "tng",
+    "wav"
+   ]
+  },
+  {
+   "id": 6,
+   "code": "lion",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "head"
+    },
+    {
+     "id": 2,
+     "tag": "tail"
+    },
+    {
+     "id": 3,
+     "tag": "emoticon"
+    }
+   ],
+   "postures": [
+    "std",
+    "beg",
+    "bnd",
+    "ded",
+    "eat",
+    "jmp",
+    "lay",
+    "pla",
+    "rdy",
+    "scr",
+    "sit",
+    "snf",
+    "spk",
+    "mv"
+   ],
+   "gestures": [
+    "agr",
+    "crz",
+    "eyb",
+    "joy",
+    "mis",
+    "puz",
+    "sad",
+    "sml",
+    "srp",
+    "tng",
+    "wav"
+   ]
+  },
+  {
+   "id": 7,
+   "code": "rhino",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "head"
+    },
+    {
+     "id": 2,
+     "tag": "tail"
+    },
+    {
+     "id": 3,
+     "tag": "emoticon"
+    }
+   ],
+   "postures": [
+    "std",
+    "beg",
+    "bnd",
+    "ded",
+    "eat",
+    "jmp",
+    "lay",
+    "pla",
+    "rdy",
+    "scr",
+    "sit",
+    "snf",
+    "spk",
+    "mv"
+   ],
+   "gestures": [
+    "agr",
+    "crz",
+    "eyb",
+    "joy",
+    "mis",
+    "puz",
+    "sad",
+    "sml",
+    "srp",
+    "tng",
+    "wav"
+   ]
+  },
+  {
+   "id": 8,
+   "code": "spider",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": true,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": true,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": true,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "htn",
+    "mv",
+    "lay-in",
+    "lay",
+    "dan",
+    "eyb",
+    "agr",
+    "shk",
+    "spk",
+    "rdy",
+    "ded",
+    "ded-in",
+    "eat",
+    "bll-in",
+    "bll",
+    "jmp",
+    "flt-in",
+    "flt",
+    "spn",
+    "pla",
+    "eyr",
+    "bnc"
+   ],
+   "gestures": [
+    "que",
+    "und",
+    "lov",
+    "nrg",
+    "exp",
+    "sml",
+    "sad",
+    "thr",
+    "trd",
+    "plf",
+    "hng"
+   ]
+  },
+  {
+   "id": 9,
+   "code": "turtle",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "swm",
+    "srp",
+    "hit",
+    "rll",
+    "stn-out",
+    "stn-in",
+    "stn",
+    "fll",
+    "std",
+    "htn",
+    "mv",
+    "lay-out",
+    "lay",
+    "lay-in",
+    "eyb",
+    "agr",
+    "spk",
+    "ded",
+    "eat",
+    "flt",
+    "pla"
+   ],
+   "gestures": [
+    "thr",
+    "trd",
+    "plf",
+    "hng",
+    "sad",
+    "sml"
+   ]
+  },
+  {
+   "id": 10,
+   "code": "chicken",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "eyb",
+    "mv",
+    "eat",
+    "ded",
+    "dnc",
+    "fly in",
+    "fly",
+    "fly out",
+    "jmp",
+    "slp",
+    "sit",
+    "pla",
+    "hij",
+    "trj"
+   ],
+   "gestures": [
+    "que",
+    "und",
+    "lov",
+    "nrg",
+    "exp",
+    "sml",
+    "sad",
+    "thr",
+    "trd",
+    "plf",
+    "hng"
+   ]
+  },
+  {
+   "id": 11,
+   "code": "frog",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": true,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": true,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": true,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": true,
+     "breed": 18,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "lay",
+    "dan",
+    "eyb",
+    "crk",
+    "ded",
+    "rlx",
+    "eat",
+    "sit",
+    "jmp",
+    "beg",
+    "wav",
+    "dip"
+   ],
+   "gestures": [
+    "que",
+    "und",
+    "lov",
+    "nrg",
+    "exp",
+    "sml",
+    "sad"
+   ]
+  },
+  {
+   "id": 12,
+   "code": "dragon",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "ded",
+    "mv",
+    "rll",
+    "rng",
+    "spk",
+    "flm",
+    "eat",
+    "wng",
+    "pla",
+    "jmp",
+    "swg",
+    "lay",
+    "grn",
+    "trn",
+    "hg"
+   ],
+   "gestures": [
+    "thr",
+    "trd",
+    "plf",
+    "hng",
+    "sad",
+    "sml"
+   ]
+  },
+  {
+   "id": 13,
+   "code": "monster",
+   "palettes": [],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 14,
+   "code": "monkey",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "eyb",
+    "spk",
+    "trn",
+    "eat",
+    "eat-in",
+    "pla-in",
+    "pla",
+    "pla-out",
+    "srp-in",
+    "srp",
+    "beg",
+    "slp",
+    "slp-in",
+    "slp-out",
+    "jmp",
+    "sit-in",
+    "sit-out",
+    "sit",
+    "ded",
+    "ded-in",
+    "ded-out",
+    "dan",
+    "ams",
+    "swm"
+   ],
+   "gestures": [
+    "thr",
+    "trd",
+    "plf",
+    "hng",
+    "sad",
+    "sml"
+   ]
+  },
+  {
+   "id": 15,
+   "code": "horse",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "tail",
+      "hair"
+     ],
+     "master": true
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": 15,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": 15,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": 15,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": 15,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 13,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 13,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 13,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 13,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 14,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 14,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 14,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 14,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 3,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 3,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 3,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 3,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 4,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 4,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 20,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 4,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 21,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 4,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 22,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 17,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 23,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 17,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 24,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 17,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 25,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 17,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 26,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 10,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 27,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 10,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 28,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 10,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 29,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 10,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 30,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 18,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 31,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 18,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 32,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 18,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 33,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 18,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 34,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 1,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 35,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 1,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 36,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 1,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 37,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 1,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 38,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 2,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 39,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 2,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 40,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 2,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 41,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 2,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 42,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 7,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 43,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 7,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 44,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 7,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 45,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 7,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 46,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 5,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 47,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 5,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 48,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 5,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 49,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 5,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 50,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 51,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 52,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 53,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 54,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 55,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 56,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 57,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 58,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 59,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 60,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 61,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 11,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 62,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 11,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 63,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 11,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 64,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 11,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 65,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 6,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 66,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 6,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 67,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 6,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 68,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 6,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 69,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 12,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 70,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 12,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 71,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 12,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 72,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 12,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 73,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 16,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 74,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 16,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 75,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 16,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 76,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 16,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 77,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 8,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 78,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 8,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 79,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 8,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 80,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 8,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 81,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 82,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 83,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 84,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 85,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "hair",
+      "tail"
+     ],
+     "master": false
+    },
+    {
+     "id": 86,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 9,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 87,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 9,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 88,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 9,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    },
+    {
+     "id": 89,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 9,
+     "tags": [
+      "body",
+      "head"
+     ],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "head"
+    },
+    {
+     "id": 2,
+     "tag": "tail"
+    },
+    {
+     "id": 3,
+     "tag": "hair"
+    },
+    {
+     "id": 4,
+     "tag": "saddle"
+    }
+   ],
+   "postures": [
+    "std",
+    "eyb",
+    "wag",
+    "mv",
+    "lay",
+    "jmp",
+    "eat",
+    "kck",
+    "lay-in",
+    "lay-out",
+    "jmp-in",
+    "jmp-out"
+   ],
+   "gestures": [
+    "thr",
+    "trd",
+    "plf",
+    "hng",
+    "sad",
+    "sml"
+   ]
+  },
+  {
+   "id": 16,
+   "code": "monsterplant",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": false,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": false,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": false,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [
+      "pot",
+      "body",
+      "mouth",
+      "nose",
+      "eye"
+     ],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "pot"
+    },
+    {
+     "id": 1,
+     "tag": "body"
+    },
+    {
+     "id": 2,
+     "tag": "mouth"
+    },
+    {
+     "id": 3,
+     "tag": "nose"
+    },
+    {
+     "id": 4,
+     "tag": "eye"
+    },
+    {
+     "id": 5,
+     "tag": "emoticon"
+    }
+   ],
+   "postures": [
+    "std",
+    "grw1",
+    "grw2",
+    "grw3",
+    "grw4",
+    "grw5",
+    "grw6",
+    "grw1ill",
+    "grw2ill",
+    "grw3ill",
+    "grw4ill",
+    "grw5ill",
+    "grw6ill",
+    "eyb",
+    "agr",
+    "ill",
+    "rip",
+    "hpy",
+    "frw",
+    "rev",
+    "spd"
+   ],
+   "gestures": [
+    "sml",
+    "sad",
+    "thr",
+    "trd",
+    "plf",
+    "hng",
+    "ywn",
+    "reb",
+    "lgh",
+    "eat",
+    "hpy",
+    "frw",
+    "rev",
+    "spd"
+   ]
+  },
+  {
+   "id": 17,
+   "code": "bunnyeaster",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "eyb",
+    "spk",
+    "eat",
+    "pla",
+    "slp"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 18,
+   "code": "bunnyevil",
+   "palettes": [],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "eyb",
+    "spk",
+    "eat",
+    "pla",
+    "slp"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 19,
+   "code": "bunnydepressed",
+   "palettes": [],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "eyb",
+    "spk",
+    "eat",
+    "pla",
+    "slp"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 20,
+   "code": "bunnylove",
+   "palettes": [],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "eyb",
+    "spk",
+    "eat",
+    "pla",
+    "slp"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 21,
+   "code": "pigeongood",
+   "palettes": [],
+   "layers": [],
+   "postures": [
+    "std",
+    "eyb",
+    "mv",
+    "eat",
+    "ded",
+    "dnc",
+    "fly in",
+    "fly",
+    "fly out",
+    "jmp",
+    "slp",
+    "sit",
+    "pla",
+    "hij",
+    "trj"
+   ],
+   "gestures": [
+    "que",
+    "und",
+    "lov",
+    "nrg",
+    "exp",
+    "sml",
+    "sad",
+    "thr",
+    "trd",
+    "plf",
+    "hng"
+   ]
+  },
+  {
+   "id": 22,
+   "code": "pigeonevil",
+   "palettes": [],
+   "layers": [],
+   "postures": [
+    "std",
+    "eyb",
+    "mv",
+    "eat",
+    "ded",
+    "dnc",
+    "fly in",
+    "fly",
+    "fly out",
+    "jmp",
+    "slp",
+    "sit",
+    "pla",
+    "hij",
+    "trj"
+   ],
+   "gestures": [
+    "que",
+    "und",
+    "lov",
+    "nrg",
+    "exp",
+    "sml",
+    "sad",
+    "thr",
+    "trd",
+    "plf",
+    "hng"
+   ]
+  },
+  {
+   "id": 23,
+   "code": "demonmonkey",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "eyb",
+    "spk",
+    "trn",
+    "eat",
+    "eat-in",
+    "pla-in",
+    "pla",
+    "pla-out",
+    "srp-in",
+    "srp",
+    "beg",
+    "slp",
+    "slp-in",
+    "slp-out",
+    "jmp",
+    "sit-in",
+    "sit-out",
+    "sit",
+    "ded",
+    "ded-in",
+    "ded-out",
+    "dan",
+    "ams",
+    "swm"
+   ],
+   "gestures": [
+    "thr",
+    "trd",
+    "plf",
+    "hng",
+    "sad",
+    "sml"
+   ]
+  },
+  {
+   "id": 24,
+   "code": "bearbaby",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": true,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": true,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": true,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": true,
+     "breed": 18,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": true,
+     "breed": 19,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "eyb",
+    "spk",
+    "eat",
+    "pla",
+    "sit",
+    "beg",
+    "slp",
+    "int",
+    "htn",
+    "lay"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 25,
+   "code": "terrierbaby",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": true,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": true,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": true,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": true,
+     "breed": 18,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": true,
+     "breed": 19,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "sit",
+    "spk",
+    "std",
+    "pla",
+    "htn",
+    "lay",
+    "eyb",
+    "wlk",
+    "agr",
+    "srp",
+    "rdy",
+    "ded",
+    "eat",
+    "jmp",
+    "mv"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 26,
+   "code": "gnome",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 6,
+     "tags": [
+      "body"
+     ],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 3,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 9,
+     "tags": [
+      "trousers"
+     ],
+     "master": true
+    },
+    {
+     "id": 3,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 4,
+     "tags": [
+      "coat"
+     ],
+     "master": true
+    },
+    {
+     "id": 4,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 2,
+     "tags": [
+      "beard"
+     ],
+     "master": true
+    },
+    {
+     "id": 5,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 4,
+     "tags": [
+      "hat"
+     ],
+     "master": true
+    },
+    {
+     "id": 6,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 6,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 14,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 3,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 3,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 3,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 10,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 13,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 4,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 3,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 13,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": 11,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": 7,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 20,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 14,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 21,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 13,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 22,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": 1,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 23,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": 5,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 24,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 10,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    },
+    {
+     "id": 25,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 14,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    },
+    {
+     "id": 26,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": 11,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    },
+    {
+     "id": 27,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": 7,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    },
+    {
+     "id": 28,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": 15,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 29,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": 7,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 30,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": 18,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 31,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": 18,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 32,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": 18,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 33,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": 18,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 34,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": 18,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "trousers"
+    },
+    {
+     "id": 2,
+     "tag": "coat"
+    },
+    {
+     "id": 3,
+     "tag": "beard"
+    },
+    {
+     "id": 4,
+     "tag": "hat"
+    }
+   ],
+   "postures": [
+    "std",
+    "mv",
+    "eyb",
+    "trn",
+    "eat",
+    "sit",
+    "lay",
+    "use",
+    "ywn",
+    "scr",
+    "lay-in",
+    "lay-out"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 27,
+   "code": "gnome",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 6,
+     "tags": [
+      "body"
+     ],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 3,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 9,
+     "tags": [
+      "trousers"
+     ],
+     "master": true
+    },
+    {
+     "id": 3,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 4,
+     "tags": [
+      "coat"
+     ],
+     "master": true
+    },
+    {
+     "id": 4,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 2,
+     "tags": [
+      "beard"
+     ],
+     "master": true
+    },
+    {
+     "id": 5,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": 4,
+     "tags": [
+      "hat"
+     ],
+     "master": true
+    },
+    {
+     "id": 6,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 6,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 14,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 3,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 3,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 3,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": 10,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 13,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 4,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 3,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 13,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": 11,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": 7,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 20,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 14,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 21,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 13,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 22,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": 1,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 23,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": 5,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 24,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": 10,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    },
+    {
+     "id": 25,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": 14,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    },
+    {
+     "id": 26,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": 11,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    },
+    {
+     "id": 27,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": 7,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    },
+    {
+     "id": 28,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": 15,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 29,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": 7,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 30,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": 18,
+     "tags": [
+      "body"
+     ],
+     "master": false
+    },
+    {
+     "id": 31,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": 18,
+     "tags": [
+      "trousers"
+     ],
+     "master": false
+    },
+    {
+     "id": 32,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": 18,
+     "tags": [
+      "coat"
+     ],
+     "master": false
+    },
+    {
+     "id": 33,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": 18,
+     "tags": [
+      "beard"
+     ],
+     "master": false
+    },
+    {
+     "id": 34,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": 18,
+     "tags": [
+      "hat"
+     ],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "trousers"
+    },
+    {
+     "id": 2,
+     "tag": "coat"
+    },
+    {
+     "id": 3,
+     "tag": "beard"
+    },
+    {
+     "id": 4,
+     "tag": "hat"
+    }
+   ],
+   "postures": [
+    "std",
+    "mv",
+    "eyb",
+    "trn",
+    "eat",
+    "sit",
+    "lay",
+    "use",
+    "ywn",
+    "scr",
+    "lay-in",
+    "lay-out"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 28,
+   "code": "kittenbaby",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": true,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": true,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": true,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": true,
+     "breed": 18,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": true,
+     "breed": 19,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 20,
+     "sellable": true,
+     "breed": 20,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "wag",
+    "trn",
+    "sit",
+    "use",
+    "rst",
+    "beg",
+    "lay",
+    "eat",
+    "pla"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 29,
+   "code": "puppybaby",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": true,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": true,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": true,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": true,
+     "breed": 18,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": true,
+     "breed": 19,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 20,
+     "sellable": true,
+     "breed": 20,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "wag",
+    "trn",
+    "sit",
+    "use",
+    "pla",
+    "rst",
+    "beg",
+    "lay",
+    "eat",
+    "swm"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 30,
+   "code": "pigletbaby",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": true,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": true,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": true,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": true,
+     "breed": 18,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": true,
+     "breed": 19,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 20,
+     "sellable": true,
+     "breed": 20,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "ear",
+    "beg",
+    "trn",
+    "sit",
+    "use",
+    "pla",
+    "rst",
+    "lay",
+    "eat",
+    "swm"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 31,
+   "code": "haloompa",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "mv",
+    "eyb",
+    "trn",
+    "eat",
+    "sit",
+    "lay",
+    "use",
+    "ywn",
+    "scr",
+    "lay-in",
+    "lay-out"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 32,
+   "code": "fools",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "lay-in",
+    "lay",
+    "lay-out",
+    "eat",
+    "mv",
+    "ded-in",
+    "ded",
+    "ded-out",
+    "swm",
+    "srp-in",
+    "srp",
+    "srp-out",
+    "dnc",
+    "jmp-in",
+    "jmp",
+    "jmp-out",
+    "pla",
+    "sit"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 33,
+   "code": "pterosaur",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": false,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 20,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "spk",
+    "beg",
+    "trn",
+    "eat",
+    "pla",
+    "use",
+    "mv",
+    "lay",
+    "mv-in",
+    "mv-out",
+    "lay-in",
+    "lay-out",
+    "blk",
+    "rst"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 34,
+   "code": "velociraptor",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": true,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": true,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": true,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": true,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": true,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": true,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": true,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": true,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": true,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": true,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": true,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": true,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": true,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": true,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": true,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": true,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": true,
+     "breed": 18,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": true,
+     "breed": 19,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "trn",
+    "eyb",
+    "lay-in",
+    "lay",
+    "lay-out",
+    "eat-in",
+    "eat",
+    "eat-out",
+    "mv",
+    "sit",
+    "sit-out",
+    "sit-in",
+    "use-in",
+    "use",
+    "use-out",
+    "play-in",
+    "play",
+    "play-out",
+    "ams",
+    "spk",
+    "dnc",
+    "sil"
+   ],
+   "gestures": [
+    "thr",
+    "trd",
+    "plf",
+    "hng",
+    "sad",
+    "sml"
+   ]
+  },
+  {
+   "id": 35,
+   "code": "cow",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 2,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [
+      "horns"
+     ],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 5,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 6,
+     "sellable": false,
+     "breed": 6,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 7,
+     "sellable": false,
+     "breed": 7,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 8,
+     "sellable": false,
+     "breed": 8,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 9,
+     "sellable": false,
+     "breed": 9,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 10,
+     "sellable": false,
+     "breed": 10,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 11,
+     "sellable": false,
+     "breed": 11,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 12,
+     "sellable": false,
+     "breed": 12,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 13,
+     "sellable": false,
+     "breed": 13,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 14,
+     "sellable": false,
+     "breed": 14,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 15,
+     "sellable": false,
+     "breed": 15,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 16,
+     "sellable": false,
+     "breed": 16,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 17,
+     "sellable": false,
+     "breed": 17,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 18,
+     "sellable": false,
+     "breed": 18,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 19,
+     "sellable": false,
+     "breed": 19,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 20,
+     "sellable": false,
+     "breed": 20,
+     "colorTag": -1,
+     "tags": [
+      "horns"
+     ],
+     "master": false
+    },
+    {
+     "id": 21,
+     "sellable": false,
+     "breed": 21,
+     "colorTag": -1,
+     "tags": [
+      "horns"
+     ],
+     "master": false
+    },
+    {
+     "id": 22,
+     "sellable": false,
+     "breed": 22,
+     "colorTag": -1,
+     "tags": [
+      "horns"
+     ],
+     "master": false
+    },
+    {
+     "id": 23,
+     "sellable": false,
+     "breed": 23,
+     "colorTag": -1,
+     "tags": [
+      "horns"
+     ],
+     "master": false
+    },
+    {
+     "id": 24,
+     "sellable": false,
+     "breed": 24,
+     "colorTag": -1,
+     "tags": [
+      "horns"
+     ],
+     "master": false
+    },
+    {
+     "id": 25,
+     "sellable": false,
+     "breed": 25,
+     "colorTag": -1,
+     "tags": [
+      "horns"
+     ],
+     "master": false
+    },
+    {
+     "id": 26,
+     "sellable": false,
+     "breed": 26,
+     "colorTag": -1,
+     "tags": [
+      "horns"
+     ],
+     "master": false
+    },
+    {
+     "id": 27,
+     "sellable": false,
+     "breed": 27,
+     "colorTag": -1,
+     "tags": [
+      "horns"
+     ],
+     "master": false
+    },
+    {
+     "id": 28,
+     "sellable": false,
+     "breed": 28,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 29,
+     "sellable": false,
+     "breed": 29,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 30,
+     "sellable": false,
+     "breed": 30,
+     "colorTag": -1,
+     "tags": [
+      "horns"
+     ],
+     "master": false
+    },
+    {
+     "id": 31,
+     "sellable": false,
+     "breed": 31,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    },
+    {
+     "id": 32,
+     "sellable": false,
+     "breed": 32,
+     "colorTag": -1,
+     "tags": [
+      "body",
+      "xhead"
+     ],
+     "master": false
+    }
+   ],
+   "layers": [
+    {
+     "id": 0,
+     "tag": "body"
+    },
+    {
+     "id": 1,
+     "tag": "xhead"
+    },
+    {
+     "id": 2,
+     "tag": "horns"
+    }
+   ],
+   "postures": [
+    "std",
+    "trn",
+    "mv",
+    "eyb",
+    "eat",
+    "rmn",
+    "wag",
+    "lay",
+    "lay-in",
+    "lay-out",
+    "wag2",
+    "blk",
+    "beg",
+    "use"
+   ],
+   "gestures": []
+  },
+  {
+   "id": 36,
+   "code": "dragondog",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": false,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": true
+    },
+    {
+     "id": 1,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": false,
+     "breed": 3,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 3,
+     "sellable": false,
+     "breed": 4,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 4,
+     "sellable": false,
+     "breed": 5,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "eyb",
+    "lay",
+    "eat",
+    "mv",
+    "sit",
+    "pla",
+    "jmp",
+    "snf",
+    "scr",
+    "beg",
+    "rdy",
+    "bnd",
+    "ded",
+    "trn"
+   ],
+   "gestures": []
+  }
+ ]
+}

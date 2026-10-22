@@ -1,0 +1,12 @@
+{
+  "//": "Furniture definitions come from furnidata.xml. This file only says what a brand-new account starts with. Furniture is named, not numbered: furnidata reuses a class id between its floor and wall sections, but class names are unique across the whole file.",
+  "starterInventory": [
+    { "className": "chair_silo", "count": 4 },
+    { "className": "table_silo_small", "count": 2 },
+    { "className": "sofa_silo", "count": 1 },
+    { "className": "doormat_love", "count": 1 },
+    { "className": "carpet_standard", "count": 1 },
+    { "className": "plant_yukka", "count": 2 },
+    { "className": "poster", "count": 2 }
+  ]
+}

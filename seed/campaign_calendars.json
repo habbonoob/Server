@@ -1,0 +1,4 @@
+{
+  "comment": "Campaign calendars: from startsOn (yyyy-MM-dd, UTC) one door a day, in the order listed. A door names the furniture behind it by class name; productCode is what the calendar names it (the furniture's own when left out) and customImage an image-library picture shown instead of its icon. Empty until the hotel runs a campaign.",
+  "calendars": []
+}

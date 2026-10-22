@@ -1,0 +1,14 @@
+**/bin/
+**/obj/
+.git/
+.idea/
+habbo-assets/
+habbo-photos/
+habbo-packetlogs/
+tests/
+tools/
+docs/
+deploy/
+**/appsettings.Local.json
+**/appsettings.Development.json
+tables.txt

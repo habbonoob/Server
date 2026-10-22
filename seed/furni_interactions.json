@@ -1,0 +1,69 @@
+{
+  "prefixes": {
+    "wf_trg_": "wired_trigger",
+    "wf_act_": "wired_effect",
+    "wf_cnd_": "wired_condition",
+    "wf_xtra_": "wired_addon",
+    "wf_slc_": "wired_selector",
+    "wf_var_": "wired_variable",
+    "bb_gate_": "game_gate",
+    "es_gate_": "game_gate",
+    "bb_patch": "banzai_tile",
+    "bb_puck": "banzai_puck",
+    "es_tile": "freeze_tile",
+    "es_box": "freeze_block",
+    "es_exit": "freeze_exit",
+    "fball_ball": "football",
+    "fball_goal_": "football_goal",
+    "petfood": "pet_food",
+    "pet_food_": "pet_food",
+    "waterbowl": "pet_drink",
+    "water_bowl": "pet_drink",
+    "nest": "pet_nest",
+    "toy1": "pet_toy",
+    "pet_toy_": "pet_toy",
+    "pet_breeding_": "pet_breeding_nest"
+  },
+  "categories": {
+    "teleport": {
+      "furniture_multistate": "teleport"
+    },
+    "gate": {
+      "furniture_multistate": "gate",
+      "furniture_guild_customized": "group_gate"
+    },
+    "vending_machine": {
+      "furniture_multistate": "vending_machine",
+      "furniture_basic": "vending_machine"
+    },
+    "roller": {
+      "furniture_multistate": "roller",
+      "furniture_basic": "roller"
+    }
+  },
+  "visualizations": {
+    "furniture_water_area": "water_area"
+  },
+  "classes": {
+    "vip_gate": "vip_gate",
+    "wf_antenna1": "wired_antenna",
+    "wf_antenna2": "wired_antenna",
+    "room_invisible_click_tile": "click_tile",
+    "xmas11_petfood": "pet_food",
+    "qt_sum11_petfood": "pet_food",
+    "horse_trough": "pet_drink",
+    "milkbowl": "pet_drink",
+    "qt_val11_nest": "pet_nest",
+    "qt_xm10_nest": "pet_nest",
+    "newbie_nest": "pet_nest",
+    "gnome_box": "pet_package",
+    "leprechaun_box": "pet_package",
+    "cowbox": "pet_package",
+    "cowbox_gold": "pet_package",
+    "newbie_cat_package": "pet_package",
+    "newbie_crocodile_package": "pet_package",
+    "wf_contract_payment": "wired_contract_payment",
+    "wf_contract_trade": "wired_contract_trade",
+    "wf_contract_reward": "wired_contract_reward"
+  }
+}

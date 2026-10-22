@@ -1,0 +1,12 @@
+[
+  { "code": "NAVIGATOR_PHASE_ONE_2014", "errorMessage": "", "minimumRank": 0 },
+  { "code": "NAVIGATOR_PHASE_TWO_2014", "errorMessage": "", "minimumRank": 0 },
+  { "code": "CITIZEN", "errorMessage": "", "minimumRank": 0 },
+  { "code": "CAMERA", "errorMessage": "", "minimumRank": 0 },
+  { "code": "MOUSE_ZOOM", "errorMessage": "", "minimumRank": 0 },
+  { "code": "TRADE", "errorMessage": "", "minimumRank": 0 },
+  { "code": "BUILDER_AT_WORK", "errorMessage": "", "minimumRank": 5 },
+  { "code": "USE_GUIDE_TOOL", "errorMessage": "", "minimumRank": 4 },
+  { "code": "JUDGE_CHAT_REVIEWS", "errorMessage": "", "minimumRank": 5 },
+  { "code": "NAVIGATOR_ROOM_THUMBNAIL_CAMERA", "errorMessage": "", "minimumRank": 5 }
+]

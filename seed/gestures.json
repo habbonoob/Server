@@ -1,0 +1,16 @@
+[
+  { "emoticon": ">:(", "gesture": 2 },
+  { "emoticon": ":@", "gesture": 2 },
+  { "emoticon": ":D", "gesture": 5 },
+  { "emoticon": ":-D", "gesture": 5 },
+  { "emoticon": ":)", "gesture": 1 },
+  { "emoticon": ":-)", "gesture": 1 },
+  { "emoticon": "=)", "gesture": 1 },
+  { "emoticon": ":(", "gesture": 4 },
+  { "emoticon": ":-(", "gesture": 4 },
+  { "emoticon": ":o", "gesture": 3 },
+  { "emoticon": ":O", "gesture": 3 },
+  { "emoticon": ":p", "gesture": 7 },
+  { "emoticon": ":P", "gesture": 7 },
+  { "emoticon": ";)", "gesture": 8 }
+]

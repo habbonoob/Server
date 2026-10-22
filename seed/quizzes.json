@@ -1,0 +1,40 @@
+{
+  "comment": "The help quizzes (quiz.<code>.* in external_texts). Each question is the text's question number with the number of its right answer; passing progresses the achievement. The answers are read from the questions and their explanations: Habbo Way 2, 3 and 7 are the least certain.",
+  "quizzes": [
+    {
+      "code": "HabboWay1",
+      "achievement": "ACH_HabboWayGraduate",
+      "questions": [
+        { "id": 0, "correct": 2 },
+        { "id": 1, "correct": 1 },
+        { "id": 2, "correct": 2 },
+        { "id": 3, "correct": 0 },
+        { "id": 4, "correct": 1 },
+        { "id": 5, "correct": 3 },
+        { "id": 6, "correct": 1 },
+        { "id": 7, "correct": 3 },
+        { "id": 8, "correct": 0 },
+        { "id": 9, "correct": 0 }
+      ]
+    },
+    {
+      "code": "SafetyQuiz1",
+      "achievement": "ACH_SafetyQuizGraduate",
+      "questions": [
+        { "id": 0, "correct": 1 },
+        { "id": 1, "correct": 1 },
+        { "id": 2, "correct": 1 },
+        { "id": 3, "correct": 1 },
+        { "id": 4, "correct": 1 },
+        { "id": 5, "correct": 0 },
+        { "id": 6, "correct": 1 },
+        { "id": 7, "correct": 1 },
+        { "id": 8, "correct": 2 },
+        { "id": 9, "correct": 2 },
+        { "id": 10, "correct": 0 },
+        { "id": 11, "correct": 0 },
+        { "id": 12, "correct": 0 }
+      ]
+    }
+  ]
+}

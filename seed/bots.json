@@ -1,0 +1,25 @@
+{
+  "page": "bots",
+  "types": [
+    {
+      "code": "generic", "offerId": 11746, "priceInCredits": 25,
+      "figure": "hr-3020-34.hd-3091-2.ch-225-92.lg-3058-100.sh-3089-1338.ca-3084-78-108.wa-2005",
+      "defaultName": "Bot", "defaultMotto": "", "gender": "M",
+      "skills": [1, 2, 3, 4, 5]
+    },
+    {
+      "code": "bartender", "offerId": 11782, "priceInCredits": 40,
+      "figure": "hr-9534-39.hd-600-1.ch-819-92.lg-3058-64.sh-3064-110.wa-2005",
+      "defaultName": "Bartender", "defaultMotto": "", "gender": "F",
+      "skills": [1, 2, 3, 4, 5, 6],
+      "beverages": [1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 23, 24, 27, 29, 35, 40, 43]
+    },
+    {
+      "code": "visitor_logger", "offerId": 14409, "priceInCredits": 35,
+      "figure": "hr-3251-34-1350.hd-3096-1.ch-3076-78-73.lg-3166-79.sh-3064-90",
+      "defaultName": "Visitor Logger", "defaultMotto": "", "gender": "F",
+      "skills": [1, 3, 4, 5],
+      "logsVisitors": true
+    }
+  ]
+}

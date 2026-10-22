@@ -1,0 +1,23 @@
+{
+  "membershipPage": "hc_membership",
+  "memberships": [
+    { "id": 3000001, "productCode": "HABBO_CLUB_VIP_1_MONTH", "priceInCredits": 25, "level": "Vip", "months": 1, "extraDays": 0, "giftable": true },
+    { "id": 3000002, "productCode": "HABBO_CLUB_VIP_3_MONTHS", "priceInCredits": 60, "level": "Vip", "months": 3, "extraDays": 0, "giftable": true },
+    { "id": 3000003, "productCode": "HABBO_CLUB_VIP_12_MONTHS", "priceInCredits": 200, "level": "Vip", "months": 12, "extraDays": 0, "giftable": true }
+  ],
+  "giftsPage": "club_gifts",
+  "gifts": [
+    { "id": 33417, "className": "hc26_2", "daysRequired": 1 },
+    { "id": 33419, "className": "hc26_6", "daysRequired": 1 },
+    { "id": 33422, "className": "hc26_5", "daysRequired": 1 },
+    { "id": 33425, "className": "hc26_12", "daysRequired": 1 },
+    { "id": 33424, "className": "hc26_3", "daysRequired": 1 },
+    { "id": 33420, "className": "hc26_9", "daysRequired": 1 },
+    { "id": 33423, "className": "hc26_1", "daysRequired": 1 },
+    { "id": 33421, "className": "hc26_4", "daysRequired": 1 },
+    { "id": 33426, "className": "hc26_7", "daysRequired": 1 },
+    { "id": 33427, "className": "hc26_10", "daysRequired": 1 },
+    { "id": 33416, "className": "hc26_8", "daysRequired": 1 },
+    { "id": 33418, "className": "hc26_11", "daysRequired": 1 }
+  ]
+}

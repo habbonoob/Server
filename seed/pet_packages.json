@@ -1,0 +1,11 @@
+{
+  "comment": "Boxes that hold a pet, by class name: the kind inside and the palettes it may come in (empty for any the shop sells). Palettes are the pet assets' (seed/pet_types.json).",
+  "packages": [
+    { "className": "gnome_box",                "type": 26, "palettes": [0, 1, 6, 7, 28] },
+    { "className": "leprechaun_box",           "type": 27, "palettes": [29] },
+    { "className": "cowbox",                   "type": 35, "palettes": [2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 32] },
+    { "className": "cowbox_gold",              "type": 35, "palettes": [28] },
+    { "className": "newbie_cat_package",       "type": 1,  "palettes": [] },
+    { "className": "newbie_crocodile_package", "type": 2,  "palettes": [] }
+  ]
+}

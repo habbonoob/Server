@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Habbo.Gateway\Habbo.Gateway.csproj" />
+    <ProjectReference Include="..\Habbo.Silo\Habbo.Silo.csproj" />
+    <ProjectReference Include="..\Habbo.Silo.Abstractions\Habbo.Silo.Abstractions.csproj" />
+    <ProjectReference Include="..\Habbo.Web\Habbo.Web.csproj" />
+    <ProjectReference Include="..\Habbo.Infrastructure\Habbo.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Orleans.Client" Version="10.3.1" />
+    <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" Version="10.3.1" />
+    <PackageReference Include="Microsoft.Orleans.Server" Version="10.3.1" />
+  </ItemGroup>
+
+</Project>

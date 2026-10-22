@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Habbo.Camera/Habbo.Camera.csproj" />
+    <Project Path="src/Habbo.Domain/Habbo.Domain.csproj" />
+    <Project Path="src/Habbo.Gateway/Habbo.Gateway.csproj" />
+    <Project Path="src/Habbo.Host/Habbo.Host.csproj" />
+    <Project Path="src/Habbo.Infrastructure/Habbo.Infrastructure.csproj" />
+    <Project Path="src/Habbo.Protocol/Habbo.Protocol.csproj" />
+    <Project Path="src/Habbo.Protocol.Generator/Habbo.Protocol.Generator.csproj" />
+    <Project Path="src/Habbo.Protocol.Wire/Habbo.Protocol.Wire.csproj" />
+    <Project Path="src/Habbo.Silo.Abstractions/Habbo.Silo.Abstractions.csproj" />
+    <Project Path="src/Habbo.Silo/Habbo.Silo.csproj" />
+    <Project Path="src/Habbo.Tools/Habbo.Tools.csproj" />
+    <Project Path="src/Habbo.Web/Habbo.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Habbo.Gateway.Tests/Habbo.Gateway.Tests.csproj" />
+    <Project Path="tests/Habbo.Protocol.Tests/Habbo.Protocol.Tests.csproj" />
+    <Project Path="tests/Habbo.Silo.Tests/Habbo.Silo.Tests.csproj" />
+  </Folder>
+</Solution>

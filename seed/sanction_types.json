@@ -1,0 +1,9 @@
+[
+  { "id": 1, "name": "ALERT", "kind": "Alert", "lengthHours": 0, "probationDays": 30, "step": 1 },
+  { "id": 2, "name": "MUTE", "kind": "Mute", "lengthHours": 1, "probationDays": 30, "step": 2 },
+  { "id": 3, "name": "BAN", "kind": "Ban", "lengthHours": 18, "probationDays": 30, "step": 3 },
+  { "id": 4, "name": "BAN", "kind": "Ban", "lengthHours": 168, "probationDays": 30, "step": 4 },
+  { "id": 5, "name": "BAN", "kind": "Ban", "lengthHours": 720, "probationDays": 30, "step": 5 },
+  { "id": 7, "name": "BAN", "kind": "Ban", "lengthHours": 720, "probationDays": 30, "step": 6 },
+  { "id": 6, "name": "BAN_PERMANENT", "kind": "Ban", "lengthHours": 876000, "probationDays": 0, "step": 7 }
+]

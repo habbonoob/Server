@@ -1,0 +1,359 @@
+{
+ "comment": "Monster plant looks. A plant is drawn in one palette and wears one part on each layer tagged here (the tags and part ids are the monsterplant asset's: seed/pet_types.json and its sprites). Each trait is drawn by its weight; a plant's rarity level is the sum of its traits' rarities (0-10, infostand.pet.raritylevel.N).",
+ "traits": [
+  {
+   "tag": "body",
+   "value": 1,
+   "rarity": 0,
+   "weight": 20
+  },
+  {
+   "tag": "body",
+   "value": 2,
+   "rarity": 0,
+   "weight": 20
+  },
+  {
+   "tag": "body",
+   "value": 3,
+   "rarity": 0,
+   "weight": 20
+  },
+  {
+   "tag": "body",
+   "value": 4,
+   "rarity": 1,
+   "weight": 12
+  },
+  {
+   "tag": "body",
+   "value": 5,
+   "rarity": 1,
+   "weight": 12
+  },
+  {
+   "tag": "body",
+   "value": 6,
+   "rarity": 1,
+   "weight": 12
+  },
+  {
+   "tag": "body",
+   "value": 7,
+   "rarity": 2,
+   "weight": 8
+  },
+  {
+   "tag": "body",
+   "value": 8,
+   "rarity": 2,
+   "weight": 8
+  },
+  {
+   "tag": "body",
+   "value": 9,
+   "rarity": 3,
+   "weight": 5
+  },
+  {
+   "tag": "body",
+   "value": 10,
+   "rarity": 3,
+   "weight": 5
+  },
+  {
+   "tag": "body",
+   "value": 11,
+   "rarity": 4,
+   "weight": 3
+  },
+  {
+   "tag": "body",
+   "value": 12,
+   "rarity": 5,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 1,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 2,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 3,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 4,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 5,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 6,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 7,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 8,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 9,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 10,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 11,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "mouth",
+   "value": 12,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 1,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 2,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 3,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 4,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 5,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 6,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 7,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 8,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 9,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 10,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 11,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "nose",
+   "value": 12,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 1,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 2,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 3,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 4,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 5,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 6,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 7,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 8,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 9,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 10,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 11,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "eye",
+   "value": 12,
+   "rarity": 0,
+   "weight": 1
+  },
+  {
+   "tag": "palette",
+   "value": 0,
+   "rarity": 0,
+   "weight": 20
+  },
+  {
+   "tag": "palette",
+   "value": 1,
+   "rarity": 0,
+   "weight": 20
+  },
+  {
+   "tag": "palette",
+   "value": 2,
+   "rarity": 0,
+   "weight": 20
+  },
+  {
+   "tag": "palette",
+   "value": 3,
+   "rarity": 1,
+   "weight": 12
+  },
+  {
+   "tag": "palette",
+   "value": 4,
+   "rarity": 1,
+   "weight": 12
+  },
+  {
+   "tag": "palette",
+   "value": 5,
+   "rarity": 2,
+   "weight": 8
+  },
+  {
+   "tag": "palette",
+   "value": 6,
+   "rarity": 2,
+   "weight": 8
+  },
+  {
+   "tag": "palette",
+   "value": 7,
+   "rarity": 3,
+   "weight": 5
+  },
+  {
+   "tag": "palette",
+   "value": 8,
+   "rarity": 3,
+   "weight": 5
+  },
+  {
+   "tag": "palette",
+   "value": 9,
+   "rarity": 4,
+   "weight": 3
+  },
+  {
+   "tag": "palette",
+   "value": 10,
+   "rarity": 5,
+   "weight": 1
+  }
+ ]
+}

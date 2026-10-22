@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "position": 1,
+      "name": "RARE: Gargoyle Fountain!",
+      "promoImage": "catalogue/feature_cata_vert_rare2_oct26.png",
+      "type": "Page",
+      "pageName": "hween26r2",
+      "expiresAt": "2026-10-12T11:00:00Z"
+    },
+    {
+      "position": 2,
+      "name": "NEW: Enchanted Broomstick Effect!",
+      "promoImage": "catalogue/feature_cata_hort_fx_oct26.png",
+      "type": "Page",
+      "pageName": "ny2015_permeffects"
+    },
+    {
+      "position": 3,
+      "name": "Nightmarish Bedroom Bundle",
+      "promoImage": "catalogue/feature_cata_hort_hween20_bun7.png",
+      "type": "Page",
+      "pageName": "house20bundd",
+      "expiresAt": "2026-10-12T11:00:00Z"
+    },
+    {
+      "position": 4,
+      "name": "NEW: Dark Academia Furni!",
+      "promoImage": "catalogue/feature_cata_hort_NewFurni_Oct26.png",
+      "type": "Page",
+      "pageName": "hween26furni",
+      "expiresAt": "2026-11-02T11:00:00Z"
+    }
+  ]
+}

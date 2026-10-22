@@ -1,0 +1,6 @@
+{
+  "comment": "Products a player may claim once for free, by the id the client's special items window asks for (external_variables special_items.<key>.free_claim). Each hands over the furniture listed, by class name. The chests window offers the starter Furni Chest, which its text says 'can be claimed for free in this window'.",
+  "claims": [
+    { "id": "chests", "active": true, "furni": [ "wf_storage_furni_starter" ] }
+  ]
+}
