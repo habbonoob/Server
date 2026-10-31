@@ -169,7 +169,10 @@ public sealed class RoomFurnitureUse(
 
     /// <summary>Takes the item out of the room; the client lets it stay for <paramref name="delayMilliseconds"/> first, as a
     /// cracked bonus bag shows itself broken before it goes.</summary>
-    public async Task<bool> RemoveAsync(RoomItemStore.PlacedItem item, int delayMilliseconds)
+    public Task<bool> RemoveAsync(RoomItemStore.PlacedItem item, int delayMilliseconds) =>
+        RemoveAsync(item, delayMilliseconds, NobodyPickedItUp);
+
+    public async Task<bool> RemoveAsync(RoomItemStore.PlacedItem item, int delayMilliseconds, int pickerAccountId)
     {
         var itemId = item.Id;
         var isWallItem = item.Item.Definition!.Type == ItemType.Wall;
@@ -184,11 +187,11 @@ public sealed class RoomFurnitureUse(
         // The client is told the same way a pick-up tells it, with nobody holding the item after.
         if (isWallItem)
         {
-            broadcast(new ItemRemoveMessageComposer(itemId, NobodyPickedItUp));
+            broadcast(new ItemRemoveMessageComposer(itemId, pickerAccountId));
         }
         else
         {
-            broadcast(new ObjectRemoveMessageComposer(itemId, IsExpired: false, NobodyPickedItUp, Delay: delayMilliseconds));
+            broadcast(new ObjectRemoveMessageComposer(itemId, IsExpired: false, pickerAccountId, Delay: delayMilliseconds));
             foreach (var update in HeightMapUpdateMessageComposer.Chunked(items.TileUpdates(vacated)))
                 broadcast(update);
         }
@@ -201,6 +204,12 @@ public sealed class RoomFurnitureUse(
         var balance = await grains.GetGrain<IPlayerGrain>(user.Player.Id).AddCreditsAsync(credits, Habbo.Domain.Users.CurrencyTransactionReasons.CreditFurniRedeem);
         sendTo(user.Player.Id, new CreditBalanceComposer(balance));
     }
+
+    public Task<bool> HasPermanentEffectAsync(RoomEntityStore.RoomEntity user, int effectId) =>
+        grains.GetGrain<IPlayerGrain>(user.Player.Id).HasPermanentEffectAsync(effectId);
+
+    public Task GrantPermanentEffectAsync(RoomEntityStore.RoomEntity user, int effectId) =>
+        grains.GetGrain<IPlayerGrain>(user.Player.Id).GrantPermanentEffectAsync(effectId);
 
     public void Broadcast(IComposer composer) => broadcast(composer);
 

@@ -241,6 +241,9 @@ public partial class RoomWiredTests
 
         public Task<bool> RemoveAsync(RoomItemStore.PlacedItem item) => Task.FromResult(Items.Remove(item.Id));
         public Task GiveCreditsAsync(RoomEntityStore.RoomEntity user, int credits) => Task.CompletedTask;
+        public Task<bool> RemoveAsync(RoomItemStore.PlacedItem item, int delayMilliseconds, int pickerAccountId) => RemoveAsync(item);
+        public Task<bool> HasPermanentEffectAsync(RoomEntityStore.RoomEntity user, int effectId) => Task.FromResult(false);
+        public Task GrantPermanentEffectAsync(RoomEntityStore.RoomEntity user, int effectId) => Task.CompletedTask;
         public void Broadcast(IComposer composer) => Broadcasts.Add(composer);
         public void Schedule(TimeSpan delay, Func<Task> action) { }
         public void ShowData(RoomItemStore.PlacedItem item) => Broadcasts.Add(new Habbo.Protocol.Messages.Outgoing.Room.Engine.ObjectDataUpdateMessageComposer(item.Id, Habbo.Protocol.Messages.Outgoing.Room.Engine.FurniStuffData.From(item.Data)));

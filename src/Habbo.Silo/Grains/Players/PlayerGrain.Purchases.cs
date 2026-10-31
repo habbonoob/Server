@@ -218,8 +218,10 @@ public sealed partial class PlayerGrain
             }
         }
 
+        // an effect bought in the shop is the player's for good; its duration only goes along to the client (habbo.com,
+        // October 2026: every effect on the effects page, and the FX boxes, are permanent)
         foreach (var (effectId, duration) in granted.Effects)
-            await AddEffectAsync(effectId, duration, isPermanent: duration == 0);
+            await AddEffectAsync(effectId, duration == 0 ? PermanentEffectDuration : duration, isPermanent: true);
         if (granted.ChatStyles > 0)
             await SendChatStylesAsync();
         if (granted.ClubLevel is { } level)

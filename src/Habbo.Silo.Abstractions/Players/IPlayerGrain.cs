@@ -163,6 +163,12 @@ public interface IPlayerGrain : IGrainWithGuidKey
     /// <summary>Starts one of the waiting effects of this type; false when there is none.</summary>
     Task<bool> ActivateEffectAsync(int effectId);
 
+    /// <summary>Whether the player has this effect for good.</summary>
+    Task<bool> HasPermanentEffectAsync(int effectId);
+
+    /// <summary>Gives the effect for good and starts it, as an FX box does, and tells the player.</summary>
+    Task GrantPermanentEffectAsync(int effectId);
+
     /// <summary>Whether the player may wear this effect now: one of theirs that is running.</summary>
     Task<bool> CanWearEffectAsync(int effectId);
 

@@ -272,7 +272,8 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
     /// item decides, so a minibar standing on a rug blocks the tile the rug alone would not.
     /// Stopping on one of these is what sits or lies the avatar down, not crossing it.</summary>
     public bool BlocksWalking(int x, int y, bool clubMember = false, IReadOnlySet<int>? groupIds = null) =>
-        TopItemAt(x, y) is { } item
+        WalkHelperAt(x, y) is null
+        && TopItemAt(x, y) is { } item
         && item.Interaction switch
         {
             // a gate lets through while it is open, a club gate only club members, a group gate only its group's
@@ -323,7 +324,25 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
         && TopItemAt(x, y, ignoreItemId) is { } item && !item.Item.Definition!.CanStackOn;
 
     private PlacedItem? StackHelperAt(int x, int y, int? ignoreItemId) =>
-        FloorItemsAt(x, y, ignoreItemId).FirstOrDefault(item => item.Interaction is StackHelperInteraction);
+        FloorItemsAt(x, y, ignoreItemId).FirstOrDefault(item => item.Interaction is StackHelperInteraction && !IsWalkHelper(item));
+
+    /// <summary>A walking helper (Walk Magic Tile, tile_walkmagic*): it shares the stacking helper's logic, but its
+    /// height is the users', not the furni's ("Adjust the height of walk tile. All users on this tile will stand on this
+    /// height"), and the client tells it apart by its class name too.</summary>
+    public static bool IsWalkHelper(PlacedItem item) =>
+        item.Interaction is StackHelperInteraction
+        && item.Item.Definition!.ClassName.StartsWith(WalkHelperClassPrefix, StringComparison.OrdinalIgnoreCase);
+
+    private const string WalkHelperClassPrefix = "tile_walkmagic";
+
+    /// <summary>The walking helper on the tile, the highest when there are more: what is on the tile does not keep
+    /// users off it, and they stand at its height.</summary>
+    public PlacedItem? WalkHelperAt(int x, int y) =>
+        FloorItemsAt(x, y, null).Where(IsWalkHelper).MaxBy(item => item.Z);
+
+    /// <summary>Whether users may stand on the tile together: a walking helper there set to "Allow multiple users on
+    /// this location".</summary>
+    public bool MultiWalkAt(int x, int y) => WalkHelperAt(x, y) is { MultiWalk: true };
 
     /// <summary>The item whose surface the tile's is, if anything stands there.</summary>
     public PlacedItem? TopItemAt(int x, int y, int? ignoreItemId = null) =>
@@ -359,6 +378,11 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
 
     public double AvatarHeightAt(int x, int y)
     {
+        // a walking helper sets the height of whoever stands on its tiles, above or below what else is there: they stand
+        // on it, where it was moved to (habbo.com: under a block stacked on one at the floor, at 0.0)
+        if (WalkHelperAt(x, y) is { } walkHelper)
+            return TopOf(walkHelper);
+
         var floor = model.GetHeight(x, y);
         return Math.Max(floor, FloorItemsAt(x, y, null)
             .Where(item => item.Item.Definition!.CanWalk)

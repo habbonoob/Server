@@ -162,6 +162,9 @@ public class RoomGameArenaTests
         public Task BatchedAsync(Func<Task> work) => work();
         public Task<bool> RemoveAsync(RoomItemStore.PlacedItem item) => Task.FromResult(Items.Remove(item.Item.Id));
         public Task GiveCreditsAsync(RoomEntityStore.RoomEntity user, int credits) => Task.CompletedTask;
+        public Task<bool> RemoveAsync(RoomItemStore.PlacedItem item, int delayMilliseconds, int pickerAccountId) => RemoveAsync(item);
+        public Task<bool> HasPermanentEffectAsync(RoomEntityStore.RoomEntity user, int effectId) => Task.FromResult(false);
+        public Task GrantPermanentEffectAsync(RoomEntityStore.RoomEntity user, int effectId) => Task.CompletedTask;
         public void Broadcast(IComposer composer) => Broadcasts.Add(composer);
         public bool IsPlaced(RoomItemStore.PlacedItem item) => Items.Find(item.Item.Id) == item;
         public bool IsOccupied(RoomItemStore.PlacedItem item) => Entities.HasAvatarAt(item.X, item.Y);

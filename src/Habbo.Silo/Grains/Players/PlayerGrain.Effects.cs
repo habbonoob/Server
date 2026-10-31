@@ -74,6 +74,38 @@ public sealed partial class PlayerGrain
         return true;
     }
 
+    /// <summary>The seconds Habbo sends with an effect it gives for good: it counts as running, never as running out
+    /// (habbo.com, October 2026: an FX box's <c>AvatarEffectAdded {92}{0}{86400}{true}</c>).</summary>
+    public const int PermanentEffectDuration = 86400;
+
+    public async Task<bool> HasPermanentEffectAsync(int effectId)
+    {
+        await using var db = await dbFactory.CreateDbContextAsync();
+        return await db.UserEffects.AnyAsync(e => e.UserId == PlayerId && e.EffectId == effectId && e.IsPermanent);
+    }
+
+    public async Task GrantPermanentEffectAsync(int effectId)
+    {
+        await using var db = await dbFactory.CreateDbContextAsync();
+        var effect = await db.UserEffects.FirstOrDefaultAsync(e => e.UserId == PlayerId && e.EffectId == effectId);
+        if (effect is null)
+        {
+            effect = new UserEffect { UserId = PlayerId, EffectId = effectId };
+            db.UserEffects.Add(effect);
+        }
+
+        // waiting copies of a temporary one stay; the one running becomes the permanent one
+        effect.Duration = PermanentEffectDuration;
+        effect.IsPermanent = true;
+        effect.ActivatedAt ??= DateTimeOffset.UtcNow;
+        await db.SaveChangesAsync();
+
+        if (_effectTimers.Remove(effectId, out var timer))
+            timer.Dispose();
+        Send(new AvatarEffectAddedMessageComposer(effectId, effect.SubType, PermanentEffectDuration, true));
+        Send(new AvatarEffectActivatedMessageComposer(effectId, PermanentEffectDuration, true));
+    }
+
     public async Task<bool> CanWearEffectAsync(int effectId)
     {
         await using var db = await dbFactory.CreateDbContextAsync();

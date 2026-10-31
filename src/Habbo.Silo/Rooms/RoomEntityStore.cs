@@ -254,9 +254,10 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
     private static bool IsClubMember(RoomEntity entity) =>
         entity.Bot is null && entity.Pet is null && entity.Player.ClubLevel != Habbo.Domain.Users.ClubLevel.None;
 
-    /// <summary>Whether somebody else is standing on the tile.</summary>
+    /// <summary>Whether somebody else is standing on the tile, so the entity may not: on a walking helper that allows
+    /// multiple users nobody is in the way.</summary>
     private bool Occupied(RoomEntity entity, int x, int y) =>
-        Avatars.Any(other => IsOther(entity, other) && other.X == x && other.Y == y);
+        !items.MultiWalkAt(x, y) && Avatars.Any(other => IsOther(entity, other) && other.X == x && other.Y == y);
 
     /// <summary>The tiles somebody else is standing on, for asking about many tiles at once.</summary>
     private HashSet<(int X, int Y)> OccupiedTiles(RoomEntity entity)
@@ -264,7 +265,7 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         var tiles = new HashSet<(int X, int Y)>();
         foreach (var other in Avatars)
         {
-            if (IsOther(entity, other))
+            if (IsOther(entity, other) && !items.MultiWalkAt(other.X, other.Y))
                 tiles.Add((other.X, other.Y));
         }
 

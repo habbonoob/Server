@@ -2,6 +2,7 @@ using Habbo.Domain.Furniture;
 using Habbo.Domain.Rooms;
 using Habbo.Domain.Users;
 using Habbo.Protocol.Composers;
+using Habbo.Protocol.Messages.Outgoing.Notifications;
 using Habbo.Protocol.Messages.Outgoing.Room.Furniture;
 using Habbo.Protocol.Rooms;
 using Habbo.Silo.Abstractions.Furni;
@@ -234,6 +235,54 @@ public class FurniInteractionTests
     }
 
     [Fact]
+    public async Task AnFxBoxGivesItsOwnerItsEffectForGoodAndIsGone()
+    {
+        var definition = Definition("furniture_effectbox", [0, 1]);
+        definition.CustomParams = "92";
+        var (item, user, room) = Setup(definition);
+        item.Item.OwnerId = user.Player.Id;
+
+        await Use(item, user, room, FurniAction.Use);
+
+        Assert.Equal([92], room.PermanentEffects);
+        Assert.Equal([(item.Item.Id, 792, -1)], room.RemovedAs);
+        Assert.Equal(92, user.EffectId);
+        var unseen = Assert.IsType<UnseenItemsComposer>(Assert.Single(room.Told));
+        Assert.Equal(UnseenItemsComposer.EffectCategory, Assert.Single(unseen.Categories).Category);
+    }
+
+    [Fact]
+    public async Task AnFxBoxWhoseEffectIsAlreadyPermanentStaysShut()
+    {
+        var definition = Definition("furniture_effectbox", [0, 1]);
+        definition.CustomParams = "92";
+        var (item, user, room) = Setup(definition);
+        item.Item.OwnerId = user.Player.Id;
+        room.PermanentEffects.Add(92);
+
+        await Use(item, user, room, FurniAction.Use);
+
+        Assert.Empty(room.Removed);
+        var notification = Assert.IsType<NotificationDialogMessageComposer>(room.Told[0]);
+        Assert.Equal("permanent_effect_exists", notification.Type);
+        Assert.IsType<UnseenItemsComposer>(room.Told[1]);
+    }
+
+    [Fact]
+    public async Task AnFxBoxIsOnlyOpenedByItsOwner()
+    {
+        var definition = Definition("furniture_effectbox", [0, 1]);
+        definition.CustomParams = "92";
+        var (item, user, room) = Setup(definition);
+        item.Item.OwnerId = Guid.NewGuid();
+
+        await Use(item, user, room, FurniAction.Use);
+
+        Assert.Empty(room.PermanentEffects);
+        Assert.Empty(room.Removed);
+    }
+
+    [Fact]
     public void PlacementRefusesARotationWithoutArtwork()
     {
         var definition = Definition(ItemDefinition.BasicLogic, [0]);
@@ -280,11 +329,33 @@ public class FurniInteractionTests
             return Task.FromResult(!item.Temporary && !AlreadyGone);
         }
 
+        public List<(int Item, int Delay, int Picker)> RemovedAs { get; } = [];
+
+        public async Task<bool> RemoveAsync(RoomItemStore.PlacedItem item, int delayMilliseconds, int pickerAccountId)
+        {
+            RemovedAs.Add((item.Item.Id, delayMilliseconds, pickerAccountId));
+            return await RemoveAsync(item);
+        }
+
         public Task GiveCreditsAsync(RoomEntityStore.RoomEntity user, int credits)
         {
             CreditsPaid.Add(credits);
             return Task.CompletedTask;
         }
+
+        /// <summary>The effects the player has for good.</summary>
+        public HashSet<int> PermanentEffects { get; } = [];
+
+        public Task<bool> HasPermanentEffectAsync(RoomEntityStore.RoomEntity user, int effectId) =>
+            Task.FromResult(PermanentEffects.Contains(effectId));
+
+        public Task GrantPermanentEffectAsync(RoomEntityStore.RoomEntity user, int effectId)
+        {
+            PermanentEffects.Add(effectId);
+            return Task.CompletedTask;
+        }
+
+        public List<IComposer> Told { get; } = [];
 
         public void Broadcast(IComposer composer)
         {
@@ -302,9 +373,7 @@ public class FurniInteractionTests
 
         public bool IsOccupied(RoomItemStore.PlacedItem item) => false;
 
-        public void Tell(RoomEntityStore.RoomEntity user, IComposer composer)
-        {
-        }
+        public void Tell(RoomEntityStore.RoomEntity user, IComposer composer) => Told.Add(composer);
 
         public async Task RunScheduledAsync()
         {

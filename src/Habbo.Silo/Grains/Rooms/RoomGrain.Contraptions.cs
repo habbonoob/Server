@@ -135,6 +135,17 @@ public sealed partial class RoomGrain
             helper.MultiWalk = row.MultiWalk;
         }
 
+        // a walking helper is moved to the height itself, users then standing on it (habbo.com, 31 October 2026: set to
+        // 200, the tile came back in an ObjectUpdate at 2.0 with the heightmap of its tile, and nothing else; set at
+        // floor level, back to 0.0)
+        if (RoomItemStore.IsWalkHelper(helper))
+        {
+            var floor = _model!.GetHeight(helper.X, helper.Y);
+            var altitude = height == OnTopOfStack ? helper.Z + hundredths / HundredthsPerTile : floor + hundredths / HundredthsPerTile;
+            await SetPlacedAltitudeAsync(helper, Math.Min(altitude, RoomItemStore.MaxAltitude));
+            return;
+        }
+
         helper.StackHeight = hundredths / HundredthsPerTile;
         BroadcastHeights(RoomItemStore.Footprint(helper));
         Broadcast(new CustomStackingHeightUpdateMessageComposer(itemId, hundredths));
@@ -150,7 +161,9 @@ public sealed partial class RoomGrain
         foreach (var row in await db.FurniStackHeights.AsNoTracking().Where(s => helperIds.Contains(s.ItemId)).ToListAsync())
         {
             var helper = _items.FindStored(row.ItemId)!;
-            helper.StackHeight = row.Height / HundredthsPerTile;
+            // a walking helper's height is where it stands; only whether it takes several users is kept for it
+            if (!RoomItemStore.IsWalkHelper(helper))
+                helper.StackHeight = row.Height / HundredthsPerTile;
             helper.MultiWalk = row.MultiWalk;
         }
     }

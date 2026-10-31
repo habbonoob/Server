@@ -11,12 +11,15 @@ namespace Habbo.Protocol.Messages.Outgoing.Notifications;
 [Message(ServerMessages.UnseenItemsComposer)]
 public sealed partial record UnseenItemsComposer(IReadOnlyList<UnseenItemCategoryData> Categories)
 {
-    /// <summary>The client's own inventory categories. Only these five count toward the badge.</summary>
+    /// <summary>The client's own inventory categories. Only the first five count toward the badge.</summary>
     public const int OwnedFurniCategory = 1;
     public const int RentedFurniCategory = 2;
     public const int PetCategory = 3;
     public const int BadgeCategory = 4;
     public const int BotCategory = 5;
+
+    /// <summary>Effects, by effect id (habbo.com, October 2026: an FX box opened sends <c>{1}{8}{1}{92}</c>).</summary>
+    public const int EffectCategory = 8;
 
     /// <summary>Furniture the player just gained, by the strip ids its inventory entries carry.</summary>
     public static UnseenItemsComposer OwnedFurni(IReadOnlyList<int> itemIds) =>
@@ -33,4 +36,8 @@ public sealed partial record UnseenItemsComposer(IReadOnlyList<UnseenItemCategor
     /// <summary>Bots the player just gained.</summary>
     public static UnseenItemsComposer Bots(IReadOnlyList<int> botIds) =>
         new([new UnseenItemCategoryData(BotCategory, botIds)]);
+
+    /// <summary>Effects the player just gained, by effect id.</summary>
+    public static UnseenItemsComposer Effects(IReadOnlyList<int> effectIds) =>
+        new([new UnseenItemCategoryData(EffectCategory, effectIds)]);
 }

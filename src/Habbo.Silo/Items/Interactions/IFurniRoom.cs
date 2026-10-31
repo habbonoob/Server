@@ -29,8 +29,18 @@ public interface IFurniRoom
     /// already gone from the database (redeemed or taken elsewhere) or was only a wired copy, so nothing that pays for it should.</summary>
     Task<bool> RemoveAsync(RoomItemStore.PlacedItem item);
 
+    /// <summary>As <see cref="RemoveAsync(RoomItemStore.PlacedItem)"/>, the client letting it stay for
+    /// <paramref name="delayMilliseconds"/> first and naming <paramref name="pickerAccountId"/> as who took it.</summary>
+    Task<bool> RemoveAsync(RoomItemStore.PlacedItem item, int delayMilliseconds, int pickerAccountId);
+
     /// <summary>Pays the player, and tells them their new balance.</summary>
     Task GiveCreditsAsync(RoomEntityStore.RoomEntity user, int credits);
+
+    /// <summary>Whether the player has this effect for good.</summary>
+    Task<bool> HasPermanentEffectAsync(RoomEntityStore.RoomEntity user, int effectId);
+
+    /// <summary>Gives the player the effect for good and starts it, telling them.</summary>
+    Task GrantPermanentEffectAsync(RoomEntityStore.RoomEntity user, int effectId);
 
     void Broadcast(IComposer composer);
 
