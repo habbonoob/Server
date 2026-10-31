@@ -177,10 +177,28 @@ public sealed partial class PlayerGrain
         }
 
         user.Credits -= credits;
-        if (credits > 0)
-            RecordTransaction(db, CurrencyTransaction.Credits, -credits, CurrencyTransactionReasons.CatalogPurchase);
+        // what bought credit furni is worth exactly what it is exchanged back for: recorded apart, Payday pays nothing back on
+        // it (paid back, a gold bar bought and cashed in again came back with 10% more each time)
+        var forCreditFurni = (int)Math.Min(credits, await CreditFurniWorthAsync(db, offer, amount));
+        if (credits - forCreditFurni > 0)
+            RecordTransaction(db, CurrencyTransaction.Credits, -(credits - forCreditFurni), CurrencyTransactionReasons.CatalogPurchase);
+        if (forCreditFurni > 0)
+            RecordTransaction(db, CurrencyTransaction.Credits, -forCreditFurni, CurrencyTransactionReasons.CreditFurniPurchase);
 
         return new CatalogCharge(PurchaseFailure.None, credits, points, pointsLeft, serial);
+    }
+
+    /// <summary>What the credit furni in `amount` of the offer are exchanged for, all together.</summary>
+    private static async Task<long> CreditFurniWorthAsync(Habbo.Infrastructure.AppDbContext db, ShopOffer offer, int amount)
+    {
+        var definitionIds = offer.Products.Where(p => p.Type == ProductTypes.Furniture).Select(p => p.DefinitionId).OfType<int>().Distinct().ToList();
+        if (definitionIds.Count == 0)
+            return 0;
+        var worth = await db.ItemDefinitions.AsNoTracking()
+            .Where(d => definitionIds.Contains(d.Id) && d.CreditValue > 0)
+            .ToDictionaryAsync(d => d.Id, d => d.CreditValue!.Value);
+        return offer.Products.Where(p => p.DefinitionId is { } id && worth.ContainsKey(id))
+            .Sum(p => (long)worth[p.DefinitionId!.Value] * p.Amount * amount);
     }
 
     /// <summary>Tells the buyer their new balances once the purchase is saved.</summary>

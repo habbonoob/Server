@@ -394,7 +394,7 @@ public sealed class ModerationService(
         var sanctions = await db.Sanctions.AsNoTracking().Where(s => s.UserId == user.Id).ToListAsync();
         var calls = db.ModerationIssues.Where(i => i.ReporterId == user.Id);
         var lastPurchase = await db.CurrencyTransactions
-            .Where(t => t.UserId == user.Id && t.Reason == CurrencyTransactionReasons.CatalogPurchase)
+            .Where(t => t.UserId == user.Id && (t.Reason == CurrencyTransactionReasons.CatalogPurchase || t.Reason == CurrencyTransactionReasons.CreditFurniPurchase))
             .MaxAsync(t => (DateTimeOffset?)t.CreatedAt);
         var machineBans = user.MachineId.Length == 0
             ? 0
