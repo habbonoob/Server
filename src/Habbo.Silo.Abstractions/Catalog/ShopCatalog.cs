@@ -19,6 +19,9 @@ public sealed partial record ShopProduct(
     [property: Id(7)] int DurationSeconds = 0)
 {
     public bool IsBadge => Type == ProductTypes.Badge;
+
+    /// <summary>An effect the shop sells for good (no duration), as an FX box gives it; the others run down once activated.</summary>
+    public bool IsPermanentEffect => Type == ProductTypes.Effect && DurationSeconds == 0;
 }
 
 /// <summary>One purchasable offer, priced as a whole. It carries no page: the same offer is

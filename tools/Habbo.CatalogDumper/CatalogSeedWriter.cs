@@ -22,8 +22,13 @@ public static class CatalogSeedWriter
     /// <summary>Our seed uses page 1 as the root; Habbo's own ids start above it.</summary>
     private const int RootPageId = 1;
 
-    /// <summary>A catalog page doesn't say how long an effect lasts; the shop's effects wear off after a day.</summary>
+    /// <summary>A catalog page doesn't say how long an effect lasts; the shop's temporary effects are taken to wear off after a
+    /// day.</summary>
     private const int EffectSeconds = 24 * 60 * 60;
+
+    /// <summary>The pages whose effects are the buyer's for good, written with no duration (Habbo's "Effects" page: "Permanent
+    /// effects are here! … Want to keep effects forever?"). Every other page's effects are temporary.</summary>
+    private static readonly HashSet<string> PermanentEffectPages = ["ny2015_permeffects"];
 
     private static readonly JsonSerializerOptions Json = new()
     {
@@ -96,7 +101,7 @@ public static class CatalogSeedWriter
                 }
 
                 written.Add(offer.Id);
-                offers.Add(JsonSerializer.Serialize(Offer(offer, furnidata), Json));
+                offers.Add(JsonSerializer.Serialize(Offer(offer, furnidata, PermanentEffectPages.Contains(page.Node.Name)), Json));
             }
 
             pages.Add(Page(new
@@ -131,7 +136,7 @@ public static class CatalogSeedWriter
 
     /// <summary>Every price the offer carries, not just the credit one: Habbo sells whole pages in duckets or diamonds,
     /// and an offer recorded with its credit price alone would be free.</summary>
-    private static object Offer(ICatalogOffer offer, IReadOnlyDictionary<(int ClassId, bool Wall), string> furnidata)
+    private static object Offer(ICatalogOffer offer, IReadOnlyDictionary<(int ClassId, bool Wall), string> furnidata, bool permanentEffects)
     {
         // PriceInSilver is on the concrete type rather than the interface
         var silver = offer is CatalogOffer concrete ? concrete.PriceInSilver : 0;
@@ -151,16 +156,16 @@ public static class CatalogSeedWriter
             isRentable = offer.IsRentable ? true : (bool?)null,
             previewImage = string.IsNullOrEmpty(offer.PreviewImage) ? null : offer.PreviewImage,
             limitedStack = limited == 0 ? (int?)null : limited,
-            products = offer.Products.Select(product => Product(product, furnidata)).ToList(),
+            products = offer.Products.Select(product => Product(product, furnidata, permanentEffects)).ToList(),
         };
     }
 
     /// <summary>Furniture by class name, a badge by its code, an effect by its id.</summary>
-    private static object Product(ICatalogProduct product, IReadOnlyDictionary<(int ClassId, bool Wall), string> furnidata) =>
+    private static object Product(ICatalogProduct product, IReadOnlyDictionary<(int ClassId, bool Wall), string> furnidata, bool permanentEffects) =>
         product.Type switch
         {
             ItemType.Badge => new { type = "Badge", extraParam = product.Variant, amount = Math.Max(1, product.Count) },
-            ItemType.Effect => new { type = "Effect", classId = product.Kind, durationSeconds = EffectSeconds, amount = Math.Max(1, product.Count) },
+            ItemType.Effect => new { type = "Effect", classId = product.Kind, durationSeconds = permanentEffects ? 0 : EffectSeconds, amount = Math.Max(1, product.Count) },
             _ => (object)new
             {
                 className = furnidata[(product.Kind, product.Type == ItemType.Wall)],

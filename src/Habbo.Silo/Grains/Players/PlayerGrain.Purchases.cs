@@ -34,6 +34,14 @@ public sealed partial class PlayerGrain
         if (!await PetOrderAcceptedAsync(db, offer, extraData) || !await FurniOrderAcceptedAsync(db, offer, extraData)
             || !await BuildersClubUpgradeAcceptedAsync(offer))
             return PurchaseResult.Failed(PurchaseFailure.NotAllowed);
+        // a permanent effect is had once, as from an FX box: one already had for good is not sold again
+        var permanentEffects = offer.Products.Where(p => p.IsPermanentEffect).Select(p => p.ClassId).OfType<int>().ToList();
+        if (permanentEffects.Count > 0
+            && await db.UserEffects.AnyAsync(e => e.UserId == PlayerId && permanentEffects.Contains(e.EffectId) && e.IsPermanent))
+        {
+            Send(new NotificationDialogMessageComposer(EffectBoxInteraction.PermanentEffectExists, []));
+            return PurchaseResult.Failed(PurchaseFailure.NotAllowed);
+        }
 
         // Debit and grant together: a crash between the two would otherwise either charge for
         // nothing or hand out free furniture.
@@ -85,7 +93,7 @@ public sealed partial class PlayerGrain
         if (amount < 1 || amount > offer.MaxAmount || amount > MostPerPurchase || (offer.IsLimited && amount != LimitedAmount))
             return PurchaseResult.Failed(PurchaseFailure.InvalidAmount);
         // a pet, a badge or a chat style is handed over once whatever the amount, so it is not charged for more than once
-        if (amount > 1 && offer.Products.Any(p => p.Type is ProductTypes.Pet or ProductTypes.Badge or ProductTypes.ChatStyle))
+        if (amount > 1 && offer.Products.Any(p => p.Type is ProductTypes.Pet or ProductTypes.Badge or ProductTypes.ChatStyle || p.IsPermanentEffect))
             return PurchaseResult.Failed(PurchaseFailure.InvalidAmount);
         if (offer.NeedsSilver)
             return PurchaseResult.Failed(PurchaseFailure.UnsupportedCurrency);
@@ -218,10 +226,20 @@ public sealed partial class PlayerGrain
             }
         }
 
-        // an effect bought in the shop is the player's for good; its duration only goes along to the client (habbo.com,
-        // October 2026: every effect on the effects page, and the FX boxes, are permanent)
+        // a temporary effect waits in the inventory and runs down once activated; a permanent one (the shop's "Effects" page,
+        // ny2015_permeffects) is the player's for good and on at once, as an FX box's is
         foreach (var (effectId, duration) in granted.Effects)
-            await AddEffectAsync(effectId, duration == 0 ? PermanentEffectDuration : duration, isPermanent: true);
+        {
+            if (duration == 0)
+            {
+                Send(UnseenItemsComposer.Effects([effectId]));
+                await GrantPermanentEffectAsync(effectId);
+            }
+            else
+            {
+                await AddEffectAsync(effectId, duration, isPermanent: false);
+            }
+        }
         if (granted.ChatStyles > 0)
             await SendChatStylesAsync();
         if (granted.ClubLevel is { } level)
@@ -266,7 +284,8 @@ public sealed partial class PlayerGrain
                     break;
 
                 case ProductTypes.Effect when product.ClassId is { } effectId:
-                    for (var i = 0; i < product.Amount * amount; i++)
+                    // a permanent one is given once, however many the offer holds
+                    for (var i = 0; i < (product.IsPermanentEffect ? 1 : product.Amount * amount); i++)
                         effects.Add((effectId, product.DurationSeconds));
                     break;
 
