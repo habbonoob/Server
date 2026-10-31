@@ -103,10 +103,34 @@ public static class ClientMessages
     // Added by September 2026 (ClientReleases.September2026): ServerHeaders.ReleaseStride (its place, 1) plus the
     // release's own id.
     public const ushort SetOnlineIndicatorPreferenceMessageEvent = ServerHeaders.ReleaseStride + 2219;
+    public const ushort BuyHabbiconMessageEvent = ServerHeaders.ReleaseStride + 279;
+    public const ushort BuyHabbiconCollectionMessageEvent = ServerHeaders.ReleaseStride + 1209;
+    public const ushort ClaimHabbiconMessageEvent = ServerHeaders.ReleaseStride + 1068;
+    public const ushort FavoriteHabbiconMessageEvent = ServerHeaders.ReleaseStride + 125;
+    public const ushort UnfavoriteHabbiconMessageEvent = ServerHeaders.ReleaseStride + 3255;
+    public const ushort GetHabbiconInfoMessageEvent = ServerHeaders.ReleaseStride + 3333;
+    public const ushort GetHabbiconShopDataMessageEvent = ServerHeaders.ReleaseStride + 3937;
+    public const ushort TriggerHabbiconMessageEvent = ServerHeaders.ReleaseStride + 2172;
+    public const ushort SendHabbiconMessageEvent = ServerHeaders.ReleaseStride + 1498;
     public const ushort GetBadgeInfoEvent = ServerHeaders.ReleaseStride + 869;
     public const ushort GetBadgeLeaderboardMessageEvent = ServerHeaders.ReleaseStride + 1519;
     public const ushort CancelAllMarketplaceOffersMessageEvent = ServerHeaders.ReleaseStride + 858;
     public const ushort ClearMarketplaceOwnHistoryMessageEvent = ServerHeaders.ReleaseStride + 2538;
+    public const ushort ClaimRewardTrackPrizeMessageEvent = ServerHeaders.ReleaseStride + 3859;
+    public const ushort PurchaseRewardTrackPremiumMessageEvent = ServerHeaders.ReleaseStride + 1663;
+
+    // Added by October 2026 (ClientReleases.October2026): ServerHeaders.ReleaseStride times its place, 2, plus the
+    // release's own id.
+    public const ushort SetFurnitureLabelMessageEvent = 2 * ServerHeaders.ReleaseStride + 2638;
+    public const ushort SetFurnitureLabelSettingsMessageEvent = 2 * ServerHeaders.ReleaseStride + 2970;
+    public const ushort FurniRecolorMessageEvent = 2 * ServerHeaders.ReleaseStride + 2852;
+    public const ushort WiredLinkOpenMessageEvent = 2 * ServerHeaders.ReleaseStride + 3208;
+    public const ushort WiredLinkSaveConfigurationMessageEvent = 2 * ServerHeaders.ReleaseStride + 385;
+    public const ushort WiredLinkCreateNetworkMessageEvent = 2 * ServerHeaders.ReleaseStride + 2192;
+    public const ushort WiredLinkRenameNetworkMessageEvent = 2 * ServerHeaders.ReleaseStride + 2794;
+    public const ushort WiredLinkDeleteNetworkMessageEvent = 2 * ServerHeaders.ReleaseStride + 2731;
+    public const ushort WiredLinkGetConnectionsMessageEvent = 2 * ServerHeaders.ReleaseStride + 2300;
+
     public const ushort GetCatalogIndexEvent = 2933;
     public const ushort GetCatalogPageEvent = 3793;
     public const ushort PurchaseFromCatalogEvent = 1962;

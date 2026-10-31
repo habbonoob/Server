@@ -10,12 +10,14 @@ using Microsoft.Extensions.Options;
 //   /mark?label=        writes a section header into the capture
 //   /status             where the capture is, how much is in it
 //   POST /roomcopy      a room the client's room copier copied, saved where the G-Earth copier saves its own
+//   POST /catalogdump   a catalog the client's catalog dumper walked, written as the G-Earth dumper writes the seed
 // Localhost only. See README.md.
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<RelayOptions>(builder.Configuration.GetSection(RelayOptions.Section));
 builder.Services.AddSingleton<GameRelay>();
 builder.Services.AddSingleton<CaptureLog>();
 builder.Services.AddSingleton<RoomCopies>();
+builder.Services.AddSingleton<CatalogDumps>();
 var options = builder.Configuration.GetSection(RelayOptions.Section).Get<RelayOptions>() ?? new RelayOptions();
 builder.WebHost.ConfigureKestrel(kestrel => kestrel.ListenLocalhost(options.Port));
 builder.Services.AddCors(cors => cors.AddDefaultPolicy(policy =>
@@ -80,6 +82,34 @@ app.MapPost("/roomcopy", async (HttpContext context, RoomCopies copies) =>
     app.Logger.LogInformation("Room copied: {Name} ({FloorItems} floor and {WallItems} wall items) to {Path}", copy.Name,
         copy.FloorItems.Count, copy.WallItems.Count, path);
     return Results.Ok(new { path, file = Path.GetFileName(path) });
+});
+
+app.MapPost("/catalogdump", async (HttpContext context, CatalogDumps dumps) =>
+{
+    if (!FromClient(context))
+        return Results.StatusCode(StatusCodes.Status403Forbidden);
+    CatalogDump? dump;
+    try
+    {
+        dump = await context.Request.ReadFromJsonAsync<CatalogDump>(context.RequestAborted);
+    }
+    catch (JsonException ex)
+    {
+        return Results.BadRequest($"not a catalog dump: {ex.Message}");
+    }
+    if (dump is null || string.IsNullOrWhiteSpace(dump.CatalogType) || dump.Packets is not { Count: > 0 })
+        return Results.BadRequest("not a catalog dump: no catalog type or packets");
+    if (dump.Packets.Any(packet => packet is null || packet.Dir != "in" || packet.Hex is null || packet.Hex.Length % 2 != 0
+                                   || !packet.Hex.All(char.IsAsciiHexDigit)))
+        return Results.BadRequest("not a catalog dump: a packet is not one the client received, in hex");
+    try
+    {
+        return Results.Ok(await dumps.SaveAsync(dump, context.RequestAborted));
+    }
+    catch (InvalidOperationException ex)
+    {
+        return Results.BadRequest($"not a catalog dump: {ex.Message}");
+    }
 });
 
 app.Logger.LogInformation("Relay on http://localhost:{Port}: start the client with ?relay={RelayPort}&capture={CapturePort}.", options.Port, options.Port, options.Port);

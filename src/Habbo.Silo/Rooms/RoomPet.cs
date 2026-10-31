@@ -24,6 +24,9 @@ public sealed class RoomPet
     public string? Posture { get; set; }
     public int PostureUntilTick { get; set; }
 
+    /// <summary>Until when it smiles, pleased at a command it obeyed; 0 when it does not.</summary>
+    public int SmileUntilTick { get; set; }
+
     /// <summary>Told to stay: it does not wander.</summary>
     public bool Staying { get; set; }
 

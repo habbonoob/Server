@@ -27,6 +27,18 @@ public readonly partial record struct WallLocation(int WallX, int WallY, int Off
                && Math.Abs(location.OffsetX) <= MaxOffset && Math.Abs(location.OffsetY) <= MaxOffset;
     }
 
+    /// <summary>The location the text names, if it is well formed, whatever room it is in.</summary>
+    public static bool TryParse(string? text, out WallLocation location)
+    {
+        location = default;
+        if (text is null || Pattern().Match(text.Trim()) is not { Success: true } match)
+            return false;
+
+        int Number(int group) => int.Parse(match.Groups[group].Value, CultureInfo.InvariantCulture);
+        location = new WallLocation(Number(1), Number(2), Number(3), Number(4), match.Groups[5].Value[0]);
+        return true;
+    }
+
     public override string ToString() =>
         string.Create(CultureInfo.InvariantCulture, $":w={WallX},{WallY} l={OffsetX},{OffsetY} {Side}");
 }

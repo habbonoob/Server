@@ -25,6 +25,29 @@ public sealed class ClientPacketSink(SessionManager sessions, ILogger<ClientPack
 
     public void Disconnect(Guid sessionGuid) => sessions.FindByGuid(sessionGuid)?.Close();
 
+    /// <summary>The room sent the session out: it, and the player grain, are in no room, if it was still that one (a
+    /// session already on its way into another keeps that one). Friends then see the player in the hotel view, and
+    /// following them no longer goes to the room they left.</summary>
+    public void LeftRoom(Guid sessionGuid, int roomId)
+    {
+        if (sessions.FindByGuid(sessionGuid) is not { } session || session.Room?.GetPrimaryKeyLong() != roomId)
+            return;
+        _ = LeaveRoomAsync(session, roomId);
+    }
+
+    private async Task LeaveRoomAsync(Session session, int roomId)
+    {
+        try
+        {
+            if (session.Room?.GetPrimaryKeyLong() == roomId)
+                await session.SetRoomAsync(null);
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Connection {ConnectionId}: failed to forget room {RoomId} it was sent out of", session.Id, roomId);
+        }
+    }
+
     /// <summary>Every session in a room held there is out of it: the client goes to the hotel view as from a closed
     /// room, and the player grain stops sending its effects there.</summary>
     public void RoomHostLost(SiloAddress silo)

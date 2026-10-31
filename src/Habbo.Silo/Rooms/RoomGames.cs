@@ -101,11 +101,11 @@ public sealed class RoomGames(
         if (!IsClock(item))
             return null;
 
-        if (_clocks.TryGetValue(item.Item.Id, out var clock) && clock.Item == item)
+        if (_clocks.TryGetValue(item.Id, out var clock) && clock.Item == item)
             return clock;
 
         clock = GameClock.For(item);
-        _clocks[item.Item.Id] = clock;
+        _clocks[item.Id] = clock;
         return clock;
     }
 
@@ -192,9 +192,9 @@ public sealed class RoomGames(
         await Banzai.PulseAsync();
         foreach (var clock in _clocks.Values.Where(c => c.Running).ToList())
         {
-            if (items.Find(clock.Item.Item.Id) != clock.Item)
+            if (items.Find(clock.Item.Id) != clock.Item)
             {
-                _clocks.Remove(clock.Item.Item.Id);
+                _clocks.Remove(clock.Item.Id);
                 continue;
             }
 
@@ -345,13 +345,14 @@ public sealed class RoomGames(
     // ---------- teams ----------
 
     /// <summary>Puts the user in a team, wearing the given effect; leaving the team it was in.</summary>
-    public async Task JoinAsync(RoomEntityStore.RoomEntity user, int team, int effectId)
+    public async Task JoinAsync(RoomEntityStore.RoomEntity user, int team, int effectId, int game = WiredGame)
     {
         if (team is < FirstTeam or > LastTeam)
             return;
 
         var wasPlaying = user.Team != NoTeam;
         user.Team = team;
+        user.TeamGame = game;
         applyEffect(user, effectId);
         if (!wasPlaying)
             OnPlayingChanged?.Invoke(user, true);
@@ -365,7 +366,7 @@ public sealed class RoomGames(
             return;
 
         var effectId = await effects.FindAsync(libraries[team - FirstTeam]) ?? 0;
-        await JoinAsync(user, team, effectId);
+        await JoinAsync(user, team, effectId, type switch { TeamType.Banzai => BanzaiGame, TeamType.Freeze => FreezeGame, _ => WiredGame });
     }
 
     public async Task LeaveAsync(RoomEntityStore.RoomEntity user)
@@ -374,6 +375,7 @@ public sealed class RoomGames(
             return;
 
         user.Team = NoTeam;
+        user.TeamGame = null;
         applyEffect(user, 0);
         OnPlayingChanged?.Invoke(user, false);
         await ShowGatesAsync();
@@ -393,8 +395,17 @@ public sealed class RoomGames(
         if (user.Team == gate.Team)
             await LeaveAsync(user);
         else
-            await JoinAsync(user, gate.Team, gate.EffectId);
+            await JoinAsync(user, gate.Team, gate.EffectId, GameOfGate(item));
     }
+
+    /// <summary>The games a team is in, as habbo.com's @team.type numbers them.</summary>
+    public const int BanzaiGame = 0;
+    public const int FreezeGame = 1;
+    public const int WiredGame = 4;
+
+    /// <summary>A gate's game, by its kind: Freeze's gates are es_gate_*, Banzai's bb_gate_*.</summary>
+    private static int GameOfGate(RoomItemStore.PlacedItem gate) =>
+        gate.Item.Definition!.ClassName.StartsWith("es_", StringComparison.OrdinalIgnoreCase) ? FreezeGame : BanzaiGame;
 
     /// <summary>A user walked off a tile: a football they stood on is heeled back.</summary>
     public void UserSteppedOff(RoomEntityStore.RoomEntity user, int fromX, int fromY) => Football.SteppedOff(user, fromX, fromY);

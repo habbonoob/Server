@@ -11,7 +11,7 @@ internal sealed class ClaimProductHandler(IProductClaimService service) : IMessa
         if (context.Session.Player is not { } player)
             return false;
 
-        await service.ClaimAsync(player, message.ClaimId);
+        await service.ClaimAsync(player, message.ClaimId, message.Choice);
         return true;
     }
 }

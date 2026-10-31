@@ -5,6 +5,7 @@ using Habbo.Protocol.Messages.Outgoing.Notifications;
 using Habbo.Protocol.Messages.Outgoing.Users;
 using Habbo.Silo.Abstractions.Catalog;
 using Habbo.Silo.Catalog;
+using Habbo.Silo.Items;
 using Habbo.Silo.Items.Interactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -30,7 +31,8 @@ public sealed partial class PlayerGrain
             return PurchaseResult.Failed(PurchaseFailure.UnknownOffer);
         if (Refuse(offer, amount, user) is { } refused)
             return refused;
-        if (!await PetOrderAcceptedAsync(db, offer, extraData) || !await FurniOrderAcceptedAsync(db, offer, extraData))
+        if (!await PetOrderAcceptedAsync(db, offer, extraData) || !await FurniOrderAcceptedAsync(db, offer, extraData)
+            || !await BuildersClubUpgradeAcceptedAsync(offer))
             return PurchaseResult.Failed(PurchaseFailure.NotAllowed);
 
         // Debit and grant together: a crash between the two would otherwise either charge for
@@ -46,7 +48,12 @@ public sealed partial class PlayerGrain
 
         await AnnounceChargeAsync(user, offer, charge);
         await AnnounceGrantAsync(granted);
-        await CountTowardsBonusRareAsync(charge.Credits);
+        await TrackActionAsync(Habbo.Silo.RewardTracks.RewardTrackActions.BuyFromCatalogue);
+        await TrackActionAsync(Habbo.Silo.RewardTracks.RewardTrackActions.SpendCredits, amount: charge.Credits);
+        if (offer.ActivityPointType == (int)Habbo.Domain.Catalog.ActivityPointType.Diamond)
+            await TrackActionAsync(Habbo.Silo.RewardTracks.RewardTrackActions.SpendDiamonds, amount: charge.Points);
+        else if (offer.ActivityPointType == (int)Habbo.Domain.Catalog.ActivityPointType.Ducket)
+            await TrackActionAsync(Habbo.Silo.RewardTracks.RewardTrackActions.SpendDuckets, amount: charge.Points);
         if (offer.LimitedStack > 0)
             await ProgressAchievementAsync(Achievements.AchievementNames.LtdPurchaser, amount);
         if (offer.Products.Where(product => product.Type == ProductTypes.Pet).Sum(product => product.Amount) * amount is > 0 and var pets)
@@ -178,7 +185,7 @@ public sealed partial class PlayerGrain
         return Task.CompletedTask;
     }
 
-    /// <summary>Tells the player what they were handed besides furniture: badges, effects, chat styles.</summary>
+    /// <summary>Tells the player what they were handed besides furniture: badges, effects, chat styles, memberships.</summary>
     private async Task AnnounceGrantAsync(GrantedProducts granted, bool asGift = false)
     {
         foreach (var bot in granted.Bots)
@@ -217,6 +224,10 @@ public sealed partial class PlayerGrain
             await SendChatStylesAsync();
         if (granted.ClubLevel is { } level)
             await AnnounceMembershipAsync(level);
+        if (granted.BuildersClubWasRunning is { } running)
+            await AnnounceBuildersClubAsync(running);
+        else if (granted.BuildersClubFurniAdded > 0)
+            await SendBuildersClubStatusAsync();
     }
 
     private async Task<GrantedProducts> GrantProductsAsync(
@@ -228,6 +239,8 @@ public sealed partial class PlayerGrain
         var effects = new List<(int, int)>();
         var chatStyles = 0;
         ClubLevel? clubLevel = null;
+        bool? buildersClubWasRunning = null;
+        var buildersClubFurniAdded = 0;
         var bots = new List<Habbo.Domain.Bots.Bot>();
         var pets = new List<Habbo.Domain.Pets.Pet>();
 
@@ -271,6 +284,17 @@ public sealed partial class PlayerGrain
                     clubLevel = user.ClubLevel;
                     break;
 
+                case ProductTypes.BuildersClub when product.ExtraParam == Habbo.Domain.Subscriptions.SubscriptionProducts.BuildersClubAddon:
+                    user.BuildersClubBonusFurni += product.Amount * amount;
+                    buildersClubFurniAdded += product.Amount * amount;
+                    break;
+
+                case ProductTypes.BuildersClub when product.ExtraParam.StartsWith(Habbo.Domain.Subscriptions.SubscriptionProducts.BuildersClubPrefix, StringComparison.Ordinal):
+                    var wasRunning = await ExtendBuildersClubAsync(db, product.ExtraParam,
+                        TimeSpan.FromSeconds((long)product.DurationSeconds * product.Amount * amount), product.Amount * amount);
+                    buildersClubWasRunning ??= wasRunning;
+                    break;
+
                 case ProductTypes.Bot when product.ClassId is { } typeId
                                            && await db.BotTypes.FirstOrDefaultAsync(t => t.Id == typeId) is { } botType:
                     // the kind names and dresses it as it arrives; the product's look is the one the shop showed
@@ -308,7 +332,8 @@ public sealed partial class PlayerGrain
                         // What the item starts with is up to its behaviour: usually the product's own
                         // parameter, but a trophy is engraved with what the buyer typed.
                         var grant = new FurniGrant(db, item, definition, product.ExtraParam, extraData, user.Username, now);
-                        interactions.For(definition).Grant(grant);
+                        if (!await RecolorableGrant.GrantColoredAsync(clientVariables, grant))
+                            interactions.For(definition).Grant(grant);
 
                         // a limited edition is numbered, which no behaviour's data may override
                         if (serial is not null)
@@ -327,6 +352,6 @@ public sealed partial class PlayerGrain
             }
         }
 
-        return new GrantedProducts(items, created, badges, effects, chatStyles, clubLevel, bots, pets);
+        return new GrantedProducts(items, created, badges, effects, chatStyles, clubLevel, bots, pets, buildersClubWasRunning, buildersClubFurniAdded);
     }
 }

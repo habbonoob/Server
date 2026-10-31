@@ -90,6 +90,7 @@ public sealed partial class RoomGrain
         {
             SendTo(entity.Player.Id, new CloseConnectionMessageComposer());
             await LeaveAsync(entity.Player.Id);
+            SentOut(entity);
         }
 
         DeactivateOnIdle();

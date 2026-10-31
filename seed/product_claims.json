@@ -1,6 +1,27 @@
 {
-  "comment": "Products a player may claim once for free, by the id the client's special items window asks for (external_variables special_items.<key>.free_claim). Each hands over the furniture listed, by class name. The chests window offers the starter Furni Chest, which its text says 'can be claimed for free in this window'.",
+  "comment": "Products a player may claim once for free, by the id the client's special items window asks for (external_variables special_items.<key>.free_claim). Each hands over the furniture listed, by class name. The chests window offers the starter Furni Chest, which its text says 'can be claimed for free in this window'. A claim may also offer choices, one of which the player takes, each furniture with the badge that comes with it: the cursed dragon adoption (October 2026, its texts: \"You can adopt only one dragon from this offer\"), 0 blue and 1 purple, each a box with its dragon (as habbo.com hands it over) and the badge PET17 or PET18 (\"I adopted a Blue/Purple Cursed Dragon!\").",
   "claims": [
-    { "id": "chests", "active": true, "furni": [ "wf_storage_furni_starter" ] }
+    {
+      "id": "chests",
+      "active": true,
+      "furni": [
+        "wf_storage_furni_starter"
+      ]
+    },
+    {
+      "id": "cursed_dragon_adoption",
+      "active": true,
+      "furni": [],
+      "choices": [
+        {
+          "furni": "drago_cursed_1_package",
+          "badge": "PET17"
+        },
+        {
+          "furni": "drago_cursed_2_package",
+          "badge": "PET18"
+        }
+      ]
+    }
   ]
 }

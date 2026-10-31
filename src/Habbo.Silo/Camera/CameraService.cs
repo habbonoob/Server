@@ -84,6 +84,7 @@ public sealed class CameraService(IDbContextFactory<AppDbContext> dbFactory, IGr
 
         photo.PublishedAt = DateTimeOffset.UtcNow;
         await db.SaveChangesAsync();
+        grains.GetGrain<IPlayerGrain>(player.Id).TrackActionAsync(RewardTracks.RewardTrackActions.PublishPicture).Ignore();
         return new PhotoPublication(true, 0, photo.Id);
     }
 

@@ -2,7 +2,9 @@ using Habbo.Silo.Abstractions.Catalog;
 
 namespace Habbo.Protocol.Messages.Outgoing.Catalog;
 
-/// <summary>A shop offer as the client's offer layout carries it, with every price and each product.</summary>
+/// <summary>A shop offer as the client's offer layout carries it, with every price and each product. A Builders Club
+/// membership goes without its product, as Habbo sends it: the client knows the offer by its code, and would show one
+/// with a product as furniture.</summary>
 public static class CatalogOfferDataFactory
 {
     public static CatalogOfferData From(ShopOffer offer) => new(
@@ -14,7 +16,7 @@ public static class CatalogOfferDataFactory
         offer.ActivityPointType,
         offer.PriceInSilver,
         offer.Giftable,
-        offer.Products.Select(product => From(offer, product)).ToList(),
+        offer.Products.Where(product => product.Type != ProductTypes.BuildersClub).Select(product => From(offer, product)).ToList(),
         (int)offer.ClubLevel,
         BundlePurchaseAllowed: offer.MaxAmount > 1,
         offer.IsPet,

@@ -44,12 +44,24 @@ public sealed record WiredEvent(
     /// <summary>Why a transaction failed, as the client numbers the reasons.</summary>
     public int? FailureReason { get; init; }
 
+    /// <summary>What a transaction that went through moved, and how many times over.</summary>
+    public WiredTransactionDone? Transaction { get; init; }
+
+    /// <summary>The Habbicon a user showed.</summary>
+    public int? Habbicon { get; init; }
+
     /// <summary>What a signal carried to the stacks that receive it.</summary>
     public IReadOnlyList<RoomItemStore.PlacedItem> SignalFurni { get; init; } = [];
     public IReadOnlyList<RoomEntityStore.RoomEntity> SignalUsers { get; init; } = [];
 
     /// <summary>For a signal: the execution that sent it, which the stacks receiving it carry on.</summary>
     public WiredExecution? Execution { get; init; }
+
+    /// <summary>For a link message or dataframe received: the room it was sent from, the dataframe's rows, and how many
+    /// links it passed through to get here.</summary>
+    public int? LinkSourceRoomId { get; init; }
+    public IReadOnlyList<Habbo.Silo.Abstractions.Wired.WiredLinkRow> LinkRows { get; init; } = [];
+    public int LinkHops { get; init; }
 }
 
 public enum WiredEventType
@@ -106,6 +118,15 @@ public enum WiredEventType
 
     /// <summary>A bot ended a walk next to the event's user.</summary>
     BotReachedUser,
+
+    /// <summary>A user showed a Habbicon over their head (the event's <see cref="WiredEvent.Habbicon"/>).</summary>
+    HabbiconUsed,
+
+    /// <summary>A message sent through a WIRED Link (the event's item) arrived: its text is the event's.</summary>
+    LinkMessageReceived,
+
+    /// <summary>A dataframe sent through a WIRED Link (the event's item) arrived, with its rows.</summary>
+    LinkDataframeReceived,
 }
 
 /// <summary>One run of a stack: the event that started it, the room to act through, what the
@@ -159,7 +180,7 @@ public sealed class WiredRun(IWiredRoom room, WiredEvent trigger)
         WiredSources.AllFurni => Room.Items.Items.ToList(),
         WiredSources.MovedFurni => MovedFurni.ToList(),
         _ => Room.Picked(box),
-    }).Where(item => Room.FindItem(item.Item.Id) == item);
+    }).Where(item => Room.FindItem(item.Id) == item);
 
     /// <summary>The users a box's user slot works on, by the source its dialog chose. Users who
     /// have left are passed over.</summary>
@@ -199,9 +220,27 @@ public sealed class WiredRun(IWiredRoom room, WiredEvent trigger)
         return Stack.Any(box => box.Type is Addons.NoMoveAnimationAddon) ? options with { AnimationMilliseconds = 0 } : options;
     }
 
-    /// <summary>A wired text with the stack's placeholders, $(name), filled in.</summary>
+    /// <summary>The placeholders the run's trigger filled, by name (any case): a link dataframe's values, captured as its
+    /// receiving trigger says.</summary>
+    public Dictionary<string, string> Placeholders { get; init; } = new(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>The placeholder a received link message is captured in (wiredfurni.params.link.receive_message_info).</summary>
+    public const string TriggerTextPlaceholder = "trigger_text";
+
+    /// <summary>The text the trigger heard: what was said, or the link message received; null for any other event.</summary>
+    public string? TriggerText => Event.Type is WiredEventType.UserSaid or WiredEventType.LinkMessageReceived ? Event.Text : null;
+
+    /// <summary>A wired text with the stack's placeholders, $(name), filled in: the received link message's
+    /// $(trigger_text) and those the trigger captured, then the add-ons'.</summary>
     public string Fill(string text)
     {
+        if (Event.Type == WiredEventType.LinkMessageReceived)
+            text = FillOne(text, TriggerTextPlaceholder, Event.Text ?? string.Empty);
+        foreach (var (name, value) in Placeholders)
+            text = FillOne(text, name, value);
+        if (text.Length > MaxFilledLength)
+            return text[..MaxFilledLength];
+
         foreach (var box in Stack.Where(box => box.Type is Addons.WiredPlaceholderAddon))
         {
             var name = Addons.WiredPlaceholderAddon.Name(box);
@@ -222,16 +261,48 @@ public sealed class WiredRun(IWiredRoom room, WiredEvent trigger)
 
     private static string Clip(string text, int length) => text.Length > length ? text[..length] : text;
 
+    private static string FillOne(string text, string name, string value) =>
+        text.Contains("$(" + name + ")", StringComparison.OrdinalIgnoreCase)
+            ? text.Replace("$(" + name + ")", Clip(value, MaxPlaceholderLength), StringComparison.OrdinalIgnoreCase)
+            : text;
+
     /// <summary>Moves a furni for one of the stack's effects, and remembers it moved.</summary>
     public async Task<bool> MoveAsync(RoomItemStore.PlacedItem item, int x, int y, int rotation, bool avatarsBlock = true)
     {
         var options = MoveOptions(avatarsBlock);
-        if (Stack.FirstOrDefault(box => box.Type is Addons.ProjectileAddon) is { } projectile && Addons.ProjectileAddon.Flies(projectile, this, item))
-            (rotation, options) = Addons.ProjectileAddon.Shape(projectile, this, item, x, y, rotation, options);
+        var projectile = Stack.FirstOrDefault(box => box.Type is Addons.ProjectileAddon);
+        var flies = projectile is not null && Addons.ProjectileAddon.Flies(projectile, this, item);
+        if (flies)
+            (rotation, options) = Addons.ProjectileAddon.Shape(projectile!, this, item, x, y, rotation, options);
 
+        var (fromX, fromY, fromZ) = (item.X, item.Y, item.Z);
         var moved = await Room.MoveItemAsync(item, x, y, rotation, options);
         if (moved && !MovedFurni.Contains(item))
             MovedFurni.Add(item);
+        if (flies)
+            Flew(item, fromX, fromY, fromZ, x, y, moved, options, avatarsBlock);
         return moved;
+    }
+
+    /// <summary>A projectile set off, as the client draws it, or ran into what stood where it was going.</summary>
+    private void Flew(RoomItemStore.PlacedItem item, int fromX, int fromY, double fromZ, int x, int y, bool moved,
+        WiredMoveOptions options, bool avatarsBlock)
+    {
+        var now = Room.Now();
+        if (moved)
+        {
+            item.Projectile = new ProjectileFlight(fromX, fromY, fromZ, item.X, item.Y, item.Z, now,
+                options.AnimationMilliseconds + (options.OvershootMilliseconds ?? 0));
+            return;
+        }
+
+        // it stays where it is, with what it ran into counted
+        var flight = item.Projectile is { } last && last.IsTravelling(now)
+            ? last
+            : item.Projectile = new ProjectileFlight(fromX, fromY, fromZ, fromX, fromY, fromZ, now, 0);
+        if (avatarsBlock && Room.Entities.HasAvatarAt(x, y))
+            flight.UserCollisions++;
+        else
+            flight.FurniCollisions++;
     }
 }

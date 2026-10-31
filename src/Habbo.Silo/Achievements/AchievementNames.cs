@@ -222,4 +222,14 @@ public static class AchievementNames
 
     /// <summary>"For getting %roman% secret recipe items using a crafting table."</summary>
     public const string SecretCrafting = "ACH_AtcgSecret";
+
+    // habbicons
+    /// <summary>"For collecting %limit% Habbicons": those owned, rewards included.</summary>
+    public const string HabbiconCollected = "ACH_HabbiconCollected";
+
+    /// <summary>"For completing %limit% Habbicon sets by claiming the bonus Habbicon."</summary>
+    public const string HabbiconCollectionComp = "ACH_HabbiconCollectionComp";
+
+    /// <summary>"For using %limit% habbicons": each shown in a room.</summary>
+    public const string HabbiconUsed = "ACH_HabbiconUsed";
 }

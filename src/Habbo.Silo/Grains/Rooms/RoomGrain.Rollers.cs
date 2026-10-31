@@ -58,18 +58,18 @@ public sealed partial class RoomGrain
 
             var rollerTop = RoomItemStore.TopOf(roller);
             var riders = _items.FloorItemsOn(roller.X, roller.Y)
-                .Where(item => item != roller && item.Z >= rollerTop - 0.01 && !movedItems.Contains(item.Item.Id)
+                .Where(item => item != roller && item.Z >= rollerTop - 0.01 && !movedItems.Contains(item.Id)
                                && RoomItemStore.FootprintSize(item.Item.Definition!, item.Rotation) == (1, 1))
                 .ToList();
             var rider = _entities.Entities.FirstOrDefault(e => e.X == roller.X && e.Y == roller.Y && !e.Walking && !movedUsers.Contains(e.Player.Id));
 
             // what lands on the next tile lands on its roller, if it has one, or on what is there
             var nextRoller = _items.FloorItemsOn(toX, toY).FirstOrDefault(item => item.Interaction is RollerInteraction);
-            var ignored = riders.Select(r => r.Item.Id).ToHashSet();
+            var ignored = riders.Select(r => r.Id).ToHashSet();
             var landing = nextRoller is not null ? RoomItemStore.TopOf(nextRoller) : _items.SurfaceAt(toX, toY);
             var furniFits = riders.Count > 0 && !_entities.HasAvatarAt(toX, toY)
                             && (nextRoller is not null || !_items.StackingBlockedAt(toX, toY))
-                            && _items.FloorItemsOn(toX, toY).All(item => item.Interaction is RollerInteraction || ignored.Contains(item.Item.Id) || item.Item.Definition!.CanStackOn);
+                            && _items.FloorItemsOn(toX, toY).All(item => item.Interaction is RollerInteraction || ignored.Contains(item.Id) || item.Item.Definition!.CanStackOn);
 
             var slid = new List<SlideObjectData>();
             if (furniFits)
@@ -79,9 +79,9 @@ public sealed partial class RoomGrain
                     var fromZ = item.Z;
                     var toZ = landing + (item.Z - rollerTop);
                     _items.MoveTo(item, toX, toY, item.Rotation, toZ);
-                    movedItems.Add(item.Item.Id);
+                    movedItems.Add(item.Id);
                     moved.Add(item);
-                    slid.Add(new SlideObjectData(item.Item.Id, RoomItemStore.FormatHeight(fromZ), RoomItemStore.FormatHeight(toZ)));
+                    slid.Add(new SlideObjectData(item.Id, RoomItemStore.FormatHeight(fromZ), RoomItemStore.FormatHeight(toZ)));
                 }
             }
 
@@ -115,7 +115,7 @@ public sealed partial class RoomGrain
             }
 
             // one standing on a roller slides along in their posture: "mv" would leave them walking on the spot
-            Broadcast(new SlideObjectBundleMessageComposer(roller.X, roller.Y, toX, toY, slid, roller.Item.Id,
+            Broadcast(new SlideObjectBundleMessageComposer(roller.X, roller.Y, toX, toY, slid, roller.Id,
                 avatar is null ? null : SlideObjectBundleMessageComposer.AvatarSlides, avatar));
         }
 

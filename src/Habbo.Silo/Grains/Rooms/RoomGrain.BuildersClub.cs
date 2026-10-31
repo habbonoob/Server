@@ -1,7 +1,10 @@
 using Habbo.Domain.Furniture;
+using Habbo.Domain.Rooms;
 using Habbo.Protocol.Composers;
 using Habbo.Protocol.Messages.Outgoing.Catalog;
+using Habbo.Protocol.Messages.Outgoing.Navigator;
 using Habbo.Protocol.Messages.Outgoing.Notifications;
+using Habbo.Protocol.Messages.Outgoing.Room.Chat;
 using Habbo.Protocol.Messages.Outgoing.Room.Engine;
 using Habbo.Protocol.Rooms;
 using Habbo.Silo.Abstractions.Furni;
@@ -123,9 +126,25 @@ public sealed partial class RoomGrain
             return false;
         }
 
-        await db.Rooms.Where(r => r.Id == _room.Id).ExecuteUpdateAsync(set => set.SetProperty(r => r.HiddenByBuildersClub, true));
-        _room.HiddenByBuildersClub = true;
+        await LockForBuildersClubAsync(db, playerId);
         return true;
+    }
+
+    /// <summary>The room locked for the trial, as habbo.com does it (25 October 2026): its door goes invisible (it was
+    /// a doorbell's before, and stays invisible after), the builder is told "This room has been locked!", and the
+    /// room hears its info, chat and look again.</summary>
+    private async Task LockForBuildersClubAsync(Habbo.Infrastructure.AppDbContext db, Guid playerId)
+    {
+        await db.Rooms.Where(r => r.Id == _room!.Id).ExecuteUpdateAsync(set => set
+            .SetProperty(r => r.HiddenByBuildersClub, true)
+            .SetProperty(r => r.State, RoomState.Invisible));
+        _room!.HiddenByBuildersClub = true;
+        _room.State = RoomState.Invisible;
+
+        SendTo(playerId, new NotificationDialogMessageComposer(RoomLocked, []));
+        Broadcast(new RoomInfoUpdatedComposer(_room.Id));
+        Broadcast(RoomVisualizationSettingsComposer.From(Visualization(_room, _model!)));
+        Broadcast(new RoomChatSettingsMessageComposer(ChatSettings()));
     }
 
     /// <summary>A new borrowed item, the owner's, already at its place in the room, with what it starts with; null
@@ -147,8 +166,10 @@ public sealed partial class RoomGrain
             place(item);
             db.UserItems.Add(item);
             var builder = _entities!.Find(playerId)!;
-            interactions.For(definition).Grant(new FurniGrant(db, item, definition, placement.ProductParam, placement.ExtraParam,
-                builder.Player.Username, DateTime.UtcNow));
+            var grant = new FurniGrant(db, item, definition, placement.ProductParam, placement.ExtraParam,
+                builder.Player.Username, DateTime.UtcNow);
+            if (!await RecolorableGrant.GrantColoredAsync(clientVariables, grant))
+                interactions.For(definition).Grant(grant);
             await db.SaveChangesAsync();
             await transaction.CommitAsync();
         }
@@ -176,6 +197,7 @@ public sealed partial class RoomGrain
     private const string BorrowLockPrefix = "builders_club:";
 
     private const string VisitDeniedForOwner = "builders_club.visit_denied_for_owner";
+    private const string RoomLocked = "builders_club.room_locked";
     private const string UsernameParameter = "USERNAME";
 
     /// <summary>Tells a player how many Builders Club items they have out, wherever they are.</summary>

@@ -1,0 +1,8 @@
+[
+  { "productCode": "loyalty_bc_31_days", "days": 31, "tier": "builders_club" },
+  { "productCode": "builders_club_14_days", "days": 14, "tier": "builders_club" },
+  { "productCode": "builders_club_31_days", "days": 31, "tier": "builders_club" },
+  { "productCode": "builders_club_addon_45furnis", "furni": 45 },
+  { "productCode": "builders_club_addon_250furnis", "furni": 250 },
+  { "productCode": "builders_club_addon_600furnis", "furni": 600 }
+]

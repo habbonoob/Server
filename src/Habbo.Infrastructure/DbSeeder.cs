@@ -79,6 +79,7 @@ public static partial class DbSeeder
         await SeedCatalogAsync(db, seedFiles, logger, BuildersClubCatalogFile, buildersClub: true, ct);
         await SeedCatalogFrontPageAsync(db, seedFiles, logger, ct);
         await SeedClubAsync(db, seedFiles, logger, ct);
+        await SeedBuildersClubMembershipsAsync(db, seedFiles, logger, ct);
         await SeedRecyclerAsync(db, seedFiles, logger, ct);
         await SeedCraftingAsync(db, seedFiles, logger, ct);
         await SeedBotsAsync(db, seedFiles, logger, ct);
@@ -545,33 +546,57 @@ public static partial class DbSeeder
     /// <summary>seed/rooms.json — the room models and the rooms that ship with a fresh hotel.</summary>
     private sealed record SeedRoomFile(List<SeedRoomModel> Models, List<SeedRoom> Rooms);
 
-    private sealed record SeedRoomModel(string Name, int DoorX, int DoorY, int DoorDirection, List<string> Heightmap);
+    private sealed record SeedRoomModel(
+        string Name, int DoorX, int DoorY, int DoorDirection, bool UseSmallScale, List<string> Heightmap);
 
     private sealed record SeedRoom(
         string Name, string Description, string ModelName,
         string? FloorType, string? Wallpaper, string? Landscape, bool IsStaffPick);
 
-    /// <summary>Seeds the room models, once: what the floor plans of every room are made from.</summary>
+    /// <summary>Keeps the room models what the seed says, every start: habbo.com's own (captured 25 October 2026 from a
+    /// fresh room of each), added when missing and put right when changed. A room's own floor plan is a model of its
+    /// own (custom_N) and is left alone.</summary>
     private static async Task SeedRoomModelsAsync(AppDbContext db, SeedRoomFile? content, ILogger logger, CancellationToken ct)
     {
-        if (content is null || await db.RoomModels.AnyAsync(ct))
+        if (content is null)
             return;
 
+        var existing = await db.RoomModels.ToDictionaryAsync(m => m.Name, ct);
+        int added = 0, changed = 0;
         foreach (var model in content.Models ?? [])
         {
-            db.RoomModels.Add(new RoomModelData
+            // The client splits the heightmap on carriage returns.
+            var heightmap = string.Join('\r', model.Heightmap);
+            if (!existing.TryGetValue(model.Name, out var row))
             {
-                Name = model.Name,
-                // The client splits the heightmap on carriage returns.
-                Heightmap = string.Join('\r', model.Heightmap),
-                DoorX = model.DoorX,
-                DoorY = model.DoorY,
-                DoorDirection = model.DoorDirection,
-            });
+                db.RoomModels.Add(new RoomModelData
+                {
+                    Name = model.Name,
+                    Heightmap = heightmap,
+                    DoorX = model.DoorX,
+                    DoorY = model.DoorY,
+                    DoorDirection = model.DoorDirection,
+                    UseSmallScale = model.UseSmallScale,
+                });
+                added++;
+            }
+            else if (row.Heightmap != heightmap || row.DoorX != model.DoorX || row.DoorY != model.DoorY
+                     || row.DoorDirection != model.DoorDirection || row.UseSmallScale != model.UseSmallScale)
+            {
+                row.Heightmap = heightmap;
+                row.DoorX = model.DoorX;
+                row.DoorY = model.DoorY;
+                row.DoorDirection = model.DoorDirection;
+                row.UseSmallScale = model.UseSmallScale;
+                changed++;
+            }
         }
 
+        if (added == 0 && changed == 0)
+            return;
+
         await db.SaveChangesAsync(ct);
-        logger.LogInformation("Seeded {Models} room model(s) from {File}.", (content.Models ?? []).Count, "rooms.json");
+        logger.LogInformation("Room models from {File}: {Added} added, {Changed} put right.", "rooms.json", added, changed);
     }
 
     /// <summary>Seeds the starter rooms for the first account, in a hotel with no rooms yet. The client needs a

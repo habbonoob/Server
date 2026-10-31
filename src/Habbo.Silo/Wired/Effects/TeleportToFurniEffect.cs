@@ -47,7 +47,7 @@ public sealed class TeleportToFurniEffect : WiredEffect
 
             run.Room.AfterPulses(fast ? FastPulsesBeforeMove : PulsesBeforeMove, () =>
             {
-                if (!run.Room.IsPresent(user) || run.Room.FindItem(target.Item.Id) != target)
+                if (!run.Room.IsPresent(user) || run.Room.FindItem(target.Id) != target)
                     return Task.CompletedTask;
 
                 if (Landing(target, run.Room.Items) is not var (x, y))

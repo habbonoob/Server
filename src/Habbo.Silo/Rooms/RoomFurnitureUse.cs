@@ -53,7 +53,13 @@ public sealed class RoomFurnitureUse(
 
     public Task UseAsync(RoomEntityStore.RoomEntity user, bool isController, int itemId, FurniAction action, int param)
     {
-        if (items.Find(itemId) is not { } placed || !Permits(placed.Interaction.UsagePolicy, isController))
+        if (items.Find(itemId) is not { } placed)
+            return Task.CompletedTask;
+
+        // a furni found and double-clicked, used or not
+        if (action == FurniAction.Use)
+            TrackAction(user, RewardTracks.RewardTrackActions.FindStuff, placed.Item.Definition!.ClassName);
+        if (!Permits(placed.Interaction.UsagePolicy, isController))
             return Task.CompletedTask;
 
         return placed.Interaction.UseAsync(new FurniUse(placed, user, action, param, this));
@@ -66,6 +72,11 @@ public sealed class RoomFurnitureUse(
         _ => false,
     };
 
+    /// <summary>Told of what a user did with furniture that their reward track tasks count.</summary>
+    public Action<RoomEntityStore.RoomEntity, string, string>? OnUserAction { get; set; }
+
+    public void TrackAction(RoomEntityStore.RoomEntity user, string action, string parameter = "") => OnUserAction?.Invoke(user, action, parameter);
+
     /// <summary>Told of every state change, whatever made it: the room's wired listens.</summary>
     public Func<RoomItemStore.PlacedItem, Task>? OnStateChanged { get; set; }
 
@@ -76,7 +87,7 @@ public sealed class RoomFurnitureUse(
     public async Task UpdateAsync(RoomItemStore.PlacedItem item, FurniDataView data, bool persist)
     {
         // an item no longer placed here (picked up while a delayed effect waited) keeps the data it left with
-        if (items.Find(item.Item.Id) != item)
+        if (items.Find(item.Id) != item)
             return;
 
         var stateChanged = item.Data.State != data.State;
@@ -97,7 +108,7 @@ public sealed class RoomFurnitureUse(
 
     public void ShowData(RoomItemStore.PlacedItem item)
     {
-        var id = item.Item.Id;
+        var id = item.Id;
         if (item.Item.Definition!.Type == ItemType.Wall)
         {
             if (_batchDepth > 0)
@@ -154,16 +165,20 @@ public sealed class RoomFurnitureUse(
         await FurniDataStore.SaveAsync(db, item.Item.Id, previous, data);
     }
 
-    public async Task<bool> RemoveAsync(RoomItemStore.PlacedItem item)
+    public Task<bool> RemoveAsync(RoomItemStore.PlacedItem item) => RemoveAsync(item, delayMilliseconds: 0);
+
+    /// <summary>Takes the item out of the room; the client lets it stay for <paramref name="delayMilliseconds"/> first, as a
+    /// cracked bonus bag shows itself broken before it goes.</summary>
+    public async Task<bool> RemoveAsync(RoomItemStore.PlacedItem item, int delayMilliseconds)
     {
-        var itemId = item.Item.Id;
+        var itemId = item.Id;
         var isWallItem = item.Item.Definition!.Type == ItemType.Wall;
         var vacated = RoomItemStore.Footprint(item).ToList();
 
         await using var db = await dbFactory.CreateDbContextAsync();
         // a wired copy leaves the room like any other item, but was never anything to consume
         var roomId = item.Item.RoomId;
-        var deleted = !item.Temporary && await db.UserItems.Where(i => i.Id == itemId && i.RoomId == roomId).ExecuteDeleteAsync() > 0;
+        var deleted = !item.Temporary && await db.UserItems.Where(i => i.Id == item.Item.Id && i.RoomId == roomId).ExecuteDeleteAsync() > 0;
         items.Remove(itemId);
 
         // The client is told the same way a pick-up tells it, with nobody holding the item after.
@@ -173,7 +188,7 @@ public sealed class RoomFurnitureUse(
         }
         else
         {
-            broadcast(new ObjectRemoveMessageComposer(itemId, IsExpired: false, NobodyPickedItUp, Delay: 0));
+            broadcast(new ObjectRemoveMessageComposer(itemId, IsExpired: false, NobodyPickedItUp, Delay: delayMilliseconds));
             foreach (var update in HeightMapUpdateMessageComposer.Chunked(items.TileUpdates(vacated)))
                 broadcast(update);
         }
@@ -191,7 +206,7 @@ public sealed class RoomFurnitureUse(
 
     public void Schedule(TimeSpan delay, Func<Task> action) => schedule(delay, action);
 
-    public bool IsPlaced(RoomItemStore.PlacedItem item) => ReferenceEquals(items.Find(item.Item.Id), item);
+    public bool IsPlaced(RoomItemStore.PlacedItem item) => ReferenceEquals(items.Find(item.Id), item);
 
     public bool IsWithinReach(RoomEntityStore.RoomEntity user, RoomItemStore.PlacedItem item) => Reaches(user, item);
 

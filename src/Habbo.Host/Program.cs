@@ -79,6 +79,8 @@ try
         // copied rooms are imported by the website's API, straight into the database
         builder.Services.Configure<Habbo.Silo.Rooms.RoomOptions>(configuration.GetSection("Rooms"));
         builder.Services.AddSingleton<Habbo.Silo.Rooms.Copies.RoomImporter>();
+        builder.Services.TryAddSingleton<Habbo.Infrastructure.SeedFiles>();
+        builder.Services.TryAddSingleton<Habbo.Silo.Wired.Variables.WiredInternalVariableCatalog>();
         builder.Services.TryAddSingleton<Habbo.Silo.Wired.WiredBoxRegistry>();
     }
     if (roles.Web && !roles.Game)
@@ -221,6 +223,7 @@ try
     app.MapInviteEndpoints();
     app.MapGamedataEndpoints(configuration);
     app.MapMirrorEndpoints();
+    app.MapClientBundleEndpoints();
     app.MapPhotoEndpoints();
     app.MapHabboImagingEndpoints();
     app.MapClientDiagnosticsEndpoints();

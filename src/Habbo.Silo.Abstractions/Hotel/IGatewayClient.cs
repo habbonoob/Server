@@ -22,4 +22,8 @@ public interface IGatewayClient : IReloadListener
     /// rooms is out of it, and its client is sent to the hotel view.</summary>
     [OneWay]
     Task RoomHostLost(SiloAddress silo);
+
+    /// <summary>The room sent the session out: it is in no room, if it was that one.</summary>
+    [OneWay]
+    Task LeftRoom(Guid sessionGuid, int roomId);
 }

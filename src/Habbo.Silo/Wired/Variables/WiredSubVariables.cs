@@ -19,6 +19,7 @@ public static class WiredSubVariables
             CanReadCreationTime = false,
             CanReadLastUpdateTime = false,
             TextConnector = new Dictionary<int, string>(),
+            AlwaysHasTextConnector = false,
             SubOf = parent.Id,
             Compute = compute,
         };

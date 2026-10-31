@@ -118,6 +118,12 @@ public sealed class GatewayRegistration(
         return Task.CompletedTask;
     }
 
+    public Task LeftRoom(Guid sessionGuid, int roomId)
+    {
+        sink.LeftRoom(sessionGuid, roomId);
+        return Task.CompletedTask;
+    }
+
     public async Task Reload(string name)
     {
         foreach (var reloadable in reloadables.Where(r => r.ReloadName == name))

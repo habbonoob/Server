@@ -10,10 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Habbo.Silo.Grains.Rooms;
 
-/// <summary>Teleports and hoppers. The avatar walks up to the front, the door opens and it steps in; a teleport flashes
-/// and the avatar comes out of its partner, in this room or another, and a hopper sends it to a random room with a
-/// hopper of its kind. Coming out, the door opens, the avatar steps out and the door closes. A teleport's partner
-/// takes the avatar in whatever the room's door says, as a linked pair always has.</summary>
+/// <summary>Teleports and hoppers. The avatar walks up to the front, the door opens as it takes its last step there,
+/// and it steps in; the door closes behind it, the teleport flashes, its partner flashes too, and the avatar comes out
+/// of the partner, in this room or another, and a hopper sends it to a random room with a hopper of its kind. Coming
+/// out, the door opens, the avatar steps out and the door closes. The timings are Habbo's, measured on habbo.com
+/// (October 2026). A teleport's partner takes the avatar in whatever the room's door says, as a linked pair always
+/// has.</summary>
 public sealed partial class RoomGrain
 {
     // what a teleport or hopper shows
@@ -21,8 +23,31 @@ public sealed partial class RoomGrain
     private const string TeleportOpen = "1";
     private const string TeleportFlashing = "2";
 
-    private static readonly TimeSpan TeleportStepTime = TimeSpan.FromMilliseconds(500);
-    private static readonly TimeSpan TeleportFlashTime = TimeSpan.FromMilliseconds(1000);
+    /// <summary>How far into the avatar's last step to the front the door opens.</summary>
+    private static readonly TimeSpan DoorOpensAhead = TimeSpan.FromMilliseconds(250);
+
+    // going in, from the moment the avatar steps into the teleport (it stands inside half a second later)
+    private static readonly TimeSpan DoorClosesBehind = TimeSpan.FromMilliseconds(1250);
+    private static readonly TimeSpan FlashesAt = TimeSpan.FromMilliseconds(2000);
+
+    /// <summary>Where the avatar goes is settled, and one going to another room is sent there.</summary>
+    private static readonly TimeSpan LeavesAt = TimeSpan.FromMilliseconds(2300);
+
+    /// <summary>A partner in this room flashes and the avatar, still inside, turns the way it will come out.</summary>
+    private static readonly TimeSpan TravelsAt = TimeSpan.FromMilliseconds(2500);
+
+    private static readonly TimeSpan GoesDarkAt = TimeSpan.FromMilliseconds(2750);
+    private static readonly TimeSpan ArrivesAt = TimeSpan.FromMilliseconds(3000);
+
+    // coming out, from the moment the avatar is inside the partner: in this room, and in a room it was sent to,
+    // timed from the room reaching its client
+    private static readonly (TimeSpan DoorOpens, TimeSpan StepsOut) ComingOutHere =
+        (TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(1000));
+    private static readonly (TimeSpan DoorOpens, TimeSpan StepsOut) ComingOutElsewhere =
+        (TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(1500));
+
+    /// <summary>How long after the avatar steps out the door closes behind it.</summary>
+    private static readonly TimeSpan DoorClosesAfterStep = TimeSpan.FromMilliseconds(750);
 
     /// <summary>How long a room waits for someone on their way through a teleport into it.</summary>
     private static readonly TimeSpan ArrivalKeptFor = TimeSpan.FromSeconds(30);
@@ -46,30 +71,60 @@ public sealed partial class RoomGrain
         }
 
         var (frontX, frontY) = FrontOf(teleport);
-        await WalkThenAsync(entity, frontX, frontY, () =>
+        Func<Task> enter = () => EnterAsync(entity, teleport, frontX, frontY);
+        await WalkThenAsync(entity, frontX, frontY, enter);
+        if (entity.OnArrival != enter)
+            return;
+
+        // still on the way: the door opens while the avatar takes its last step to the front
+        entity.OnLastStep = () =>
         {
-            if (entity.X != frontX || entity.Y != frontY || !_furniture!.IsPlaced(teleport) || teleport.IsBusy
-                || _entities!.HasAvatarAt(teleport.X, teleport.Y))
+            Schedule(DoorOpensAhead, () =>
+            {
+                if (entity.OnArrival == enter && entity.X == frontX && entity.Y == frontY && !teleport.IsBusy
+                    && !_entities!.HasAvatarAt(teleport.X, teleport.Y))
+                    ShowTeleport(teleport, TeleportOpen);
+                return Task.CompletedTask;
+            });
+            return Task.CompletedTask;
+        };
+    }
+
+    /// <summary>The avatar, in front, steps in; the door closes behind it and the teleport flashes before it
+    /// travels.</summary>
+    private Task EnterAsync(RoomEntityStore.RoomEntity entity, RoomItemStore.PlacedItem teleport, int frontX, int frontY)
+    {
+        if (!_furniture!.IsPlaced(teleport) || teleport.IsBusy || _entities!.HasAvatarAt(teleport.X, teleport.Y))
+            return Task.CompletedTask;
+        if (entity.X != frontX || entity.Y != frontY)
+        {
+            // the door opened for a walk that ended short of it
+            ShowTeleport(teleport, TeleportClosed);
+            return Task.CompletedTask;
+        }
+
+        teleport.BusyUntil = DateTime.UtcNow + ArrivesAt;
+        ShowTeleport(teleport, TeleportOpen);
+        BroadcastStep(entity, _entities.StepInto(entity, teleport.X, teleport.Y));
+        Schedule(DoorClosesBehind, () =>
+        {
+            ShowTeleport(teleport, TeleportClosed);
+            if (!Inside(entity, teleport))
                 return Task.CompletedTask;
 
-            teleport.BusyUntil = DateTime.UtcNow + TeleportStepTime + TeleportFlashTime + TeleportStepTime;
-            ShowTeleport(teleport, TeleportOpen);
-            Broadcast(UserUpdateMessageComposer.From([_entities.StepInto(entity, teleport.X, teleport.Y)]));
-            Schedule(TeleportStepTime, () =>
+            Schedule(FlashesAt - DoorClosesBehind, () =>
             {
                 if (!Inside(entity, teleport))
-                {
-                    ShowTeleport(teleport, TeleportClosed);
                     return Task.CompletedTask;
-                }
 
                 if (teleport.Interaction is TeleportInteraction)
                     ShowTeleport(teleport, TeleportFlashing);
-                Schedule(TeleportFlashTime, () => TravelAsync(entity, teleport));
+                Schedule(LeavesAt - FlashesAt, () => TravelAsync(entity, teleport));
                 return Task.CompletedTask;
             });
             return Task.CompletedTask;
         });
+        return Task.CompletedTask;
     }
 
     /// <summary>Sends the avatar on from inside the teleport: out of its partner here, into the room the partner or a
@@ -89,18 +144,11 @@ public sealed partial class RoomGrain
             return;
         }
 
+        TrackAction(entity, Habbo.Silo.RewardTracks.RewardTrackActions.Teleport);
+
         if (found.RoomId == _room!.Id)
         {
-            if (_items!.Find(found.ItemId) is not { } partner || partner.IsBusy || _entities!.HasAvatarAt(partner.X, partner.Y))
-            {
-                await StepOutAsync(entity, source);
-                return;
-            }
-
-            ShowTeleport(source, TeleportClosed);
-            _entities.Carry(entity, partner.X, partner.Y);
-            Broadcast(UserUpdateMessageComposer.From([_entities.Turn(entity, partner.Rotation)]));
-            ArriveThrough(entity, partner);
+            Schedule(TravelsAt - LeavesAt, () => TravelHereAsync(entity, source, found.ItemId));
             return;
         }
 
@@ -110,8 +158,50 @@ public sealed partial class RoomGrain
             return;
         }
 
-        ShowTeleport(source, TeleportClosed);
+        Schedule(GoesDarkAt - LeavesAt, () =>
+        {
+            ShowTeleport(source, TeleportClosed);
+            return Task.CompletedTask;
+        });
         SendTo(entity.Player.Id, new RoomForwardMessageComposer(found.RoomId));
+    }
+
+    /// <summary>To a partner in this room: it lights up and the avatar turns the way it will come out, then the source
+    /// goes dark and the avatar is in the partner.</summary>
+    private Task TravelHereAsync(RoomEntityStore.RoomEntity entity, RoomItemStore.PlacedItem source, int partnerId)
+    {
+        if (!Inside(entity, source))
+        {
+            ShowTeleport(source, TeleportClosed);
+            return Task.CompletedTask;
+        }
+
+        if (_items!.FindStored(partnerId) is not { } partner || partner.IsBusy || _entities!.HasAvatarAt(partner.X, partner.Y))
+            return StepOutAsync(entity, source);
+
+        partner.BusyUntil = DateTime.UtcNow + (ArrivesAt - TravelsAt) + ComingOutHere.StepsOut + DoorClosesAfterStep;
+        if (partner.Interaction is TeleportInteraction)
+            ShowTeleport(partner, TeleportFlashing);
+        Broadcast(UserUpdateMessageComposer.From([_entities.Turn(entity, partner.Rotation)]));
+        Schedule(GoesDarkAt - TravelsAt, () =>
+        {
+            ShowTeleport(source, TeleportClosed);
+            return Task.CompletedTask;
+        });
+        Schedule(ArrivesAt - TravelsAt, () =>
+        {
+            if (!Inside(entity, source) || !_furniture!.IsPlaced(partner) || _entities.HasAvatarAt(partner.X, partner.Y))
+            {
+                ShowTeleport(partner, TeleportClosed);
+                return Inside(entity, source) ? StepOutAsync(entity, source) : Task.CompletedTask;
+            }
+
+            _entities.Carry(entity, partner.X, partner.Y);
+            Broadcast(UserUpdateMessageComposer.From([_entities.Turn(entity, partner.Rotation)]));
+            ComeOut(entity, partner, ComingOutHere);
+            return Task.CompletedTask;
+        });
+        return Task.CompletedTask;
     }
 
     /// <summary>For wired: the avatar goes straight through the teleport, without walking up to it or stepping in,
@@ -132,20 +222,24 @@ public sealed partial class RoomGrain
             return;
         }
 
-        if (_items.Find(found.ItemId) is not { } partner || partner.IsBusy || _entities.HasAvatarAt(partner.X, partner.Y))
+        if (_items.FindStored(found.ItemId) is not { } partner || partner.IsBusy || _entities.HasAvatarAt(partner.X, partner.Y))
             return;
 
         _entities.Carry(entity, partner.X, partner.Y);
         Broadcast(UserUpdateMessageComposer.From([_entities.Turn(entity, partner.Rotation)]));
-        ArriveThrough(entity, partner);
+        if (partner.Interaction is TeleportInteraction)
+            ShowTeleport(partner, TeleportFlashing);
+        ComeOut(entity, partner, ComingOutHere);
     }
 
+    /// <summary>Someone is on their way through a teleport here, named by its database id as its partner's link (or
+    /// a hopper's search) found it; kept by the id the room knows it by.</summary>
     public Task<bool> ExpectArrivalAsync(Guid playerId, int itemId)
     {
-        if (_items?.Find(itemId) is not { } teleport || !IsTeleport(teleport))
+        if (_items?.FindStored(itemId) is not { } teleport || !IsTeleport(teleport))
             return Task.FromResult(false);
 
-        _arrivals[playerId] = (itemId, DateTime.UtcNow + ArrivalKeptFor);
+        _arrivals[playerId] = (teleport.Id, DateTime.UtcNow + ArrivalKeptFor);
         _admitted.Give(playerId);
         return Task.FromResult(true);
     }
@@ -154,30 +248,51 @@ public sealed partial class RoomGrain
     private void PlaceArrival(RoomEntityStore.RoomEntity entity)
     {
         var playerId = entity.Player.Id;
+        RememberEntry(entity, null);
         if (!_arrivals.Remove(playerId, out var arrival) || arrival.Until < DateTime.UtcNow
             || _items!.Find(arrival.ItemId) is not { } teleport || _entities!.HasAvatarAt(teleport.X, teleport.Y))
             return;
 
+        RememberEntry(entity, teleport.Id);
+
         _entities.Carry(entity, teleport.X, teleport.Y);
         _entities.Turn(entity, teleport.Rotation);
-        _arrivingThrough[playerId] = teleport.Item.Id;
+        _arrivingThrough[playerId] = teleport.Id;
     }
 
     /// <summary>Once the client has the room, someone who arrived inside a teleport comes out of it.</summary>
     private void StepOutOfArrival(RoomEntityStore.RoomEntity entity)
     {
-        if (_arrivingThrough.Remove(entity.Player.Id, out var itemId) && _items!.Find(itemId) is { } teleport && Inside(entity, teleport))
-            ArriveThrough(entity, teleport);
+        if (!_arrivingThrough.Remove(entity.Player.Id, out var itemId) || _items!.Find(itemId) is not { } teleport
+            || !Inside(entity, teleport))
+            return;
+
+        if (teleport.Interaction is TeleportInteraction)
+            ShowTeleport(teleport, TeleportFlashing);
+        ComeOut(entity, teleport, ComingOutElsewhere);
     }
 
-    private void ArriveThrough(RoomEntityStore.RoomEntity entity, RoomItemStore.PlacedItem teleport)
+    /// <summary>The avatar is inside: the door opens, the avatar steps out in front, and the door closes behind
+    /// it.</summary>
+    private void ComeOut(RoomEntityStore.RoomEntity entity, RoomItemStore.PlacedItem teleport,
+        (TimeSpan DoorOpens, TimeSpan StepsOut) timing)
     {
-        teleport.BusyUntil = DateTime.UtcNow + TeleportFlashTime + TeleportStepTime * 2;
-        ShowTeleport(teleport, teleport.Interaction is TeleportInteraction ? TeleportFlashing : TeleportOpen);
-        Schedule(TeleportFlashTime, () => StepOutAsync(entity, teleport));
+        teleport.BusyUntil = DateTime.UtcNow + timing.StepsOut + DoorClosesAfterStep;
+        Schedule(timing.DoorOpens, () =>
+        {
+            if (!Inside(entity, teleport))
+            {
+                ShowTeleport(teleport, TeleportClosed);
+                return Task.CompletedTask;
+            }
+
+            ShowTeleport(teleport, TeleportOpen);
+            Schedule(timing.StepsOut - timing.DoorOpens, () => StepOutAsync(entity, teleport));
+            return Task.CompletedTask;
+        });
     }
 
-    /// <summary>The door opens, the avatar steps out in front, and the door closes behind it.</summary>
+    /// <summary>The door opens if it is not yet, the avatar steps out in front, and the door closes behind it.</summary>
     private Task StepOutAsync(RoomEntityStore.RoomEntity entity, RoomItemStore.PlacedItem teleport)
     {
         if (!Inside(entity, teleport))
@@ -188,9 +303,9 @@ public sealed partial class RoomGrain
 
         ShowTeleport(teleport, TeleportOpen);
         var (frontX, frontY) = FrontOf(teleport);
-        if (_entities!.Slide(entity, frontX, frontY) is { } stepped)
-            Broadcast(UserUpdateMessageComposer.From([stepped]));
-        Schedule(TeleportStepTime, () =>
+        if (_entities!.Slide(entity, frontX, frontY, facing: true) is { } stepped)
+            BroadcastStep(entity, stepped);
+        Schedule(DoorClosesAfterStep, () =>
         {
             ShowTeleport(teleport, TeleportClosed);
             return Task.CompletedTask;
@@ -198,9 +313,13 @@ public sealed partial class RoomGrain
         return Task.CompletedTask;
     }
 
-    /// <summary>Where a teleport's partner stands: its room and its id; none when it is in nobody's room.</summary>
+    /// <summary>Where a teleport's partner stands: its room and its database id; none when it is in nobody's room.</summary>
     private async Task<(int RoomId, int ItemId)?> PartnerOfAsync(RoomItemStore.PlacedItem teleport)
     {
+        // wired may have pointed it at another teleport here
+        if (WiredTargetOf(teleport) is { } wired)
+            return wired;
+
         await using var db = await dbFactory.CreateDbContextAsync();
         var partner = await db.FurniTeleportLinks.AsNoTracking()
             .Where(link => link.ItemId == teleport.Item.Id)

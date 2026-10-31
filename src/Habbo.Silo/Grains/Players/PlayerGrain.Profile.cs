@@ -172,6 +172,7 @@ public sealed partial class PlayerGrain
         user.RespectReplenishes = user.RespectReplenishedOn == today ? user.RespectReplenishes + 1 : 1;
         user.RespectReplenishedOn = today;
         await db.SaveChangesAsync();
+        await TrackActionAsync(Habbo.Silo.RewardTracks.RewardTrackActions.ReplenishRespect);
         return Remember(user);
     }
 

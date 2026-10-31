@@ -91,6 +91,9 @@ public sealed class User
     /// <summary>SnowStorm games bought beyond the day's free ones.</summary>
     public int SnowWarTokens { get; set; }
 
+    /// <summary>Furni the Builders Club upgrades bought (+45, +250, +600) add to the membership's limit, for good.</summary>
+    public int BuildersClubBonusFurni { get; set; }
+
     /// <summary>The day the player last bought their respects back, and how often they did that day.</summary>
     public DateOnly? RespectReplenishedOn { get; set; }
 

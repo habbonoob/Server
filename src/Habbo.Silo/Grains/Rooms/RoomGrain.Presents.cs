@@ -20,7 +20,7 @@ public sealed partial class RoomGrain
             return;
 
         var owner = GrainFactory.GetGrain<IPlayerGrain>(playerId);
-        if (await owner.UnwrapGiftAsync(itemId) is not { } gift)
+        if (await owner.UnwrapGiftAsync(present.Item.Id) is not { } gift)
             return;
 
         var (x, y, rotation) = (present.X, present.Y, present.Rotation);
@@ -33,16 +33,16 @@ public sealed partial class RoomGrain
         BroadcastHeights(vacated);
         ResettleOn(vacated, []);
 
-        var placedId = 0;
+        // the gift's items go by their database ids; one put down here, by the id the room knows it by
+        RoomItemStore.PlacedItem? placed = null;
         if (gift.FirstIsFloorItem && gift.ItemIds.Count > 0)
         {
             await PlaceFloorItemAsync(playerId, gift.ItemIds[0], x, y, rotation);
-            if (_items.Find(gift.ItemIds[0]) is not null)
-                placedId = gift.ItemIds[0];
+            placed = _items.FindStored(gift.ItemIds[0]);
         }
 
-        await owner.AnnounceItemsAsync(gift.ItemIds.Where(id => id != placedId).ToList());
+        await owner.AnnounceItemsAsync(gift.ItemIds.Where(id => id != placed?.Item.Id).ToList());
         SendTo(playerId, new PresentOpenedMessageComposer(gift.ItemType, gift.ClassId, gift.ProductCode,
-            placedId != 0 ? placedId : gift.ItemIds.FirstOrDefault(), gift.ItemType, placedId != 0, NoPetFigure));
+            placed?.Id ?? gift.ItemIds.FirstOrDefault(), gift.ItemType, placed is not null, NoPetFigure));
     }
 }

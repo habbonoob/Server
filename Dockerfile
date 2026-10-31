@@ -7,6 +7,7 @@ WORKDIR /src
 # the project files alone first: the restore is a layer of its own, cached until a package changes, rather than
 # downloaded again for every change to the code
 COPY Directory.Build.props Habbo.slnx ./
+COPY src/Habbo.Bundles/Habbo.Bundles.csproj src/Habbo.Bundles/
 COPY src/Habbo.Camera/Habbo.Camera.csproj src/Habbo.Camera/
 COPY src/Habbo.Domain/Habbo.Domain.csproj src/Habbo.Domain/
 COPY src/Habbo.Gateway/Habbo.Gateway.csproj src/Habbo.Gateway/

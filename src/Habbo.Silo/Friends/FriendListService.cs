@@ -180,6 +180,7 @@ public sealed class FriendListService(
         var player = await db.Users.FirstAsync(user => user.Id == playerId, ct);
         db.FriendRequests.Add(new FriendRequest { RequesterId = playerId, TargetId = target.Id });
         await db.SaveChangesAsync(ct);
+        grains.GetGrain<IPlayerGrain>(playerId).TrackActionAsync(RewardTracks.RewardTrackActions.RequestFriend).Ignore();
 
         return new FriendRequestResult(
             FriendRequestFailure.None,
@@ -204,7 +205,7 @@ public sealed class FriendListService(
             return new FriendAcceptance([], []);
 
         var player = await db.Users.FirstAsync(user => user.Id == playerId, ct);
-        var made = new List<FriendshipMade>();
+        var accepted = new List<User>();
         var failures = new List<FriendAcceptFailure>();
         var ownCount = await db.Friendships.CountAsync(f => f.UserId == playerId, ct);
         var ownLimit = await FriendLimitAsync(db, playerId, ct);
@@ -239,12 +240,19 @@ public sealed class FriendListService(
             // and the player's own request the other way, if they had made one, is answered by this too
             await db.FriendRequests.Where(r => r.RequesterId == playerId && r.TargetId == requester.Id).ExecuteDeleteAsync(ct);
             ownCount++;
-            // A friendship just made is announced to both sides, who are both there to hear it.
-            made.Add(new FriendshipMade(
-                requester.Id, ToFriendView(requester, online: true), ToFriendView(player, online: true)));
+            accepted.Add(requester);
         }
 
         await db.SaveChangesAsync(ct);
+
+        // A friendship just made is announced to both sides, each shown the other as their list would show them: a
+        // requester may have gone offline since asking, and either may be in a room to follow.
+        var made = new List<FriendshipMade>();
+        foreach (var requester in accepted)
+        {
+            made.Add(new FriendshipMade(
+                requester.Id, await LiveFriendViewAsync(db, requester, playerId, ct), await LiveFriendViewAsync(db, player, requester.Id, ct)));
+        }
 
         // both sides of each friendship count their friends again
         foreach (var userId in made.Select(m => m.RequesterId).Append(playerId).Distinct().ToList())
@@ -313,6 +321,18 @@ public sealed class FriendListService(
     {
         public const int NotFriend = 3;
         public const int Blocked = 4;
+    }
+
+    /// <summary>How <paramref name="user"/> shows in <paramref name="viewerId"/>'s list right now, as the whole list
+    /// shows a friend: online unless they are not or hide it from the viewer, and to be followed when they are in a room
+    /// and let their friends follow them.</summary>
+    private async Task<FriendView> LiveFriendViewAsync(AppDbContext db, User user, Guid viewerId, CancellationToken ct)
+    {
+        var online = (await grains.GetGrain<IUserPresenceGrain>(IUserPresenceGrain.Key).WhichAreOnlineAsync([user.Id])).Contains(user.Id)
+                     && !(await OnlineVisibility.HidesFromAsync(db, user.Id, [viewerId], ct)).Contains(viewerId);
+        var followable = online && !user.FollowingBlocked
+                         && await grains.GetGrain<IPlayerGrain>(user.Id).GetCurrentRoomAsync() is not null;
+        return ToFriendView(user, online) with { FollowingAllowed = followable };
     }
 
     private static FriendView ToFriendView(User user, bool online) => new(

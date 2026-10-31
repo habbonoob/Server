@@ -9,7 +9,7 @@ public static partial class DbSeeder
 {
     private sealed record SeedProductClaims(List<SeedProductClaim>? Claims);
 
-    private sealed record SeedProductClaim(string Id, bool Active, List<string>? Furni);
+    private sealed record SeedProductClaim(string Id, bool Active, List<string>? Furni, List<ProductClaimChoice>? Choices);
 
     /// <summary>seed/product_claims.json. A claim the hotel already has keeps whatever it was changed to.</summary>
     private static async Task SeedProductClaimsAsync(AppDbContext db, SeedFiles seedFiles, ILogger logger, CancellationToken ct)
@@ -19,7 +19,7 @@ public static partial class DbSeeder
         var added = 0;
         foreach (var seed in (file?.Claims ?? []).Where(c => !known.Contains(c.Id)))
         {
-            db.ProductClaims.Add(new ProductClaim { Id = seed.Id, Active = seed.Active, Furni = seed.Furni ?? [] });
+            db.ProductClaims.Add(new ProductClaim { Id = seed.Id, Active = seed.Active, Furni = seed.Furni ?? [], Choices = seed.Choices ?? [] });
             added++;
         }
 

@@ -1,0 +1,17 @@
+{
+  "//": "What pets say, as habbo.com's level 10-11 dog said it (captures of 18-25 October 2026; trained by hand on 25 October 2026). One line of the kind is picked at random each time. A command is refused about one time in six or seven (9 of some 60 commands), before its energy is looked at; one the pet has not the energy for is refused with a hungry line. A refusing pet turns its back on whoever asked and sits. Not captured, so guessed: a pet left to itself that is tired with no nest to rest in sets off for a water bowl saying a thirsty line; one told to Play (pla) or Play football says a play line, kicking; one told to Wag Tail, or scratched by its owner, a wag line.",
+  "refuseChance": 0.15,
+  "lines": {
+    "speak": ["*on cloud nine*", "*in a good mood*", "*joyful*", "*grinning*"],
+    "refuse": ["*no, not doing that*", "*so not going to do that*", "*I'm ignoring you*", "Yes, yes, I'll do it later", "Maybe I'll do it later"],
+    "hungry": ["*feeling hungry*", "*could eat a cat*", "*give me treats*", "*gimme me food*", "Food, please", "*I want some chicken*", "I could eat a whale", "My stomach is growling"],
+    "eat": ["*munch munch*", "*om nom nom*", "*Chewing*", "What a delicacy, yum, yum", "Yum, yum, this is delicious"],
+    "drink": ["*nice and cool*", "*drinking*", "*Mmm spring water*", "*atchuu*"],
+    "thirsty": ["*I want something to drink*", "*Thirsty*", "*looking for a drink*", "*looking for water*"],
+    "sleep": ["*ZZZzzzZZZZ*", "*sleeping beauty*", "*I need my beauty sleep*"],
+    "play": ["*is playing*", "*bounces around*"],
+    "levelUp": ["Leveling up"],
+    "greet": ["*Yay! You're home!*"],
+    "wag": ["*wags tail at %owner%*"]
+  }
+}

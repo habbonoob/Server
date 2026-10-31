@@ -12,6 +12,9 @@ namespace Habbo.Gateway.Messages;
 public sealed class MessageDispatcher(
     MessageHandlerRegistry registry, IOptions<GameNetworkOptions> options, ILogger<MessageDispatcher> logger)
 {
+    /// <summary>How much of a message that did not read is logged, to see what the client sent.</summary>
+    private const int MalformedPayloadLogged = 256;
+
     public async Task<bool> DispatchAsync(GatewaySessionContext context, GameFrame frame, CancellationToken ct)
     {
         if (!Allowed(context.Session))
@@ -90,6 +93,15 @@ public sealed class MessageDispatcher(
             // and the player stays
             logger.LogWarning("Connection {ConnectionId}: handler {Handler} reached no silo: {Reason}",
                 context.Session.Id, handler.GetType().Name, ex.Message);
+            return true;
+        }
+        catch (MalformedMessageException ex)
+        {
+            // only this message is lost: its frame had its own length, so the next one reads as it should, and the
+            // player stays (a release writing one message differently used to disconnect them on sending it)
+            logger.LogWarning(ex.InnerException, "Connection {ConnectionId}: {Message} (header {Header}, release {Release}) did not read and was dropped; payload {Length} bytes: {Payload}",
+                context.Session.Id, ex.Name, frame.Header, context.Session.Headers.Release, frame.Payload.Length,
+                Convert.ToHexString(frame.Payload.Span[..Math.Min(frame.Payload.Length, MalformedPayloadLogged)]));
             return true;
         }
         catch (Exception ex)

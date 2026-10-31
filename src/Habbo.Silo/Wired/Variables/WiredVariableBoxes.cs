@@ -31,7 +31,8 @@ public abstract partial class WiredVariableBox : WiredBoxType
     /// this room — a variable another room shares is described the same way.</summary>
     public abstract WiredVariable Define(int boxId, FurniWired settings);
 
-    public WiredVariable Define(WiredBox box) => Define(box.Id, box.Settings);
+    /// <summary>The box's variable, named by the box's database id (see <see cref="WiredBox.StoredId"/>).</summary>
+    public WiredVariable Define(WiredBox box) => Define(box.StoredId, box.Settings);
 
     /// <summary>The variable the box makes, for a box whose variable depends on others.</summary>
     public virtual WiredVariable Define(WiredBox box, Func<string, WiredVariable?> find) => Define(box);

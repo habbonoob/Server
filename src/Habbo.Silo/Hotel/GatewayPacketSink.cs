@@ -49,6 +49,8 @@ public sealed class GatewayPacketSink(
 
     public void RoomHostLost(SiloAddress silo) => Deliver(gateway => Forget(gateway.RoomHostLost(silo)));
 
+    public void LeftRoom(Guid sessionGuid, int roomId) => Deliver(gateway => Forget(gateway.LeftRoom(sessionGuid, roomId)));
+
     /// <summary>What :update read again here, read again by every gateway and every other silo.</summary>
     void IReloadRelay.Reload(string name)
     {

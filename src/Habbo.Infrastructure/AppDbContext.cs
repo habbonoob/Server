@@ -9,7 +9,9 @@ using Habbo.Domain.Furniture;
 using Habbo.Domain.Furniture.Data;
 using Habbo.Domain.Groups;
 using Habbo.Domain.Moderation;
+using Habbo.Domain.DailyTasks;
 using Habbo.Domain.Navigator;
+using Habbo.Domain.RewardTracks;
 using Habbo.Domain.Rooms;
 using Habbo.Domain.Support;
 using Habbo.Domain.Users;
@@ -117,6 +119,9 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     public DbSet<FurniState> FurniStates => Set<FurniState>();
     public DbSet<FurniTrophy> FurniTrophies => Set<FurniTrophy>();
     public DbSet<FurniPostIt> FurniPostIts => Set<FurniPostIt>();
+    public DbSet<FurniLabel> FurniLabels => Set<FurniLabel>();
+    public DbSet<RewardTrackProgress> RewardTrackProgresses => Set<RewardTrackProgress>();
+    public DbSet<DailyTask> DailyTasks => Set<DailyTask>();
     public DbSet<FurniGift> FurniGifts => Set<FurniGift>();
     public DbSet<ClubGiftClaim> ClubGiftClaims => Set<ClubGiftClaim>();
     public DbSet<Voucher> Vouchers => Set<Voucher>();
@@ -138,6 +143,8 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     public DbSet<UserFilterWord> UserFilterWords => Set<UserFilterWord>();
     public DbSet<Habbo.Domain.Campaigns.CampaignCalendar> CampaignCalendars => Set<Habbo.Domain.Campaigns.CampaignCalendar>();
     public DbSet<Habbo.Domain.Campaigns.CampaignCalendarOpening> CampaignCalendarOpenings => Set<Habbo.Domain.Campaigns.CampaignCalendarOpening>();
+    public DbSet<Habbo.Domain.Habbicons.UserHabbicon> UserHabbicons => Set<Habbo.Domain.Habbicons.UserHabbicon>();
+    public DbSet<Habbo.Domain.Quests.UserSeasonalQuest> UserSeasonalQuests => Set<Habbo.Domain.Quests.UserSeasonalQuest>();
     public DbSet<Habbo.Domain.LandingView.PromoArticle> PromoArticles => Set<Habbo.Domain.LandingView.PromoArticle>();
     public DbSet<Habbo.Domain.Catalog.ProductClaim> ProductClaims => Set<Habbo.Domain.Catalog.ProductClaim>();
     public DbSet<Habbo.Domain.Furniture.Chests.ChestCoins> ChestCoins => Set<Habbo.Domain.Furniture.Chests.ChestCoins>();
@@ -182,6 +189,8 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     public DbSet<FurniWired> FurniWiredBoxes => Set<FurniWired>();
     public DbSet<FurniWiredSnapshot> FurniWiredSnapshots => Set<FurniWiredSnapshot>();
     public DbSet<WiredRewardGrant> WiredRewardGrants => Set<WiredRewardGrant>();
+    public DbSet<WiredLinkNetwork> WiredLinkNetworks => Set<WiredLinkNetwork>();
+    public DbSet<WiredLinkEndpoint> WiredLinkEndpoints => Set<WiredLinkEndpoint>();
     public DbSet<FurniAchievementResolution> FurniAchievementResolutions => Set<FurniAchievementResolution>();
     public DbSet<RoomCompetitionEntry> RoomCompetitionEntries => Set<RoomCompetitionEntry>();
     public DbSet<RoomCompetitionVote> RoomCompetitionVotes => Set<RoomCompetitionVote>();
@@ -1343,6 +1352,20 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             opening.HasOne<Habbo.Domain.Campaigns.CampaignCalendar>().WithMany().HasForeignKey(o => o.CampaignName).OnDelete(DeleteBehavior.Cascade);
         });
 
+        modelBuilder.Entity<Habbo.Domain.Habbicons.UserHabbicon>(habbicon =>
+        {
+            habbicon.ToTable("user_habbicons");
+            habbicon.HasKey(h => new { h.UserId, h.HabbiconId });
+            habbicon.HasOne(h => h.User).WithMany().HasForeignKey(h => h.UserId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Habbo.Domain.Quests.UserSeasonalQuest>(quest =>
+        {
+            quest.ToTable("user_seasonal_quests");
+            quest.HasKey(q => new { q.UserId, q.QuestId });
+            quest.HasOne(q => q.User).WithMany().HasForeignKey(q => q.UserId).OnDelete(DeleteBehavior.Cascade);
+        });
+
         modelBuilder.Entity<Habbo.Domain.Furniture.Chests.ChestCoins>(coins =>
         {
             coins.ToTable("chest_coins");
@@ -1416,6 +1439,7 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             claim.ToTable("product_claims");
             claim.HasKey(c => c.Id);
             claim.Property(c => c.Id).HasMaxLength(Habbo.Domain.Catalog.ProductClaim.IdMaxLength);
+            claim.Property(c => c.Choices).StoredAsJson();
         });
 
         modelBuilder.Entity<Habbo.Domain.Catalog.ProductClaimRecord>(record =>
@@ -1572,6 +1596,34 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             postIt.HasOne(p => p.Item).WithOne().HasForeignKey<FurniPostIt>(p => p.ItemId).OnDelete(DeleteBehavior.Cascade);
         });
 
+        modelBuilder.Entity<DailyTask>(task =>
+        {
+            task.ToTable("daily_tasks");
+            task.HasKey(t => t.Id);
+            task.Property(t => t.Id).UseIdentityAlwaysColumn();
+            task.Property(t => t.Code).HasMaxLength(DailyTask.MaxCodeLength);
+            task.HasIndex(t => new { t.UserId, t.Day });
+            task.HasOne(t => t.User).WithMany().HasForeignKey(t => t.UserId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<RewardTrackProgress>(progress =>
+        {
+            progress.ToTable("reward_track_progress");
+            progress.HasKey(p => new { p.UserId, p.TrackId });
+            progress.Property(p => p.TrackId).HasMaxLength(RewardTrackProgress.MaxIdLength);
+            progress.Property(p => p.Tasks).StoredAsJson();
+            progress.Property(p => p.Claimed).StoredAsJson();
+            progress.HasOne(p => p.User).WithMany().HasForeignKey(p => p.UserId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<FurniLabel>(label =>
+        {
+            label.ToTable("furni_labels");
+            label.HasKey(l => l.ItemId);
+            label.Property(l => l.Text).HasMaxLength(FurniLabel.MaxTextLength);
+            label.HasOne(l => l.Item).WithOne().HasForeignKey<FurniLabel>(l => l.ItemId).OnDelete(DeleteBehavior.Cascade);
+        });
+
         modelBuilder.Entity<FurniTrophy>(trophy =>
         {
             trophy.ToTable("furni_trophies");
@@ -1605,6 +1657,27 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             grant.HasOne<UserItem>().WithMany().HasForeignKey(g => g.WiredItemId).OnDelete(DeleteBehavior.Cascade);
             grant.HasOne<User>().WithMany().HasForeignKey(g => g.UserId).OnDelete(DeleteBehavior.Cascade);
             grant.HasIndex(g => new { g.WiredItemId, g.UserId });
+        });
+
+        // a user's wired link networks, which go with the user; a name once per owner
+        modelBuilder.Entity<WiredLinkNetwork>(network =>
+        {
+            network.ToTable("wired_link_networks");
+            network.HasKey(n => n.Id);
+            network.Property(n => n.Id).UseIdentityAlwaysColumn();
+            network.Property(n => n.Name).HasMaxLength(WiredLinkNetwork.MaxNameLength).IsRequired();
+            network.HasOne(n => n.Owner).WithMany().HasForeignKey(n => n.OwnerId).OnDelete(DeleteBehavior.Cascade);
+            network.HasIndex(n => new { n.OwnerId, n.Name }).IsUnique();
+        });
+
+        // what a WIRED Link is connected to: it goes with the Link, and a deleted network disconnects its Links
+        modelBuilder.Entity<WiredLinkEndpoint>(endpoint =>
+        {
+            endpoint.ToTable("wired_link_endpoints");
+            endpoint.HasKey(e => e.ItemId);
+            endpoint.HasOne(e => e.Item).WithOne().HasForeignKey<WiredLinkEndpoint>(e => e.ItemId).OnDelete(DeleteBehavior.Cascade);
+            endpoint.HasOne(e => e.Network).WithMany().HasForeignKey(e => e.NetworkId).OnDelete(DeleteBehavior.SetNull);
+            endpoint.HasIndex(e => e.NetworkId);
         });
 
         // a resolution statue's challenge while it is under way; it goes with the statue, the user or the achievement

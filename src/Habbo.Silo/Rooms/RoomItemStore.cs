@@ -14,7 +14,12 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
     /// <summary>How close two surfaces have to be to count as the same level.</summary>
     private const double HeightTolerance = 0.01;
 
+    /// <summary>The room's items by the id the room and its visitors know them by (<see cref="PlacedItem.Id"/>).</summary>
     private readonly Dictionary<int, PlacedItem> _items = [];
+
+    /// <summary>The room's items by their <see cref="UserItem"/>'s id: the database's, for what is saved or read back
+    /// under it (a wired copy, having no row, goes by its own).</summary>
+    private readonly Dictionary<int, PlacedItem> _stored = [];
 
     /// <summary>The floor items covering each tile. Every question about a tile (what blocks it, what stands on
     /// top, where to sit) asks this, and pathfinding asks it of every tile it reaches, so it is kept rather than
@@ -49,7 +54,59 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
 
     public IReadOnlyCollection<PlacedItem> Items => _items.Values;
 
+    /// <summary>The item the room knows by this id: what the client names an item by, and what the room's own
+    /// bookkeeping (wired, games, chests) keys it by.</summary>
     public PlacedItem? Find(int itemId) => _items.GetValueOrDefault(itemId);
+
+    /// <summary>The item whose database row has this id: for what was saved under it (wired picks, teleport links,
+    /// an inventory item being put down). A wired copy, which has no row, is found by its own id.</summary>
+    public PlacedItem? FindStored(int databaseId) => _stored.GetValueOrDefault(databaseId);
+
+    /// <summary>The room-facing id of the item saved under a database id, if it is here; otherwise the id as it is,
+    /// which is what any other item goes by anyway.</summary>
+    public int IdOfStored(int databaseId) => FindStored(databaseId)?.Id ?? databaseId;
+
+    /// <summary>The database id of the item the room knows by this id, if it is here; otherwise the id as it is.</summary>
+    public int StoredIdOf(int itemId) => Find(itemId)?.Item.Id ?? itemId;
+
+    /// <summary>The first id of Builders Club furni: Habbo's client tells borrowed furni by its id alone
+    /// (FurniId.isBuilderClubId: 2147418112 to 2147483647), and shows it with the club's border and owner line.</summary>
+    public const int FirstBuildersClubId = 2147418112;
+
+    private int _nextBuildersClubId = FirstBuildersClubId;
+
+    /// <summary>The Builders Club ids of items gone from the room, oldest first: used again once every fresh one is.</summary>
+    private readonly Queue<int> _freedBuildersClubIds = [];
+
+    /// <summary>The id the room gives an item coming in: Builders Club furni a room-local id in the club's range (the
+    /// one it has already, if it is here); anything else its database id. habbo.com (25 October 2026) sent the first
+    /// Builders Club item put down in a room as 2147418112 (0x7FFF0000), on its ObjectAdd and again in the room's
+    /// objects on entry, and the client clicked, used and opened its wired dialog by that id. The ids are taken to
+    /// count up by one per room, in the order the room loads or places its Builders Club furni: one capture is all
+    /// there is to go by. An item keeps its id for the room's life; one picked up is not used again until every
+    /// fresh one has been.</summary>
+    private int IdFor(UserItem item)
+    {
+        if (!item.BuildersClub)
+            return item.Id;
+        if (_stored.TryGetValue(item.Id, out var here))
+            return here.Id;
+        if (_nextBuildersClubId < int.MaxValue)
+            return _nextBuildersClubId++;
+        return _freedBuildersClubIds.TryDequeue(out var freed) ? freed : int.MaxValue;
+    }
+
+    /// <summary>Puts an item with a database row in the room under its id, in place of whatever was there under
+    /// either of its ids.</summary>
+    private void Store(PlacedItem placed)
+    {
+        if (_stored.Remove(placed.Item.Id, out var earlier) && _items.Remove(earlier.Id))
+            Unindex(earlier);
+        if (_items.Remove(placed.Id, out var other))
+            Unindex(other);
+        _items[placed.Id] = placed;
+        _stored[placed.Item.Id] = placed;
+    }
 
     public void Load(IEnumerable<UserItem> items, IReadOnlyDictionary<int, FurniDataView> data)
     {
@@ -57,6 +114,7 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
         {
             var placed = new PlacedItem
             {
+                Id = IdFor(item),
                 Item = item,
                 Data = data.GetValueOrDefault(item.Id, FurniDataView.Plain),
                 Interaction = interactions.For(item.Definition!),
@@ -65,9 +123,7 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
                 Z = item.Z ?? 0,
                 Rotation = item.Rotation ?? 0,
             };
-            if (_items.Remove(item.Id, out var earlier))
-                Unindex(earlier);
-            _items[item.Id] = placed;
+            Store(placed);
             Index(placed);
         }
     }
@@ -76,6 +132,7 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
     {
         var placed = new PlacedItem
         {
+            Id = IdFor(item),
             Item = item,
             Data = data,
             Interaction = interactions.For(item.Definition!),
@@ -84,15 +141,17 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
             Z = SurfaceAt(x, y),
             Rotation = rotation,
         };
-        if (_items.Remove(item.Id, out var earlier))
-            Unindex(earlier);
-        _items[item.Id] = placed;
+        Store(placed);
         Index(placed);
         return placed;
     }
 
     /// <summary>The first id of wired's temporary copies: above any real item's, as Habbo numbers them.</summary>
     public const int FirstTemporaryId = 2147401728;
+
+    /// <summary>The last id of wired's temporary copies: the client takes any above for Builders Club furni
+    /// (FurniId.isTempId: 2147401728 to 2147418111).</summary>
+    public const int LastTemporaryId = FirstBuildersClubId - 1;
 
     private int _nextTemporaryId = FirstTemporaryId;
 
@@ -104,7 +163,7 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
     public PlacedItem? AddCopy(PlacedItem template, FurniDataView data, int x, int y, double? z, int rotation)
     {
         int id;
-        if (_nextTemporaryId < int.MaxValue)
+        if (_nextTemporaryId <= LastTemporaryId)
             id = _nextTemporaryId++;
         else if (!_freedTemporaryIds.TryDequeue(out id))
             return null;
@@ -123,6 +182,7 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
         };
         var placed = new PlacedItem
         {
+            Id = id,
             Item = item,
             Data = data,
             Interaction = interactions.For(item.Definition!),
@@ -132,7 +192,8 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
             Rotation = rotation,
             Temporary = true,
         };
-        _items[item.Id] = placed;
+        _items[placed.Id] = placed;
+        _stored[placed.Item.Id] = placed;
         Index(placed);
         return placed;
     }
@@ -142,6 +203,7 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
     {
         var placed = new PlacedItem
         {
+            Id = IdFor(item),
             Item = item,
             Data = data,
             Interaction = interactions.For(item.Definition!),
@@ -150,36 +212,40 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
             Z = 0,
             Rotation = 0,
         };
-        _items[item.Id] = placed;
+        Store(placed);
         return placed;
     }
 
     /// <summary>Areas hidden by the room's area hiders, as the floor map carries them.</summary>
     public List<AreaHideData> AreaHides() =>
         _items.Values.Where(item => item.Interaction is AreaHideInteraction)
-            .Select(item => AreaHideInteraction.Area(item.Item.Id, item.Data))
+            .Select(item => AreaHideInteraction.Area(item.Id, item.Data))
             .ToList();
 
+    /// <summary>Takes the item the room knows by this id out of the room.</summary>
     public bool Remove(int itemId)
     {
         if (!_items.Remove(itemId, out var item))
             return false;
 
         Unindex(item);
+        _stored.Remove(item.Item.Id);
         if (item.Temporary)
             _freedTemporaryIds.Enqueue(itemId);
+        else if (item.Item.BuildersClub)
+            _freedBuildersClubIds.Enqueue(itemId);
         return true;
     }
 
     /// <summary>Moves an item, settling it on what is there — or at the altitude given.</summary>
     public void MoveTo(PlacedItem item, int x, int y, int rotation, double? altitude = null)
     {
-        var placed = _items.GetValueOrDefault(item.Item.Id) == item;
+        var placed = _items.GetValueOrDefault(item.Id) == item;
         if (placed)
             Unindex(item);
         item.X = x;
         item.Y = y;
-        item.Z = altitude ?? SurfaceAt(x, y, item.Item.Id);
+        item.Z = altitude ?? SurfaceAt(x, y, item.Id);
         item.Rotation = rotation;
         if (placed)
             Index(item);
@@ -311,7 +377,7 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
 
     /// <summary>The floor items covering a tile. Callers pick among them by height.</summary>
     private IEnumerable<PlacedItem> FloorItemsAt(int x, int y, int? ignoreItemId) =>
-        _tiles.TryGetValue((x, y), out var here) ? here.Where(item => item.Item.Id != ignoreItemId) : [];
+        _tiles.TryGetValue((x, y), out var here) ? here.Where(item => item.Id != ignoreItemId) : [];
 
     /// <summary>The floor items covering a tile, lowest first.</summary>
     /// <summary>The highest a floor item may stand, as wired's altitude slider reaches: 80.</summary>
@@ -351,7 +417,7 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
                     return false;
                 if (hasAvatar(tx, ty) && !covered.Contains((tx, ty)))
                     return false;
-                if (blockedByFurni && FloorItemsOn(tx, ty).Any(other => other.Item.Id != itemId))
+                if (blockedByFurni && FloorItemsOn(tx, ty).Any(other => other.Id != itemId))
                     return false;
                 if (throughFurni)
                     continue;
@@ -376,7 +442,7 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
             var (width, height) = FootprintSize(item.Item.Definition!, item.Rotation);
             var mask = WaterAreaBorderMask.For(
                 item.X, item.Y, width, height, model.IsTile,
-                (x, y) => IsWaterAreaAt(x, y, item.Item.Id));
+                (x, y) => IsWaterAreaAt(x, y, item.Id));
 
             var state = mask.ToString(CultureInfo.InvariantCulture);
             if (item.Data.StateText == state)
@@ -419,7 +485,7 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
     {
         var definition = item.Item.Definition!;
         return new RoomItemData(
-            item.Item.Id,
+            item.Id,
             definition.ClassId,
             definition.Type == ItemType.Wall,
             item.X,
@@ -443,6 +509,12 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
     /// <summary>An item placed in the room, with its live position.</summary>
     public sealed class PlacedItem
     {
+        /// <summary>The id the room and the client know the item by. It is the database id (<c>Item.Id</c>) but for
+        /// Builders Club furni, which goes by a room-local id in the club's range, and wired's temporary copies, by
+        /// one in theirs. Everything the room sends that names the item names it by this, the client names it by
+        /// this, and the room keeps track of it by this; what is saved goes by the database id.</summary>
+        public required int Id { get; init; }
+
         public required UserItem Item { get; init; }
 
         /// <summary>The item's data as the room last knew it. Settable because using an item
@@ -470,5 +542,20 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
         /// <summary>A copy wired placed: it lives in the room only, is never saved, and goes when wired removes it or
         /// the room unloads.</summary>
         public bool Temporary { get; init; }
+
+        /// <summary>For a stack helper: whether avatars walk across its tiles at every height (its multi-walk mode).</summary>
+        public bool MultiWalk { get; set; }
+
+        /// <summary>How wired's set visibility left it for everyone; null as it was placed. Kept for the room's life, not saved.</summary>
+        public WiredTransparency? Transparency { get; set; }
+
+        /// <summary>Made invisible for everyone (habbo.com's @is_invisible).</summary>
+        public bool Invisible => Transparency is { Transparency: WiredTransparency.Invisible };
+
+        /// <summary>Given @can_move_freely by wired: its wired moves pass through furni and avatars. Kept for the room's life.</summary>
+        public bool MovesFreely { get; set; }
+
+        /// <summary>Its last flight as a wired projectile, and what it ran into on the way; null until it first flies.</summary>
+        public ProjectileFlight? Projectile { get; set; }
     }
 }

@@ -47,8 +47,8 @@ public sealed partial class RoomGrain
         var pet = entity.Pet!;
         var nests = _items!.Items.Where(item => item.Interaction is PetBreedingNestInteraction).ToList();
         var suitable = nests.Where(nest => NestKinds(nest)?.Adult == pet.Data.TypeId).ToList();
-        var waiting = suitable.FirstOrDefault(nest => Occupants(nest.Item.Id).Count is > 0 and < NestCapacity);
-        var empty = suitable.FirstOrDefault(nest => Occupants(nest.Item.Id).Count == 0);
+        var waiting = suitable.FirstOrDefault(nest => Occupants(nest.Id).Count is > 0 and < NestCapacity);
+        var empty = suitable.FirstOrDefault(nest => Occupants(nest.Id).Count == 0);
 
         int? failure = nests.Count == 0 ? GoToBreedingNestFailureComposer.NoNests
             : suitable.Count == 0 ? GoToBreedingNestFailureComposer.NoSuitableNest
@@ -67,7 +67,7 @@ public sealed partial class RoomGrain
         var nest = waiting is not null && waiting.Item.OwnerId == pet.Data.OwnerId ? waiting : empty ?? waiting!;
         pet.Busy = true;
         pet.Following = null;
-        _nests[nest.Item.Id] = [.. Occupants(nest.Item.Id), entity];
+        _nests[nest.Id] = [.. Occupants(nest.Id), entity];
         await WalkThenAsync(entity, nest.X, nest.Y, () => SettleInNestAsync(entity, nest, speaker.Player.Id));
         return true;
     }
@@ -75,7 +75,7 @@ public sealed partial class RoomGrain
     private async Task SettleInNestAsync(RoomEntityStore.RoomEntity entity, RoomItemStore.PlacedItem nest, Guid commanderId)
     {
         var pet = entity.Pet!;
-        if (_entities?.FindPet(pet.Data.Id) != entity || !Occupants(nest.Item.Id).Contains(entity))
+        if (_entities?.FindPet(pet.Data.Id) != entity || !Occupants(nest.Id).Contains(entity))
             return;
         // the nest went while the pet walked to it: the pet is free again rather than kept waiting for it
         if (!_furniture!.IsPlaced(nest))
@@ -100,7 +100,7 @@ public sealed partial class RoomGrain
         }
 
         // a pet still on its way is not in the nest yet: the last to settle has the owner asked
-        var occupants = Occupants(nest.Item.Id);
+        var occupants = Occupants(nest.Id);
         var settled = occupants.Count(o => o.Pet!.Staying);
         await ShowNestFillingAsync(nest, settled);
         if (settled == NestCapacity)
@@ -125,7 +125,7 @@ public sealed partial class RoomGrain
             return;
 
         var categories = await RarityChancesAsync(kinds.Baby, one.Pet!.Data.Level, two.Pet!.Data.Level);
-        SendTo(nest.Item.OwnerId, new ConfirmBreedingRequestComposer(nest.Item.Id, BreedingInfo(one), BreedingInfo(two),
+        SendTo(nest.Item.OwnerId, new ConfirmBreedingRequestComposer(nest.Id, BreedingInfo(one), BreedingInfo(two),
             categories.Select(c => new RarityCategoryData((int)Math.Round(c.Chance), c.Category.Palettes)).ToList(), kinds.Baby));
     }
 

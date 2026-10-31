@@ -567,6 +567,15 @@
   "ambassadorOnly": false
  },
  {
+  "id": 253,
+  "assetId": "wired_link_speaker",
+  "systemStyle": true,
+  "purchasable": false,
+  "hcOnly": false,
+  "staffOverrideable": false,
+  "ambassadorOnly": false
+ },
+ {
   "id": 1000,
   "assetId": "nft_habbo_avatar_bronze",
   "systemStyle": false,

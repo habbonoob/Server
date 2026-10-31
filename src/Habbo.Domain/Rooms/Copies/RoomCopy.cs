@@ -32,7 +32,7 @@ public sealed record RoomCopy(
     IReadOnlyList<RoomCopyWallItem> WallItems,
     IReadOnlyList<RoomCopyVariable>? Variables = null)
 {
-    /// <summary>2 added the items' own ids and the wired boxes' settings, 3 the room's variables; an older copy reads
-    /// the same, without them.</summary>
-    public const int CurrentFormat = 3;
+    /// <summary>2 added the items' own ids and the wired boxes' settings, 3 the room's variables, 4 the floor items'
+    /// extra numbers, which link teleports; an older copy reads the same, without them.</summary>
+    public const int CurrentFormat = 4;
 }

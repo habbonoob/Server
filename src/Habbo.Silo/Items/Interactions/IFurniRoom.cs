@@ -47,6 +47,12 @@ public interface IFurniRoom
     /// <summary>Sends one avatar's player a message.</summary>
     void Tell(RoomEntityStore.RoomEntity user, IComposer composer);
 
+    /// <summary>Counts what the user did with the item on their reward track and daily tasks (one of RewardTrackActions,
+    /// and what narrows it: the hand item handed over).</summary>
+    void TrackAction(RoomEntityStore.RoomEntity user, string action, string parameter = "")
+    {
+    }
+
     /// <summary>Whether the avatar stands on or next to the item — close enough to touch it.</summary>
     bool IsWithinReach(RoomEntityStore.RoomEntity user, RoomItemStore.PlacedItem item);
 

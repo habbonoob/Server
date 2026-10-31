@@ -24,4 +24,8 @@ public enum CatalogProductType
 
     /// <summary>A pet, whose kind is the class id; its name, palette and colour come with the purchase.</summary>
     Pet = 6,
+
+    /// <summary>Builders Club membership: how long in the duration, and the tier it is at least, by product name, in
+    /// the extra parameter. Habbo sends such an offer with no products at all; the client knows it by its code.</summary>
+    BuildersClub = 7,
 }

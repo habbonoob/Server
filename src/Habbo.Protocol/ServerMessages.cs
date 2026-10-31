@@ -200,11 +200,36 @@ public static class ServerMessages
     // Added by September 2026 (ClientReleases.September2026): ServerHeaders.ReleaseStride (its place, 1) plus the
     // release's own id.
     public const ushort BadgeInfoComposer = ServerHeaders.ReleaseStride + 3012;
+    public const ushort UserHabbiconsComposer = ServerHeaders.ReleaseStride + 320;
+    public const ushort UserHabbiconStatusChangedComposer = ServerHeaders.ReleaseStride + 2401;
+    public const ushort HabbiconShopDataComposer = ServerHeaders.ReleaseStride + 1372;
+    public const ushort HabbiconInfoComposer = ServerHeaders.ReleaseStride + 1761;
+    public const ushort RoomUseHabbiconComposer = ServerHeaders.ReleaseStride + 3578;
     public const ushort BadgeLeaderboardResultMessageComposer = ServerHeaders.ReleaseStride + 46;
     public const ushort MarketplaceCancelAllOffersResultComposer = ServerHeaders.ReleaseStride + 3241;
     public const ushort MarketplaceClearOwnHistoryResultComposer = ServerHeaders.ReleaseStride + 3769;
     public const ushort RaidProtectionCapabilityComposer = ServerHeaders.ReleaseStride + 27;
     public const ushort SpecialSystemChatMessageComposer = ServerHeaders.ReleaseStride + 1554;
+    public const ushort RewardTracksComposer = ServerHeaders.ReleaseStride + 2693;
+    public const ushort RewardTrackProgressComposer = ServerHeaders.ReleaseStride + 465;
+    public const ushort RewardTrackClaimResultComposer = ServerHeaders.ReleaseStride + 3629;
+    public const ushort RewardTrackPremiumPurchaseResultComposer = ServerHeaders.ReleaseStride + 1374;
+
+    // Added by October 2026 (ClientReleases.October2026): ServerHeaders.ReleaseStride times its place, 2, plus the
+    // release's own id.
+    public const ushort FurnitureLabelsAndRegionsComposer = 2 * ServerHeaders.ReleaseStride + 2237;
+    public const ushort FurnitureLabelsAndRegionsUpdateComposer = 2 * ServerHeaders.ReleaseStride + 796;
+    public const ushort FurniRecolorUpdateMessageComposer = 2 * ServerHeaders.ReleaseStride + 181;
+    public const ushort WiredFurniTransparencyComposer = 2 * ServerHeaders.ReleaseStride + 2321;
+    public const ushort WiredUserTransparencyComposer = 2 * ServerHeaders.ReleaseStride + 3664;
+    public const ushort WiredFurniVisualizationStateComposer = 2 * ServerHeaders.ReleaseStride + 1826;
+    public const ushort WiredUserVisualizationStateComposer = 2 * ServerHeaders.ReleaseStride + 1454;
+    public const ushort WiredLinkOpenMessageComposer = 2 * ServerHeaders.ReleaseStride + 1715;
+    public const ushort WiredLinkConfigurationMessageComposer = 2 * ServerHeaders.ReleaseStride + 3405;
+    public const ushort WiredLinkOperationResultMessageComposer = 2 * ServerHeaders.ReleaseStride + 3961;
+    public const ushort WiredLinkConnectionsMessageComposer = 2 * ServerHeaders.ReleaseStride + 3962;
+    public const ushort WiredLinkInvalidatedMessageComposer = 2 * ServerHeaders.ReleaseStride + 999;
+
     public const ushort BanInfoMessageComposer = 1421;
     public const ushort BannedUsersFromRoomComposer = 3184;
     public const ushort BlockUserUpdateMessageComposer = 3554;

@@ -1,0 +1,357 @@
+{
+  "//": "The daily task pool: three a day for each player, new at midnight UTC (habbo.com's own: the time left it sent always ran out at 23:59:59 UTC; the Habbo X wiki has \"around 2 AM European time\"). A task is named by its code, which keys its texts (dailytask.<code>.name, .desc, .hint, .completed) and its image. \"observed\" tasks are as habbo.com sent them (October 2026: repeats and rewards); the rest are the active tasks of https://habboxwiki.com/Daily_Tasks, with its repeats and the 10 duckets most of habbo.com's pay. Parameters narrow what counts: furni classes found (double-clicked) or walked over, pet types found (looked at), hand items found, the sign held up to someone, \"floor\" for floor items placed; effects are what must be worn. Left out: the tasks the wiki times in minutes it does not give (Dance, Dance, Dance!, Dude, Chillax!, Sit Down), Take A Swim (broken on habbo.com, the wiki says) and Diamond Dash! (gone). A reward's type is the client's product type: 8 currency (item: its type, 0 duckets).",
+  "tasks": [
+    {
+      "code": "1742378786317_G",
+      "//": "Making Acquaintances",
+      "action": "REQUEST_FRIEND",
+      "repeats": 3,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }],
+      "observed": true
+    },
+    {
+      "code": "1742375669365_G",
+      "//": "Show Someone They're a 10!",
+      "action": "SHOW_SIGN",
+      "parameters": ["10"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }],
+      "observed": true
+    },
+    {
+      "code": "1738671194164_G",
+      "//": "Boulevard Skating",
+      "action": "WALK_OVER_STUFF",
+      "parameters": ["sb_tile"],
+      "repeats": 40,
+      "rewards": [{ "type": 8, "item": "0", "amount": 50 }],
+      "effects": [71, 72],
+      "observed": true
+    },
+    {
+      "code": "1734084926818_G",
+      "//": "Jungle Field Trip",
+      "action": "WALK_OVER_STUFF",
+      "parameters": ["anc_jngl_patch"],
+      "repeats": 5,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }],
+      "observed": true
+    },
+    {
+      "code": "1735033170628_G",
+      "//": "Ramped Up",
+      "action": "FIND_STUFF",
+      "parameters": ["sb_ramp"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }],
+      "observed": true
+    },
+    {
+      "code": "1736418692846_G",
+      "//": "Shell We?",
+      "action": "FIND_STUFF",
+      "parameters": ["qt_sum11_shell1", "qt_sum11_shell4", "qt_sum11_shell5"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }],
+      "observed": true
+    },
+    {
+      "code": "1734085401642_G",
+      "//": "Looking For Leo",
+      "action": "FIND_PET",
+      "parameters": ["6"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 20 }],
+      "observed": true
+    },
+    {
+      "code": "1734081671274_G",
+      "//": "Bird Watching",
+      "action": "FIND_PET",
+      "parameters": ["10"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }],
+      "observed": true
+    },
+    {
+      "code": "1734084129952_G",
+      "//": "Dragon Spotting",
+      "action": "FIND_PET",
+      "parameters": ["12"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 20 }],
+      "observed": true
+    },
+    {
+      "code": "1734083261885_G",
+      "//": "King Of The Castle",
+      "action": "FIND_STUFF",
+      "parameters": ["sand_cstl_twr", "sand_cstl_wall", "sand_cstl_gate", "seaside_c26_sandcastle"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1742377579479_G",
+      "//": "Redecoration!",
+      "action": "MOVE_ITEM",
+      "repeats": 3,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734084662772_G",
+      "//": "It's Happy Hour!",
+      "action": "FIND_STUFF",
+      "parameters": ["summer_icebox"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734011895115_G",
+      "//": "Have A Ball",
+      "action": "FIND_STUFF",
+      "parameters": ["bw_bball"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1738665649831_G",
+      "//": "Tearaways",
+      "action": "FIND_PET",
+      "parameters": ["3"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1740473719724_G",
+      "//": "Ducket Dash!",
+      "action": "SPEND_DUCKETS",
+      "repeats": 100,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1741864788753_G",
+      "//": "Nice to Say Hi!",
+      "action": "WAVE",
+      "repeats": 7,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1735033914077_G",
+      "//": "Horned Justice!",
+      "action": "FIND_PET",
+      "parameters": ["7"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734083877537_G",
+      "//": "A Dog Needs Help!",
+      "action": "FIND_PET",
+      "parameters": ["0"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1742193348839_G",
+      "//": "Time for a Hot Drink",
+      "action": "FIND_HAND_ITEM",
+      "parameters": ["1", "10", "11", "13", "14", "15", "16", "27", "53", "146", "149", "178", "1115"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1741863086174_G",
+      "//": "What Does This Do?",
+      "action": "SWITCH_ITEM_STATE",
+      "repeats": 20,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1742195901294_G",
+      "//": "Enjoy Before It Melts",
+      "action": "FIND_HAND_ITEM",
+      "parameters": ["120", "121", "127", "128", "137", "160", "161", "162", "163", "167", "180"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734090080825_G",
+      "//": "Vitamin C Hunter!",
+      "action": "FIND_HAND_ITEM",
+      "parameters": ["38", "116"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1742192895786_G",
+      "//": "Dance Crew",
+      "action": "DANCE_CREW",
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734083605369_G",
+      "//": "Hey Mr. DJ",
+      "action": "FIND_STUFF",
+      "parameters": ["party_djtable", "djesko_turntable", "classic7_djbooth", "hc25_6", "rare_r23_djesko_turntable_2"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1742376992244_G",
+      "//": "Decoration time!",
+      "action": "PLACE_ITEM",
+      "parameters": ["floor"],
+      "repeats": 10,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1741850663726_G",
+      "//": "Have a Chat!",
+      "action": "CHAT_WITH_SOMEONE",
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1735032535146_G",
+      "//": "What A Boar",
+      "action": "FIND_PET",
+      "parameters": ["5"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734080703257_G",
+      "//": "Where's My Food?",
+      "action": "FIND_PET",
+      "parameters": ["1"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734011773612_G",
+      "//": "FOOD!",
+      "action": "FIND_STUFF",
+      "parameters": ["summer_grill*1", "summer_grill*2", "summer_grill*3", "summer_grill*4", "hblooza_bbq"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734081804428_G",
+      "//": "Stand Very Still...",
+      "action": "FIND_PET",
+      "parameters": ["2"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1736419490512_G",
+      "//": "The Body Wash",
+      "action": "FIND_STUFF",
+      "parameters": ["bw_shower", "bling_shwr", "bathroom_shower1", "bathroom_shower2", "bathroom_shower3", "bathroom_shower4", "hc17_8", "hc21_2", "hygge_c25_shower", "celestial_c19_starshower"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1738672844085_G",
+      "//": "Walk This Way",
+      "action": "WALK_OVER_STUFF",
+      "parameters": ["urban_sidewalk", "es_sidewalk", "paris_c15_pavement", "hween_c15_pavement", "vwave_c21_pavement", "vwave_c21_glitchpavement"],
+      "repeats": 30,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1735032138894_G",
+      "//": "A Picnic Pick",
+      "action": "FIND_STUFF",
+      "parameters": ["picnic_basket", "fall_c23_picnicbasket", "fall_c23_picnicbasketb", "fall_c23_deluxebasket", "fall_c23_deluxebasketb", "ducket_c26_picnicbasket"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1735033733395_G",
+      "//": "Rare Frog Alert",
+      "action": "FIND_PET",
+      "parameters": ["11"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1742369952117_G",
+      "//": "Out of Thin Air",
+      "action": "TELEPORT",
+      "repeats": 3,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1738669228963_G",
+      "//": "Rare Artifacts",
+      "action": "FIND_STUFF",
+      "parameters": ["anc_trophy_obsidian", "anc_trophy_marble", "anc_trophy_sstone", "anc_artifact3"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1742194750225_G",
+      "//": "A Smoothie Sensation",
+      "action": "FIND_HAND_ITEM",
+      "parameters": ["106", "113", "114", "115"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734011389107_G",
+      "//": "Backpackers Delight",
+      "action": "ENTER_OTHER_USERS_ROOM",
+      "repeats": 15,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1738752193145_G",
+      "//": "Catalogue Spree!",
+      "action": "SPEND_CREDITS",
+      "repeats": 5,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1738672360392_G",
+      "//": "Super Skater",
+      "action": "WEAR_EFFECT",
+      "parameters": ["71", "72"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734079966714_G",
+      "//": "Boat Trip!",
+      "action": "FIND_STUFF",
+      "parameters": ["bw_boat", "bw_boat_p", "bw_boat_g"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1738669470836_G",
+      "//": "Natural Spring",
+      "action": "FIND_STUFF",
+      "parameters": ["tiki_waterfall"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1734017532958_G",
+      "//": "Bear Patrol",
+      "action": "FIND_PET",
+      "parameters": ["4"],
+      "repeats": 1,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    },
+    {
+      "code": "1738670908293_G",
+      "//": "Roll On!",
+      "action": "WALK_OVER_STUFF",
+      "parameters": ["val11_floor"],
+      "repeats": 20,
+      "rewards": [{ "type": 8, "item": "0", "amount": 10 }]
+    }
+  ]
+}

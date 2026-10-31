@@ -70,6 +70,27 @@ public interface IWiredRoom
     /// <summary>Dresses the user in an effect (0 takes it off).</summary>
     Task<bool> SetEffectAsync(RoomEntityStore.RoomEntity user, int effectId);
 
+    /// <summary>What the room knows of a pet, as its info card shows it; null for anyone else.</summary>
+    WiredPetStats? PetStats(RoomEntityStore.RoomEntity pet);
+
+    /// <summary>Where a teleport leads now: its partner, or the teleport wired pointed it at; null when it leads nowhere.</summary>
+    int? TeleportTarget(RoomItemStore.PlacedItem teleport);
+
+    /// <summary>Points a teleport at another teleport of the room until it unloads; false for anything else.</summary>
+    Task<bool> SetTeleportTargetAsync(RoomItemStore.PlacedItem teleport, int targetId);
+
+    /// <summary>Hangs a wall item somewhere else on the walls; false where it may not hang.</summary>
+    Task<bool> MoveWallItemAsync(RoomItemStore.PlacedItem item, WallLocation location);
+
+    /// <summary>Shows a Habbicon over the user's head, for everyone.</summary>
+    Task<bool> ShowHabbiconAsync(RoomEntityStore.RoomEntity user, int habbiconId);
+
+    /// <summary>The user's wired trade, if they are in one.</summary>
+    WiredTrade? TradeOf(RoomEntityStore.RoomEntity user);
+
+    /// <summary>Stores a furni's new data and shows it (an area hider's area too); false past the pulse's write budget.</summary>
+    Task<bool> UpdateFurniDataAsync(RoomItemStore.PlacedItem item, FurniDataView data);
+
     /// <summary>Makes the user dance a style (0 stops), as they could themselves.</summary>
     Task<bool> DanceAsync(RoomEntityStore.RoomEntity user, int style);
 
@@ -122,12 +143,25 @@ public interface IWiredRoom
     /// <summary>Shows a message in the wired bubble to the user, or to everyone in the room.</summary>
     void ShowMessage(RoomEntityStore.RoomEntity user, string text, int style, bool toEveryone);
 
+    /// <summary>Shows the furni and users at a transparency (wired's set visibility): to everyone, kept for those who come in
+    /// later; or, given an audience, only to those of it in the room now, for as long as they stay.</summary>
+    void SetTransparency(IReadOnlyList<RoomItemStore.PlacedItem> furni, IReadOnlyList<RoomEntityStore.RoomEntity> users,
+        WiredTransparency transparency, IReadOnlyList<RoomEntityStore.RoomEntity>? audience);
+
     void ResetTimers();
 
     /// <summary>Sends a signal through the antenna to the stacks that receive on it, carrying the
     /// furni and users; the sending run's user stays the user it is about.</summary>
     Task SendSignalAsync(RoomItemStore.PlacedItem antenna, IReadOnlyList<RoomItemStore.PlacedItem> furni,
         IReadOnlyList<RoomEntityStore.RoomEntity> users, WiredRun from);
+
+    /// <summary>Sends a message, or a dataframe's rows, through a WIRED Link: to the stacks that receive on the Links of
+    /// its network in other rooms, and on itself when it receives its own room's.</summary>
+    Task SendLinkAsync(RoomItemStore.PlacedItem link, bool dataframe, string message,
+        IReadOnlyList<Abstractions.Wired.WiredLinkRow> rows, WiredRun from);
+
+    /// <summary>Shows a chat bubble standing on the item's tile, said by no one, in a style.</summary>
+    void SpeakAt(RoomItemStore.PlacedItem item, string text, int style);
 
     /// <summary>Tells the user's client what their clicks do in the room (<see cref="Effects.ClickConfigurationEffect"/>).</summary>
     void SetClickSettings(RoomEntityStore.RoomEntity user, int userOption, int furniOption);

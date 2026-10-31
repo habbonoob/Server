@@ -26,6 +26,9 @@ public sealed class ConsoleMessage
 
     public required string Text { get; set; }
 
+    /// <summary>The Habbicon sent in place of text, if one was; the text is then its name, what older clients show.</summary>
+    public int? HabbiconId { get; set; }
+
     public DateTimeOffset SentAt { get; set; } = DateTimeOffset.UtcNow;
 
     /// <summary>Whether the recipient has been shown it.</summary>

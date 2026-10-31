@@ -22,6 +22,7 @@ public sealed partial class PlayerGrain
 
         Send(new FigureUpdateComposer(figure, gender.ToLetter()));
         await ReachAchievementAsync(Achievements.AchievementNames.AvatarLooks, 1);
+        await TrackActionAsync(Habbo.Silo.RewardTracks.RewardTrackActions.ChangeFigure);
         return Remember(user);
     }
 
@@ -31,8 +32,11 @@ public sealed partial class PlayerGrain
         var user = await LoadUserAsync(db);
         var max = accountOptions.Value.MottoMaxLength;
         motto = (await wordFilter.FilterAsync(motto.Length > max ? motto[..max] : motto)).Text;
+        var changed = user.Motto != motto;
         user.Motto = motto.Length > max ? motto[..max] : motto;
         await db.SaveChangesAsync();
+        if (changed)
+            await TrackActionAsync(Habbo.Silo.RewardTracks.RewardTrackActions.ChangeMotto);
         return Remember(user);
     }
 

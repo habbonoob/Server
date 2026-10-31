@@ -21,12 +21,14 @@ public sealed partial class RoomGrain
 
     public async Task SendYoutubeDisplayAsync(Guid playerId, int itemId)
     {
-        if (_items?.Find(itemId) is not { Interaction: YoutubeDisplayInteraction })
+        if (_items?.Find(itemId) is not { Interaction: YoutubeDisplayInteraction } tv)
             return;
 
+        // the TV's state is saved under its database id; the client knows it by the room's
         await using var db = await dbFactory.CreateDbContextAsync();
         var playlists = await db.YoutubePlaylists.AsNoTracking().OrderBy(p => p.OrderIndex).ToListAsync();
-        var state = await db.YoutubeDisplayStates.AsNoTracking().FirstOrDefaultAsync(s => s.ItemId == itemId);
+        var storedId = tv.Item.Id;
+        var state = await db.YoutubeDisplayStates.AsNoTracking().FirstOrDefaultAsync(s => s.ItemId == storedId);
         SendTo(playerId, new YoutubeDisplayPlaylistsMessageComposer(itemId,
             playlists.Select(p => new YoutubeDisplayPlaylistData(p.Id, p.Title, p.Description)).ToList(), state?.PlaylistId ?? string.Empty));
 
@@ -36,16 +38,17 @@ public sealed partial class RoomGrain
 
     public async Task SetYoutubePlaylistAsync(Guid playerId, int itemId, string playlistId)
     {
-        if (!IsController(playerId) || _items?.Find(itemId) is not { Interaction: YoutubeDisplayInteraction })
+        if (!IsController(playerId) || _items?.Find(itemId) is not { Interaction: YoutubeDisplayInteraction } tv)
             return;
 
         await using var db = await dbFactory.CreateDbContextAsync();
         if (!await db.YoutubePlaylists.AnyAsync(p => p.Id == playlistId))
             return;
 
-        var state = await db.YoutubeDisplayStates.FirstOrDefaultAsync(s => s.ItemId == itemId);
+        var storedId = tv.Item.Id;
+        var state = await db.YoutubeDisplayStates.FirstOrDefaultAsync(s => s.ItemId == storedId);
         if (state is null)
-            db.YoutubeDisplayStates.Add(state = new YoutubeDisplayState { ItemId = itemId, PlaylistId = playlistId });
+            db.YoutubeDisplayStates.Add(state = new YoutubeDisplayState { ItemId = storedId, PlaylistId = playlistId });
         (state.PlaylistId, state.Position, state.Paused) = (playlistId, 0, false);
         await db.SaveChangesAsync();
 
@@ -55,11 +58,12 @@ public sealed partial class RoomGrain
 
     public async Task ControlYoutubeAsync(Guid playerId, int itemId, int command)
     {
-        if (!IsController(playerId) || _items?.Find(itemId) is not { Interaction: YoutubeDisplayInteraction })
+        if (!IsController(playerId) || _items?.Find(itemId) is not { Interaction: YoutubeDisplayInteraction } tv)
             return;
 
         await using var db = await dbFactory.CreateDbContextAsync();
-        if (await db.YoutubeDisplayStates.FirstOrDefaultAsync(s => s.ItemId == itemId) is not { } state)
+        var storedId = tv.Item.Id;
+        if (await db.YoutubeDisplayStates.FirstOrDefaultAsync(s => s.ItemId == storedId) is not { } state)
             return;
 
         switch (command)

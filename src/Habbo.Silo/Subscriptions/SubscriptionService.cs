@@ -1,6 +1,7 @@
 using Habbo.Domain.Subscriptions;
 using Habbo.Infrastructure;
 using Habbo.Silo.Abstractions.Subscriptions;
+using Habbo.Silo.Rooms;
 using Microsoft.EntityFrameworkCore;
 
 namespace Habbo.Silo.Subscriptions;
@@ -69,25 +70,29 @@ public sealed class SubscriptionService(IDbContextFactory<AppDbContext> dbFactor
         var tiers = await db.BuildersClubLimits.AsNoTracking().ToListAsync(ct);
         var maxFurniLimit = tiers.Count == 0 ? 0 : tiers.Max(tier => tier.MaxFurniLimit);
 
+        // the upgrades bought go on top of the tier's limit
         var limits = subscription is null ? null : tiers.FirstOrDefault(tier => tier.ProductName == subscription.ProductName);
-        return BuildersClubStatus(subscription?.ExpiresAt, limits?.FurniLimit ?? 0, limits?.Grace ?? TimeSpan.Zero,
+        var bonus = await db.Users.AsNoTracking().Where(u => u.Id == playerId).Select(u => u.BuildersClubBonusFurni).FirstOrDefaultAsync(ct);
+        return BuildersClubStatus(subscription?.ExpiresAt, (limits?.FurniLimit ?? 0) + bonus, limits?.Grace ?? TimeSpan.Zero,
             maxFurniLimit, DateTimeOffset.UtcNow);
     }
 
     /// <summary>A Builders Club membership as the client is told it. Through the grace period the tier's limit still
-    /// holds (and building is the trial's); after it the limit is 0, as for one who never joined (Habbo, 2026-10-22:
-    /// [0, 0, 500, 0]). Habbo's limit after the grace period is not measured.</summary>
+    /// holds (and building is the trial's). One with no membership, never joined or past the grace period, is on the
+    /// free trial: they build with the trial's limit (<see cref="BuildersClubFurni.TrialFurniLimit"/>), and the room
+    /// they build in is locked. Habbo's limit after a grace period is not measured; it is taken to be the trial's.
+    /// </summary>
     public static BuildersClubView BuildersClubStatus(
         DateTimeOffset? expiresAt, int furniLimit, TimeSpan grace, int maxFurniLimit, DateTimeOffset now)
     {
         if (expiresAt is not { } expires)
-            return new BuildersClubView(0, 0, maxFurniLimit, 0);
+            return new BuildersClubView(0, BuildersClubFurni.TrialFurniLimit, maxFurniLimit, 0);
 
         var remaining = expires - now;
         var withGrace = remaining + grace;
         return new BuildersClubView(
             (int)Math.Max(0, remaining.TotalSeconds),
-            withGrace > TimeSpan.Zero ? furniLimit : 0,
+            withGrace > TimeSpan.Zero ? furniLimit : BuildersClubFurni.TrialFurniLimit,
             maxFurniLimit,
             (int)Math.Max(0, withGrace.TotalSeconds));
     }

@@ -25,7 +25,7 @@ public sealed partial class RoomGrain
     {
         if (item.Interaction is not FriendFurniInteraction)
             return false;
-        if (item.Data.StringValues is [FriendFurniLocked, ..] || _friendLocks.ContainsKey(item.Item.Id)
+        if (item.Data.StringValues is [FriendFurniLocked, ..] || _friendLocks.ContainsKey(item.Id)
             || _friendLocks.Values.Any(l => l.Involves(user.Player.Id)) || !RoomFurnitureUse.Reaches(user, item))
             return true;
 
@@ -41,10 +41,10 @@ public sealed partial class RoomGrain
         if (beside.FirstOrDefault(other => friendIds.Contains(other.Player.Id)) is not { } friend)
             return true;
 
-        var pending = new FriendLock(item.Item.Id, user.Player.Id, friend.Player.Id);
-        _friendLocks[item.Item.Id] = pending;
+        var pending = new FriendLock(item.Id, user.Player.Id, friend.Player.Id);
+        _friendLocks[item.Id] = pending;
         foreach (var playerId in new[] { pending.Starter, pending.Friend })
-            SendTo(playerId, new FriendFurniStartConfirmationMessageComposer(item.Item.Id, playerId == item.Item.OwnerId));
+            SendTo(playerId, new FriendFurniStartConfirmationMessageComposer(item.Id, playerId == item.Item.OwnerId));
         return true;
     }
 
@@ -82,6 +82,8 @@ public sealed partial class RoomGrain
                 DateTime.UtcNow.ToString(FriendFurniDateFormat, CultureInfo.InvariantCulture),
             ],
         });
+        TrackAction(starter, Habbo.Silo.RewardTracks.RewardTrackActions.FriendFurniLocked);
+        TrackAction(friend, Habbo.Silo.RewardTracks.RewardTrackActions.FriendFurniLocked);
     }
 
     /// <summary>A player leaving calls off any lock they were part of.</summary>

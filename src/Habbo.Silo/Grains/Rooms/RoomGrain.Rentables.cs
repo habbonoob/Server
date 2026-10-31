@@ -16,7 +16,8 @@ public sealed partial class RoomGrain
 {
     private const string RentReason = "rentable_space";
 
-    /// <summary>The rented spaces, by the space's item id.</summary>
+    /// <summary>The rented spaces, by the space's database id, as the rents are saved; the client names a space by the
+    /// id the room knows it by.</summary>
     private readonly Dictionary<int, RentedSpace> _rentals = [];
 
     private async Task LoadRentalsAsync(AppDbContext db)
@@ -36,7 +37,7 @@ public sealed partial class RoomGrain
     private bool RentsTiles(Guid playerId, IEnumerable<(int X, int Y)> tiles)
     {
         var wanted = tiles.ToList();
-        return _rentals.Any(r => r.Value.RenterId == playerId && _items?.Find(r.Key) is { } space && SpaceCovers(space, wanted));
+        return _rentals.Any(r => r.Value.RenterId == playerId && _items?.FindStored(r.Key) is { } space && SpaceCovers(space, wanted));
     }
 
     private static IEnumerable<(int X, int Y)> TilesAt(Habbo.Domain.Furniture.ItemDefinition definition, int x, int y, int rotation)
@@ -79,7 +80,7 @@ public sealed partial class RoomGrain
             return;
 
         var rules = rentableOptions.Value;
-        if (_rentals.TryGetValue(itemId, out var rented))
+        if (_rentals.TryGetValue(space.Item.Id, out var rented))
         {
             SendTo(playerId, new RentableSpaceStatusMessageComposer(true, RentableSpaceRentFailedMessageComposer.AlreadyRented, rented.RenterAccountId,
                 rented.RenterName, (int)Math.Max(0, (rented.Until - DateTimeOffset.UtcNow).TotalSeconds), rules.PriceInCredits));
@@ -108,10 +109,10 @@ public sealed partial class RoomGrain
 
         var until = DateTimeOffset.UtcNow.AddSeconds(rules.RentSeconds);
         await using var db = await dbFactory.CreateDbContextAsync();
-        db.RentableSpaceRentals.Add(new RentableSpaceRental { ItemId = itemId, RenterId = playerId, RentedUntil = until });
+        db.RentableSpaceRentals.Add(new RentableSpaceRental { ItemId = space.Item.Id, RenterId = playerId, RentedUntil = until });
         await db.SaveChangesAsync();
 
-        _rentals[itemId] = new RentedSpace(playerId, renter.Player.AccountId, renter.Player.Username, until);
+        _rentals[space.Item.Id] = new RentedSpace(playerId, renter.Player.AccountId, renter.Player.Username, until);
         SendTo(playerId, new RentableSpaceRentOkMessageComposer(rules.RentSeconds));
     }
 
@@ -121,7 +122,7 @@ public sealed partial class RoomGrain
         if (_items?.Find(itemId) is not { Interaction: RentableSpaceInteraction } space)
             return;
 
-        if (!_rentals.TryGetValue(itemId, out var rented))
+        if (!_rentals.TryGetValue(space.Item.Id, out var rented))
         {
             SendTo(playerId, new RentableSpaceRentFailedMessageComposer(RentableSpaceRentFailedMessageComposer.NotRented));
             return;
@@ -163,7 +164,7 @@ public sealed partial class RoomGrain
         var now = DateTimeOffset.UtcNow;
         foreach (var itemId in _rentals.Where(r => r.Value.Until <= now).Select(r => r.Key).ToList())
         {
-            if (_items.Find(itemId) is { } space)
+            if (_items.FindStored(itemId) is { } space)
                 await EndRentAsync(space);
             else
             {

@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Habbo.Domain\Habbo.Domain.csproj" />
+    <!-- the dumper's capture replay and seed writer, so a catalog the client walked comes out as the G-Earth dumper writes it -->
+    <ProjectReference Include="..\Habbo.CatalogDumper\Habbo.CatalogDumper.csproj" />
   </ItemGroup>
 
 </Project>

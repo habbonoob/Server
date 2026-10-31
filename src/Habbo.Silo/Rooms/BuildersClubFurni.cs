@@ -20,6 +20,11 @@ public static class BuildersClubFurni
     /// its Builders Club furni locks it to visitors.</summary>
     public static bool IsTrial(BuildersClubView club) => club.SecondsLeft <= 0;
 
+    /// <summary>How many Builders Club items one on the free trial may have out: 50, as habbo.com's trial gives. (One
+    /// capture of an account that never joined, 25 October 2026, was told 1000; the hotel's owner knows the trial as 50.)
+    /// </summary>
+    public const int TrialFurniLimit = 50;
+
     /// <summary>On the trial, only with nobody but staff visiting.</summary>
     public static bool MayBuildWithVisitors(bool trial, int visitors) => !trial || visitors == 0;
 

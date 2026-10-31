@@ -23,6 +23,14 @@ public sealed class RelayOptions
     /// G-Earth copier saves them.</summary>
     public string? RoomCopyDirectory { get; set; }
 
+    /// <summary>Where the client's catalog dumps are written, as the hotel's seed catalogs (catalog.json, and
+    /// catalog_builders_club.json for the Builders Club warehouse): absolute, or relative to the repository root.</summary>
+    public string CatalogSeedDirectory { get; set; } = "seed";
+
+    /// <summary>The furnidata the catalog dumps name their products from: absolute, or relative to the repository
+    /// root.</summary>
+    public string CatalogFurnidata { get; set; } = "seed/furnidata.xml";
+
     /// <summary>The pages allowed to call the capture API (the client's dev and preview servers), under either name
     /// of this machine: the preview serves on every interface, so its page may be opened as 127.0.0.1 too.</summary>
     public string[] AllowedOrigins { get; set; } =

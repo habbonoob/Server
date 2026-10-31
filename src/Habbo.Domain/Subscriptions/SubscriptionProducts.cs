@@ -11,4 +11,8 @@ public static class SubscriptionProducts
     /// <summary>The client treats any product name starting with this as a Builders Club,
     /// which is how the tiers are told apart.</summary>
     public const string BuildersClubPrefix = "builders_club";
+
+    /// <summary>What a Builders Club upgrade product names instead of a tier: it adds its amount to the furni limit,
+    /// and no time.</summary>
+    public const string BuildersClubAddon = "builders_club_addon";
 }

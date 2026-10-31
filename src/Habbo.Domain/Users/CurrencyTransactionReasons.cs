@@ -13,4 +13,7 @@ public static class CurrencyTransactionReasons
     public const string ChestWithdrawal = "chest_withdrawal";
     public const string PhotoPurchase = "photo_purchase";
     public const string PhotoPublish = "photo_publish";
+    public const string RewardTrackPrize = "reward_track_prize";
+    public const string DailyTaskReward = "daily_task_reward";
+    public const string Recycler = "recycler";
 }

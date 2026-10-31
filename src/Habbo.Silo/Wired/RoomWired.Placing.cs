@@ -29,7 +29,7 @@ public sealed partial class RoomWired
 
     public async Task<bool> RemoveCopyAsync(RoomItemStore.PlacedItem copy)
     {
-        if (!copy.Temporary || items.Find(copy.Item.Id) != copy || !TakeWrite())
+        if (!copy.Temporary || items.Find(copy.Id) != copy || !TakeWrite())
             return false;
 
         await furniture.RemoveAsync(copy);

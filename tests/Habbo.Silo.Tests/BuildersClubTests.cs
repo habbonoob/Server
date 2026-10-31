@@ -1,4 +1,8 @@
+using Habbo.Domain.Subscriptions;
+using Habbo.Domain.Users;
 using Habbo.Infrastructure;
+using Habbo.Protocol.Messages.Outgoing.Catalog;
+using Habbo.Silo.Abstractions.Catalog;
 using Habbo.Silo.Abstractions.Rooms;
 using Habbo.Silo.Abstractions.Subscriptions;
 using Habbo.Silo.Rooms;
@@ -16,10 +20,10 @@ public class BuildersClubTests
         SubscriptionService.BuildersClubStatus(expiresAt, furniLimit: 50, Grace, maxFurniLimit: 500, Now);
 
     [Fact]
-    public void OneWhoNeverJoinedHasNoLimitAndIsShownTheBestTier()
+    public void OneWhoNeverJoinedIsOnTheTrialAndIsShownTheBestTier()
     {
-        // Habbo, 2026-10-22: [0, 0, 500, 0]
-        Assert.Equal(new BuildersClubView(0, 0, 500, 0), Status(null));
+        Assert.Equal(new BuildersClubView(0, BuildersClubFurni.TrialFurniLimit, 500, 0), Status(null));
+        Assert.True(BuildersClubFurni.IsTrial(Status(null)));
     }
 
     [Fact]
@@ -44,12 +48,12 @@ public class BuildersClubTests
     }
 
     [Fact]
-    public void AfterTheGracePeriodNothingMoreCanBeBorrowed()
+    public void AfterTheGracePeriodItIsTheTrialAgain()
     {
         var status = Status(Now.AddDays(-8));
 
-        Assert.Equal(0, status.FurniLimit);
-        Assert.False(BuildersClubFurni.HasRoomFor(0, status.FurniLimit));
+        Assert.Equal(BuildersClubFurni.TrialFurniLimit, status.FurniLimit);
+        Assert.True(BuildersClubFurni.IsTrial(status));
     }
 
     [Fact]
@@ -84,5 +88,59 @@ public class BuildersClubTests
         var sql = db.UserItems.Where(item => item.RoomId == null).ToQueryString();
 
         Assert.Contains("NOT (u.\"BuildersClub\") OR u.\"RoomId\" IS NOT NULL", sql);
+    }
+
+    private static readonly BuildersClubLimits[] Tiers =
+    [
+        new() { ProductName = "builders_club", FurniLimit = 50, MaxFurniLimit = 500, Grace = Grace },
+        new() { ProductName = "builders_club_pro", FurniLimit = 500, MaxFurniLimit = 500, Grace = Grace },
+    ];
+
+    private static Subscription Membership(string tier, DateTimeOffset expiresAt) =>
+        new() { ProductName = tier, ExpiresAt = expiresAt };
+
+    [Fact]
+    public void BoughtDaysGoOnTopOfTheTimeLeft()
+    {
+        var membership = Membership("builders_club", Now.AddDays(5));
+
+        var wasRunning = BuildersClubMembership.Extend(membership, "builders_club", TimeSpan.FromDays(31), 1, Tiers, Now);
+
+        Assert.True(wasRunning);
+        Assert.Equal(Now.AddDays(36), membership.ExpiresAt);
+        Assert.Equal(Now, membership.LastModifiedAt);
+    }
+
+    [Fact]
+    public void AMembershipWithNoTimeLeftRunsFromNowEvenInItsGrace()
+    {
+        var membership = Membership("builders_club", Now.AddDays(-2));
+
+        var wasRunning = BuildersClubMembership.Extend(membership, "builders_club", TimeSpan.FromDays(31), 1, Tiers, Now);
+
+        Assert.False(wasRunning);
+        Assert.Equal(Now.AddDays(31), membership.ExpiresAt);
+    }
+
+    [Fact]
+    public void BuyingNeverLowersTheTier()
+    {
+        var pro = Membership("builders_club_pro", Now.AddDays(5));
+        BuildersClubMembership.Extend(pro, "builders_club", TimeSpan.FromDays(31), 1, Tiers, Now);
+        Assert.Equal("builders_club_pro", pro.ProductName);
+
+        var basic = Membership("builders_club", Now.AddDays(5));
+        BuildersClubMembership.Extend(basic, "builders_club_pro", TimeSpan.FromDays(31), 1, Tiers, Now);
+        Assert.Equal("builders_club_pro", basic.ProductName);
+    }
+
+    [Fact]
+    public void AMembershipIsSentWithoutItsProductAsHabboSendsIt()
+    {
+        var offer = new ShopOffer(13902, "loyalty_bc_31_days", 105, ClubLevel.None, 1,
+            [new ShopProduct(null, 0, false, "builders_club", 1, ProductTypes.BuildersClub, null, 31 * 86400)],
+            105, 5, 0, false, true, false, string.Empty);
+
+        Assert.Empty(CatalogOfferDataFactory.From(offer).Products);
     }
 }

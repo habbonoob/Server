@@ -1,0 +1,73 @@
+{
+  "comment": "Seasonal quests: time-limited campaigns, each a chain of quests taken on one after another (GetSeasonalQuests lists the one the player is on in each). A calendar is the advent calendar the client draws for campaigns starting with seasonalQuestCalendar.campaignPrefix: one campaign a day from startsOn (UTC), its quest's sort order the day, open until endsOn; its days pay reward activity points of activityPointType (101 snowflakes, seasonalQuestCalendar.currency). Texts are quests.<campaign>.<code>.*. The bawcollab campaigns are habbo.com's (SeasonalQuestsMessage, 25 Oct 2026: their first quests, 2094 and 2095, and their end); the later quest ids are ours. The xmas2013 days come from the external texts (quests.xmas2013_*); their ids and types are ours: Habbo judged most in its Santa's Workshop rooms, so FIND_STUFF stands for 'the room's wired says so'. steps defaults to 1.",
+  "calendars": [
+    {
+      "prefix": "xmas2013",
+      "startsOn": "2026-12-01",
+      "endsOn": "2026-12-31",
+      "activityPointType": 101,
+      "reward": 5,
+      "days": [
+        { "day": 1, "campaign": "xmas2013_1", "chain": "xmas2013_1", "quest": { "id": 201301, "code": "the_doors", "type": "FIND_STUFF" } },
+        { "day": 2, "campaign": "xmas2013_2", "chain": "xmas2013_2", "quest": { "id": 201302, "code": "the_keys", "type": "FIND_STUFF" } },
+        { "day": 3, "campaign": "xmas2013_3", "chain": "xmas2013_3", "quest": { "id": 201303, "code": "hole_torch", "type": "FIND_STUFF" } },
+        { "day": 4, "campaign": "xmas2013_4", "chain": "xmas2013_4", "quest": { "id": 201304, "code": "dive", "type": "SWIM" } },
+        { "day": 5, "campaign": "xmas2013_5", "chain": "xmas2013_5", "quest": { "id": 201305, "code": "fireplace", "type": "FIND_STUFF" } },
+        { "day": 6, "campaign": "xmas2013_6", "chain": "xmas2013_6", "quest": { "id": 201306, "code": "slippers", "type": "FIND_STUFF" } },
+        { "day": 7, "campaign": "xmas2013_7", "chain": "xmas2013_7", "quest": { "id": 201307, "code": "trendset", "type": "FIND_STUFF" } },
+        { "day": 8, "campaign": "xmas2013_8", "chain": "xmas2013_8", "quest": { "id": 201308, "code": "penguin", "type": "FIND_STUFF" } },
+        { "day": 9, "campaign": "xmas2013_9", "chain": "xmas2013_9", "quest": { "id": 201309, "code": "satellite", "type": "FIND_STUFF" } },
+        { "day": 10, "campaign": "xmas2013_10", "chain": "xmas_10", "quest": { "id": 201310, "code": "friends", "type": "FIND_STUFF" } },
+        { "day": 11, "campaign": "xmas2013_11", "chain": "xmas2013_11", "quest": { "id": 201311, "code": "drinks", "type": "FIND_STUFF" } },
+        { "day": 12, "campaign": "xmas2013_12", "chain": "xmas_12", "quest": { "id": 201312, "code": "snow", "type": "WAVE" } },
+        { "day": 13, "campaign": "xmas2013_13", "chain": "xmas2013_13", "quest": { "id": 201313, "code": "dance", "type": "DANCE" } },
+        { "day": 14, "campaign": "xmas2013_14", "chain": "xmas2013_14", "quest": { "id": 201314, "code": "moredrink", "type": "FIND_STUFF" } },
+        { "day": 15, "campaign": "xmas2013_15", "chain": "xmas2013_15", "quest": { "id": 201315, "code": "1386093252572", "type": "FIND_STUFF" } },
+        { "day": 16, "campaign": "xmas2013_16", "chain": "xmas2013_16", "quest": { "id": 201316, "code": "barrel", "type": "FIND_STUFF" } },
+        { "day": 17, "campaign": "xmas2013_17", "chain": "xmas2013_17", "quest": { "id": 201317, "code": "tree", "type": "FIND_STUFF" } },
+        { "day": 18, "campaign": "xmas2013_18", "chain": "xmas_2013_18", "quest": { "id": 201318, "code": "carol", "type": "FIND_STUFF" } },
+        { "day": 19, "campaign": "xmas2013_19", "chain": "xmas2013_19", "quest": { "id": 201319, "code": "guess", "type": "FIND_STUFF" } },
+        { "day": 20, "campaign": "xmas2013_20", "chain": "xmas2013_20", "quest": { "id": 201320, "code": "carrots", "type": "FIND_STUFF" } },
+        { "day": 21, "campaign": "xmas2013_22", "chain": "xmas2013_22", "quest": { "id": 201321, "code": "santa", "type": "FIND_STUFF" } },
+        { "day": 22, "campaign": "xmas2013_23", "chain": "day_22", "quest": { "id": 201322, "code": "turkey", "type": "FIND_STUFF" } },
+        { "day": 23, "campaign": "xmas2013_24", "chain": "xmas2013_23", "quest": { "id": 201323, "code": "snowman", "type": "FIND_STUFF" } },
+        { "day": 24, "campaign": "xmas2013_25", "chain": "xmas2013_24", "quest": { "id": 201324, "code": "merry", "type": "FIND_STUFF" } }
+      ]
+    }
+  ],
+  "campaigns": [
+    {
+      "code": "bawcollab_worlds",
+      "chain": "1771579236591",
+      "startsAt": "2026-02-20T00:00:00Z",
+      "endsAt": "2027-03-11T00:00:00Z",
+      "activityPointType": -1,
+      "reward": 0,
+      "quests": [
+        { "id": 2094, "code": "1771579447385", "type": "WEAR_BADGE", "parameter": "W2601", "easy": true },
+        { "id": 2096, "code": "1771579590928", "type": "WEAR_BADGE", "parameter": "W2610", "easy": true },
+        { "id": 2097, "code": "1771579734993", "type": "WEAR_BADGE", "parameter": "W2609", "easy": true },
+        { "id": 2098, "code": "1771579820366", "type": "WEAR_BADGE", "parameter": "W2604", "easy": true },
+        { "id": 2099, "code": "1771579914271", "type": "WEAR_BADGE", "parameter": "W2603", "easy": true },
+        { "id": 2100, "code": "1771580011052", "type": "WEAR_BADGE", "parameter": "W2602", "easy": true },
+        { "id": 2101, "code": "1771580115098", "type": "WEAR_BADGE", "parameter": "W2605", "easy": true },
+        { "id": 2102, "code": "1771580187651", "type": "WEAR_BADGE", "parameter": "W2606", "easy": true },
+        { "id": 2103, "code": "1771580591567", "type": "WEAR_BADGE", "parameter": "W2608", "easy": true },
+        { "id": 2104, "code": "1771580655461", "type": "WEAR_BADGE", "parameter": "W2607", "easy": true }
+      ]
+    },
+    {
+      "code": "bawcollab_dlc",
+      "chain": "1771583727360",
+      "startsAt": "2026-02-20T00:00:00Z",
+      "endsAt": "2027-03-11T00:00:00Z",
+      "activityPointType": -1,
+      "reward": 0,
+      "quests": [
+        { "id": 2095, "code": "1771583870994", "type": "WEAR_BADGE", "parameter": "W2611", "easy": true },
+        { "id": 2105, "code": "1771584000727", "type": "WEAR_BADGE", "parameter": "W2612", "easy": true },
+        { "id": 2106, "code": "1771584285810", "type": "WEAR_BADGE", "parameter": "W2613", "easy": true }
+      ]
+    }
+  ]
+}

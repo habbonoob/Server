@@ -71,7 +71,7 @@ public sealed class CatalogExtrasService(
 
         var spent = await db.BonusRareProgress.Where(p => p.UserId == player.Id).Select(p => p.CreditsSpent).FirstOrDefaultAsync();
         await messenger.SendAsync(player.Id, new BonusRareInfoMessageComposer(
-            rare.Type == Habbo.Domain.Furniture.ItemType.Wall ? CatalogProductData.WallType : CatalogProductData.FloorType,
+            rare.ClassName,
             rare.ClassId, bonus.BonusRareCredits, Math.Max(0, bonus.BonusRareCredits - spent)));
     }
 

@@ -33,6 +33,7 @@ public sealed partial class RoomGrain
 
             // the room's own, which check who may themselves
             (new(PickAllCommand, [], ":pickall"), (player, _) => PickAllAsync(player)),
+            (new(PickAllBuildersClubCommand, [], ":pickallbc"), (player, _) => PickAllBuildersClubAsync(player)),
             (new(EjectAllCommand, [], ":ejectall [username]"), EjectAllAsync),
             (new(EjectPetsCommand, [], ":ejectpets"), (player, _) => EjectPetsAsync(player)),
             (new(ResetScoresCommand, [], ":resetscores"), (player, _) => ResetScoresAsync(player)),

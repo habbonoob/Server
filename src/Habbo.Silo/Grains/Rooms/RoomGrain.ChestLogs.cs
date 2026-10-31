@@ -3,6 +3,7 @@ using Habbo.Domain.Furniture.Chests;
 using Habbo.Protocol.Messages.Outgoing.UserDefinedRoomEvents.WiredTrading.Chests.Storage;
 using Habbo.Protocol.Messages.Outgoing.UserDefinedRoomEvents.WiredTrading.Transactions;
 using Habbo.Silo.Chests;
+using Habbo.Silo.Items.Interactions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Habbo.Silo.Grains.Rooms;
@@ -16,9 +17,11 @@ public sealed partial class RoomGrain
         if (_entities?.Find(playerId) is not { } user || Chest(chestId) is not { } chest || !MayOpenChest(user, chest))
             return;
 
+        // the log names chests by their database ids
         await using var db = await dbFactory.CreateDbContextAsync();
+        var storedId = chest.Item.Id;
         await SendChestLogPageAsync(playerId, WiredTransactionLogListMessageComposer.ChestLogs, chestId,
-            db.ChestTransactions.Where(t => t.RoomId == _room!.Id && t.ChestIds.Contains(chestId)), pageSize, page);
+            db.ChestTransactions.Where(t => t.RoomId == _room!.Id && t.ChestIds.Contains(storedId)), pageSize, page);
     }
 
     public async Task SendRoomChestLogsAsync(Guid playerId, int pageSize, int page)
@@ -40,13 +43,16 @@ public sealed partial class RoomGrain
         await using var db = await dbFactory.CreateDbContextAsync();
         if (await db.ChestTransactions.AsNoTracking().Include(t => t.Items).FirstOrDefaultAsync(t => t.Id == transactionId && t.RoomId == _room!.Id)
             is not { } transaction
-            || (!WiredRights(user).Read && !transaction.ChestIds.Any(id => Chest(id) is { } chest && MayOpenChest(user, chest))))
+            || (!WiredRights(user).Read
+                && !transaction.ChestIds.Any(id => _items?.FindStored(id) is { Interaction: ChestInteraction } chest && MayOpenChest(user, chest))))
             return;
 
         var names = await NamesOfAsync(db, [transaction]);
         ChestItemAmountData Amount(ChestTransactionItem item) =>
             new(new ChestItemTypeData(item.IsWallItem, item.TypeId, item.PosterId), item.Amount);
-        SendTo(playerId, new WiredTransactionLogDetailsMessageComposer(ToLogInfo(transaction, names), transaction.ChestIds,
+        // the chests by the ids the room knows them by, those still here
+        SendTo(playerId, new WiredTransactionLogDetailsMessageComposer(ToLogInfo(transaction, names),
+            transaction.ChestIds.Select(id => _items?.IdOfStored(id) ?? id).ToList(),
             transaction.Items.Where(i => i.Deposited).Select(Amount).ToList(), transaction.Items.Where(i => !i.Deposited).Select(Amount).ToList(), false));
     }
 

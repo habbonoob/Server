@@ -11,9 +11,10 @@ public abstract class WiredBoxType
     /// <summary>How many furni one box may pick.</summary>
     public const int MaxPickedFurni = 20;
 
-    /// <summary>The most int parameters a dialog sends; more is not a dialog talking. The largest Habbo's dialogs send
-    /// (bc_run4) is the levelling display add-on's 22; the neighbourhood's is 18 (three, then its drawing in 15 words).</summary>
-    public const int MaxIntParams = 22;
+    /// <summary>The most int parameters a dialog sends; more is not a dialog talking. The largest Habbo's dialogs send is
+    /// the send-link-dataframe effect's 37 (a row count, then three for each of its 12 rows); before it, the levelling
+    /// display add-on's 22 (bc_run4).</summary>
+    public const int MaxIntParams = 37;
 
     public abstract WiredKind Kind { get; }
 
@@ -60,6 +61,13 @@ public abstract class WiredBoxType
     /// boxes nothing, leaving the reset to the client.</summary>
     public virtual IReadOnlyList<int> ResetIntParams => [];
 
+    /// <summary>The variable ids a new box's dialog is sent: none for most; one per row for the link dataframe boxes,
+    /// whose dialogs refuse to load without all twelve.</summary>
+    public virtual IReadOnlyList<string> DefaultVariableIds => [];
+
+    /// <summary>The longest string the box keeps: the text limit, or more for the link dataframe boxes.</summary>
+    public virtual int MaxStringLength => FurniWired.TextMaxLength;
+
     /// <summary>Whether saving records the picked furni as they stand, for the boxes that match
     /// or restore that picture.</summary>
     public virtual bool TakesSnapshot => false;
@@ -89,7 +97,7 @@ public abstract class WiredTrigger : WiredBoxType
     {
         WiredSources.SelectedFurni => room.SelectedFor(box, e).Furni.Contains(item),
         WiredSources.SignalFurni => e.SignalFurni.Contains(item),
-        _ => box.Settings.StuffIds.Contains(item.Item.Id),
+        _ => box.Settings.StuffIds.Contains(item.Id),
     };
 
     public override WiredKind Kind => WiredKind.Trigger;

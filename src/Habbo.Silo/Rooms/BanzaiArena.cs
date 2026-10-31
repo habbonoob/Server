@@ -191,7 +191,7 @@ public sealed class BanzaiArena(RoomGames games, RoomItemStore items, IFurniRoom
 
     private void Kick(RoomItemStore.PlacedItem puck, RoomEntityStore.RoomEntity kicker, int dx, int dy)
     {
-        if (actions is null || (dx == 0 && dy == 0) || !_rollingPucks.Add(puck.Item.Id))
+        if (actions is null || (dx == 0 && dy == 0) || !_rollingPucks.Add(puck.Id))
             return;
 
         var power = KickPower(puck);
@@ -209,10 +209,10 @@ public sealed class BanzaiArena(RoomGames games, RoomItemStore items, IFurniRoom
     /// <summary>One tile of a kick: on, unless something is in the way, which stops it there.</summary>
     private async Task RollAsync(RoomItemStore.PlacedItem puck, int dx, int dy, int left, int team, RoomEntityStore.RoomEntity kicker, bool last)
     {
-        if (!_rollingPucks.Contains(puck.Item.Id))
+        if (!_rollingPucks.Contains(puck.Id))
             return;
         if (last)
-            _rollingPucks.Remove(puck.Item.Id);
+            _rollingPucks.Remove(puck.Id);
         if (actions is null || !furniture.IsPlaced(puck))
             return;
 
@@ -241,7 +241,7 @@ public sealed class BanzaiArena(RoomGames games, RoomItemStore items, IFurniRoom
     /// <summary>Something in the way: the puck stops where it is, at rest (11, as Habbo's ends a roll).</summary>
     private async Task StopAsync(RoomItemStore.PlacedItem puck)
     {
-        _rollingPucks.Remove(puck.Item.Id);
+        _rollingPucks.Remove(puck.Id);
         if (puck.Data.StateText != RestState)
             await furniture.UpdateAsync(puck, puck.Data with { State = RestState });
     }

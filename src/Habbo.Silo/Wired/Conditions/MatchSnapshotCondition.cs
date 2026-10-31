@@ -17,7 +17,7 @@ public class MatchSnapshotCondition : WiredCondition
         var parts = WiredFurni.SnapshotParts.Of(box);
         var snapshots = box.Settings.Snapshots.ToDictionary(snapshot => snapshot.ItemId);
         // what the source gives that the snapshot never saw has nothing to match
-        return WiredQuantity.Passes(box, IsNegative, run.Furni(box).Where(item => snapshots.ContainsKey(item.Item.Id)),
-            item => WiredFurni.Matches(item, snapshots[item.Item.Id], parts));
+        return WiredQuantity.Passes(box, IsNegative, run.Furni(box).Where(item => snapshots.ContainsKey(item.Id)),
+            item => WiredFurni.Matches(item, snapshots[item.Id], parts));
     }
 }

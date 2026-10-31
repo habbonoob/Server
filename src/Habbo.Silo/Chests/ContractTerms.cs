@@ -3,7 +3,8 @@ using Habbo.Domain.Furniture.Chests;
 namespace Habbo.Silo.Chests;
 
 /// <summary>A contract as one transaction runs it: what it asks and gives, how many times the rules are to be met
-/// (once, exactly so many, or as often as offered up to a limit), and the chests it pays into and gives from.</summary>
+/// (once, exactly so many, or as often as offered up to a limit), and the chests it pays into and gives from. The
+/// chests and the contract furni go by the ids the room knows them by.</summary>
 public sealed record ContractTerms(
     WiredContract Contract,
     int RuleType,

@@ -33,6 +33,16 @@ then says what it left out (below). Commit the file: it is the catalog new hotel
 rate-limits; requesting them back to back gets the account throttled and produces a half-empty
 dump that still looks complete.
 
+## Without G-Earth: the web client
+
+habbo-pixi's browser client can walk the catalog itself (its `catalog-dumper` package), through
+[the relay](../Habbo.Relay/README.md), so neither G-Earth nor the official client is needed. Start the relay and
+open the client with `?relay=8791&catalog=8791`, then say `:dumpcatalog` in a room (`:dumpcatalog builders_club` for
+the warehouse, `:dumpcatalog stop` to give up); whispers say how far it got. It asks for the pages as `CatalogWalker`
+does, one every 600 ms (`?catalogdelay=`), and posts Habbo's answers to the relay unread. The relay keeps them as a
+capture and runs them through `CaptureReplay` and `CatalogSeedWriter`, writing `seed/catalog.json`
+(`seed/catalog_builders_club.json`): the same seed `--capture` makes of that capture, which also gives the SQL.
+
 ## Checking the output without Habbo
 
 ```

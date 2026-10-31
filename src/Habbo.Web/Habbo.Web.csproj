@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Habbo.Bundles\Habbo.Bundles.csproj" />
     <ProjectReference Include="..\Habbo.Camera\Habbo.Camera.csproj" />
     <ProjectReference Include="..\Habbo.Domain\Habbo.Domain.csproj" />
     <ProjectReference Include="..\Habbo.Infrastructure\Habbo.Infrastructure.csproj" />

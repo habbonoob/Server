@@ -74,7 +74,8 @@ public sealed class GiveRewardEffect : WiredEffect
         // one user after another: each counts what the box has given before giving, so all at once would
         // each count none and a limit of one would reward everyone
         foreach (var user in run.Users(box).ToList())
-            await run.Room.Rewards.RewardAsync(box.Id, user, rules, run.Room.Random);
+            // what a box has given is kept under its database id
+            await run.Room.Rewards.RewardAsync(box.StoredId, user, rules, run.Room.Random);
     }
 
     private static string[] Texts(FurniWired settings) => settings.StringParam.Split(RewardSeparator, StringSplitOptions.RemoveEmptyEntries);

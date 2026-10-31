@@ -43,6 +43,8 @@ public static class WebServiceCollectionExtensions
             client.DefaultRequestHeaders.UserAgent.ParseAdd(AssetMirror.UserAgent);
         });
         services.AddSingleton<AssetMirror>();
+        services.Configure<BundleOptions>(configuration.GetSection(BundleOptions.Section));
+        services.AddSingleton<AssetBundles>();
         services.AddSingleton<GroupBadgeImager>();
         services.AddHostedService<SsoTicketCleanup>();
         services.AddCors(options =>

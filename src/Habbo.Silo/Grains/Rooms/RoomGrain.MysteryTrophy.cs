@@ -39,7 +39,7 @@ public sealed partial class RoomGrain
         await db.SaveChangesAsync();
 
         await PlaceFloorItemAsync(playerId, trophy.Id, x, y, rotation);
-        if (_items.Find(trophy.Id) is null)
+        if (_items.FindStored(trophy.Id) is null)
             await GrainFactory.GetGrain<IPlayerGrain>(playerId).AnnounceItemsAsync([trophy.Id]);
     }
 }

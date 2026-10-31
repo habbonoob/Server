@@ -45,14 +45,14 @@ public sealed class FootballPitch(RoomItemStore items, RoomEntityStore entities,
     /// <summary>A user stepped onto an item, from a tile; <paramref name="arriving"/> when the walk ends there.</summary>
     public async Task SteppedOnAsync(RoomEntityStore.RoomEntity user, RoomItemStore.PlacedItem item, int fromX, int fromY, bool arriving)
     {
-        if (!IsBall(item) || actions is null || _rolls.ContainsKey(item.Item.Id))
+        if (!IsBall(item) || actions is null || _rolls.ContainsKey(item.Id))
             return;
 
         var (dx, dy) = (Math.Sign(item.X - fromX), Math.Sign(item.Y - fromY));
         if (dx == 0 && dy == 0)
             return;
 
-        var dribbled = _dribbledBy.TryGetValue(item.Item.Id, out var by) && by == user;
+        var dribbled = _dribbledBy.TryGetValue(item.Id, out var by) && by == user;
         if (arriving && dribbled)
             return;
         if (arriving)
@@ -64,7 +64,7 @@ public sealed class FootballPitch(RoomItemStore items, RoomEntityStore entities,
     /// <summary>A user walked off a tile: a ball they stood on is heeled back the other way.</summary>
     public void SteppedOff(RoomEntityStore.RoomEntity user, int fromX, int fromY)
     {
-        if (actions is null || BallAt(fromX, fromY) is not { } ball || _rolls.ContainsKey(ball.Item.Id))
+        if (actions is null || BallAt(fromX, fromY) is not { } ball || _rolls.ContainsKey(ball.Id))
             return;
 
         var (dx, dy) = (Math.Sign(user.X - fromX), Math.Sign(user.Y - fromY));
@@ -78,14 +78,14 @@ public sealed class FootballPitch(RoomItemStore items, RoomEntityStore entities,
         if (actions!.HasAvatarAt(x, y) || GoalAt(x, y) is not null)
             return;
         if (await MoveAsync(ball, x, y, dx, dy, Rest, intoGoal: false))
-            _dribbledBy[ball.Item.Id] = user;
+            _dribbledBy[ball.Id] = user;
     }
 
     private void Kick(RoomItemStore.PlacedItem ball, RoomEntityStore.RoomEntity kicker, int dx, int dy)
     {
-        _dribbledBy.Remove(ball.Item.Id);
-        var roll = _rolls.GetValueOrDefault(ball.Item.Id) + 1;
-        _rolls[ball.Item.Id] = roll;
+        _dribbledBy.Remove(ball.Id);
+        var roll = _rolls.GetValueOrDefault(ball.Id) + 1;
+        _rolls[ball.Id] = roll;
         var power = Power(ball);
         furniture.Schedule(LastStepTime / power, () => RollAsync(ball, kicker, dx, dy, power - 1, roll, bounced: false));
     }
@@ -94,7 +94,7 @@ public sealed class FootballPitch(RoomItemStore items, RoomEntityStore entities,
     /// way.</summary>
     private async Task RollAsync(RoomItemStore.PlacedItem ball, RoomEntityStore.RoomEntity kicker, int dx, int dy, int left, int roll, bool bounced)
     {
-        if (_rolls.GetValueOrDefault(ball.Item.Id) != roll || !furniture.IsPlaced(ball))
+        if (_rolls.GetValueOrDefault(ball.Id) != roll || !furniture.IsPlaced(ball))
             return;
 
         var (x, y) = (ball.X + dx, ball.Y + dy);
@@ -102,7 +102,7 @@ public sealed class FootballPitch(RoomItemStore items, RoomEntityStore entities,
         {
             // the goal's back or side: back off it a tile, at half the power it came with, and still (Habbo: a goal
             // at dir 0 hit from the south at 44 sent the ball back a tile at 22)
-            _rolls.Remove(ball.Item.Id);
+            _rolls.Remove(ball.Id);
             await MoveAsync(ball, ball.X - dx, ball.Y - dy, -dx, -dy, State((left + 1) / 2), intoGoal: false);
             return;
         }
@@ -114,9 +114,9 @@ public sealed class FootballPitch(RoomItemStore items, RoomEntityStore entities,
             // out of the net, a tile back, at half the power it went in with, and still
             furniture.Schedule(LastStepTime / Math.Max(1, left), async () =>
             {
-                if (_rolls.GetValueOrDefault(ball.Item.Id) != roll)
+                if (_rolls.GetValueOrDefault(ball.Id) != roll)
                     return;
-                _rolls.Remove(ball.Item.Id);
+                _rolls.Remove(ball.Id);
                 await MoveAsync(ball, ball.X - dx, ball.Y - dy, -dx, -dy, State(left / 2), intoGoal: true);
             });
             return;
@@ -128,7 +128,7 @@ public sealed class FootballPitch(RoomItemStore items, RoomEntityStore entities,
             // something in the way: back the other way, a tile shorter, slowly (Habbo: off a wall at 33, then 11, 11)
             if (left <= 0)
             {
-                _rolls.Remove(ball.Item.Id);
+                _rolls.Remove(ball.Id);
                 return;
             }
 
@@ -137,14 +137,14 @@ public sealed class FootballPitch(RoomItemStore items, RoomEntityStore entities,
             left--;
             if (actions.HasAvatarAt(x, y) || !await MoveAsync(ball, x, y, dx, dy, Rest, intoGoal: false))
             {
-                _rolls.Remove(ball.Item.Id);
+                _rolls.Remove(ball.Id);
                 return;
             }
         }
 
         if (left <= 0)
         {
-            _rolls.Remove(ball.Item.Id);
+            _rolls.Remove(ball.Id);
             return;
         }
 

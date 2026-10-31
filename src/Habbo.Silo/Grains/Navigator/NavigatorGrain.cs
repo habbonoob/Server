@@ -119,6 +119,7 @@ public sealed class NavigatorGrain(
             CategoryId = request.CategoryId,
             MaxUsers = settingsRules.MaxVisitors(request.MaxVisitors),
             TradeMode = RoomSettingsRules.Choice(request.TradeMode, 0, RoomSettingsRules.TradeModeMax, 0),
+            UseSmallScale = model.UseSmallScale,
         };
 
         db.Rooms.Add(room);
@@ -126,6 +127,7 @@ public sealed class NavigatorGrain(
         logger.LogInformation("Created room {RoomId} '{Name}' on model '{Model}'.",
             room.Id, room.Name, model.Name);
 
+        GrainFactory.GetGrain<IPlayerGrain>(owner.Id).TrackActionAsync(RewardTracks.RewardTrackActions.CreateRoom).Ignore();
         return new RoomCreationResult(room.Id, room.Name);
     }
 }

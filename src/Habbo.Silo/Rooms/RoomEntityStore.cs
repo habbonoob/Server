@@ -24,6 +24,9 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
     /// <summary>The status the client shows a trading avatar with.</summary>
     private const string TradingStatus = "trd";
 
+    /// <summary>A pet's smile, as habbo.com shows one after a command it obeyed, walking or not.</summary>
+    private const string PetSmileStatus = "gst sml";
+
     /// <summary>What ends each status entry, and opens and closes the line.</summary>
     private const string StatusSeparator = "/";
 
@@ -65,6 +68,9 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
 
     /// <summary>The user with the room index.</summary>
     public RoomEntity? FindByIndex(int roomIndex) => _entities.Values.FirstOrDefault(entity => entity.RoomIndex == roomIndex);
+
+    /// <summary>Whoever stands at the room index: a player, a bot or a pet (wired counts them all as users).</summary>
+    public RoomEntity? FindAvatarByIndex(int roomIndex) => Avatars.FirstOrDefault(entity => entity.RoomIndex == roomIndex);
 
     public RoomEntity? FindBot(int botId) => _bots.GetValueOrDefault(botId);
 
@@ -384,6 +390,8 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         entity.X = next.X;
         entity.Y = next.Y;
         entity.Z = items.AvatarHeightAt(next.X, next.Y);
+        if (entity.Path.Count == 0)
+            _changes.Add((entity, EntityChange.LastStep));
 
         var target = $"{next.X},{next.Y},{RoomItemStore.FormatHeight(entity.Z)}";
         return ToUpdate(entity, fromX, fromY, fromZ, StatusOf(entity, $"mv {target}"));
@@ -568,6 +576,8 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
 
         if (move is null && entity.Pet?.Posture is { } posture)
             parts.Add(posture);
+        if (entity.Pet is { SmileUntilTick: > 0 } smiling && CurrentTick < smiling.SmileUntilTick)
+            parts.Add(PetSmileStatus);
         if (entity.Sign is { } sign)
             parts.Add($"sign {sign}");
         if (entity.Trading)
@@ -651,8 +661,9 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         BadgesRank: entity.BadgesRank);
 
     /// <summary>Moves the entity one step onto a tile that is free to stand on, sliding there as a
-    /// walking step does; null when it cannot go there.</summary>
-    public AvatarUpdateData? Slide(RoomEntity entity, int x, int y)
+    /// walking step does, and turned the way it steps when it walks there of itself; null when it cannot go there.
+    /// The status says it walks until the next one says otherwise.</summary>
+    public AvatarUpdateData? Slide(RoomEntity entity, int x, int y, bool facing = false)
     {
         if (!model.IsTile(x, y) || Occupied(entity, x, y) || items.BlocksWalking(x, y, IsClubMember(entity), entity.GroupIds))
             return null;
@@ -662,6 +673,8 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         entity.Goal = null;
         entity.Walking = false;
         GetUp(entity);
+        if (facing)
+            Face(entity, x, y);
         entity.X = x;
         entity.Y = y;
         entity.Z = items.AvatarHeightAt(x, y);
@@ -669,7 +682,8 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
     }
 
     /// <summary>Moves the entity one step into a tile nobody may walk onto, such as a teleport it goes into,
-    /// sliding there as a walking step does.</summary>
+    /// sliding there and turned as a walking step does. The status says it walks until the next one says
+    /// otherwise.</summary>
     public AvatarUpdateData StepInto(RoomEntity entity, int x, int y)
     {
         var (fromX, fromY, fromZ) = (entity.X, entity.Y, entity.Z);
@@ -677,10 +691,21 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         entity.Goal = null;
         entity.Walking = false;
         GetUp(entity);
+        Face(entity, x, y);
         entity.X = x;
         entity.Y = y;
         entity.Z = items.AvatarHeightAt(x, y);
         return ToUpdate(entity, fromX, fromY, fromZ, StatusOf(entity, $"mv {x},{y},{RoomItemStore.FormatHeight(entity.Z)}"));
+    }
+
+    /// <summary>Turns the entity, body and head, the way it steps to the tile next to it.</summary>
+    private static void Face(RoomEntity entity, int x, int y)
+    {
+        if (entity.X == x && entity.Y == y)
+            return;
+
+        entity.BodyDirection = DirectionOf(entity.X, entity.Y, x, y);
+        entity.HeadDirection = entity.BodyDirection;
     }
 
     /// <summary>Turns the entity to face a tile, as a click on someone does: a standing entity turns
@@ -866,6 +891,9 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         /// <summary>A walk ended, where it was going or as close as it got.</summary>
         Arrived,
 
+        /// <summary>A walk set off on its last step, a tick before it ends.</summary>
+        LastStep,
+
         /// <summary>A user stood idle for as long as the room lets them.</summary>
         IdledOut,
     }
@@ -955,6 +983,10 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         /// A new walk the player starts drops it.</summary>
         public Func<Task>? OnArrival { get; set; }
 
+        /// <summary>What to do as the current walk sets off on its last step, a tick before <see cref="OnArrival"/>.
+        /// Whoever sets it checks that the walk is still the one they meant.</summary>
+        public Func<Task>? OnLastStep { get; set; }
+
         /// <summary>How much control it has in the room (<see cref="RoomControllerLevels"/>).</summary>
         public int ControllerLevel { get; set; }
 
@@ -974,6 +1006,9 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         /// <summary>Invisible staff (:invisible): nobody else is shown them.</summary>
         public bool Invisible { get; set; }
 
+        /// <summary>How wired's set visibility left it for everyone; null as it came in.</summary>
+        public WiredTransparency? Transparency { get; set; }
+
         /// <summary>Staff walking by teleport (:teleport): a click takes them straight to the tile.</summary>
         public bool Teleporting { get; set; }
 
@@ -985,5 +1020,18 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         public int? LastAction { get; set; }
         public string LastActionExtra { get; set; } = string.Empty;
         public int LastActionTick { get; set; }
+
+        /// <summary>How it came into the room (habbo.com's @room_entry.method: 0 by the door, 2 by teleport, 3 through
+        /// a room network), and the teleport it came out of, if it did.</summary>
+        public int EntryMethod { get; set; }
+        public int? EntryTeleportId { get; set; }
+
+        /// <summary>The Habbicon it last showed over its head, and when; null when it shows none.</summary>
+        public int? Habbicon { get; set; }
+        public DateTimeOffset HabbiconShownAt { get; set; }
+
+        /// <summary>The game its team is in (habbo.com's @team.type: 0 Battle Banzai, 1 Freeze, 2 Tagging, 3 Swimming,
+        /// 4 Wired); null outside a team.</summary>
+        public int? TeamGame { get; set; }
     }
 }

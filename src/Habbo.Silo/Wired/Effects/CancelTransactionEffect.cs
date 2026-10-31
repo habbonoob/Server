@@ -14,7 +14,7 @@ public sealed class CancelTransactionEffect : WiredEffect
 
     public override async Task RunAsync(WiredBox box, WiredRun run)
     {
-        IReadOnlySet<int>? contracts = box.IntParam(Criteria) == AnyTransaction ? null : run.Furni(box).Select(c => c.Item.Id).ToHashSet();
+        IReadOnlySet<int>? contracts = box.IntParam(Criteria) == AnyTransaction ? null : run.Furni(box).Select(c => c.Id).ToHashSet();
         foreach (var user in run.Users(box).ToList())
             await run.Room.Chests.CancelContractsAsync(user, contracts);
     }

@@ -139,7 +139,7 @@ public sealed class CaptureLog : IDisposable
 
     /// <summary>An absolute path as is; a relative one under the repository root (the folder above the binary that
     /// has Habbo.slnx), so captures land beside the logger's.</summary>
-    private static string Resolve(string configured)
+    internal static string Resolve(string configured)
     {
         if (Path.IsPathRooted(configured))
             return configured;

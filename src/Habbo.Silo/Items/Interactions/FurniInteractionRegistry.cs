@@ -37,6 +37,9 @@ public sealed class FurniInteractionRegistry
                     ?? throw new InvalidOperationException($"No behaviour is registered for '{ItemDefinition.BasicLogic}'.");
     }
 
-    public FurniInteraction For(ItemDefinition definition) =>
-        _byName.GetValueOrDefault(definition.InteractionName, _fallback);
+    public FurniInteraction For(ItemDefinition definition) => For(definition.InteractionName);
+
+    /// <summary>The behaviour an item with this <see cref="ItemDefinition.InteractionName"/> has.</summary>
+    public FurniInteraction For(string interactionName) =>
+        _byName.GetValueOrDefault(interactionName, _fallback);
 }

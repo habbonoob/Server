@@ -21,12 +21,16 @@ public sealed class CraftingService(
     FurniInteractionRegistry interactions,
     PlayerMessenger messenger) : ICraftingService
 {
-    /// <summary>The altar's furniture, if it stands in the player's room.</summary>
+    /// <summary>The altar's furniture, if it stands in the player's room. The client names it by the id the room knows
+    /// it by, which for Builders Club furni the room alone can turn into its database id.</summary>
     private async Task<int?> AltarDefinitionAsync(AppDbContext db, PlayerData player, int altarId)
     {
-        var roomId = await grains.GetGrain<IPlayerGrain>(player.Id).GetCurrentRoomAsync();
-        return roomId is null ? null : await db.UserItems.AsNoTracking()
-            .Where(i => i.Id == altarId && i.RoomId == roomId).Select(i => (int?)i.DefinitionId).FirstOrDefaultAsync();
+        if (await grains.GetGrain<IPlayerGrain>(player.Id).GetCurrentRoomAsync() is not { } roomId)
+            return null;
+
+        var storedId = await grains.GetGrain<Habbo.Silo.Abstractions.Rooms.IGameRoomGrain>(roomId).StoredIdOfAsync(altarId);
+        return await db.UserItems.AsNoTracking()
+            .Where(i => i.Id == storedId && i.RoomId == roomId).Select(i => (int?)i.DefinitionId).FirstOrDefaultAsync();
     }
 
     private static IQueryable<CraftingRecipe> RecipesAt(AppDbContext db, int altar) =>

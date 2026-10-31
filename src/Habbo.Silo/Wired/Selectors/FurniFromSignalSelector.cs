@@ -9,5 +9,5 @@ public sealed class FurniFromSignalSelector : WiredFurniSelector
     public override int Code => SelectorCodes.FurniFromSignal;
 
     public override IEnumerable<RoomItemStore.PlacedItem> Select(WiredBox box, WiredRun run) =>
-        run.Event.SignalFurni.Where(item => run.Room.FindItem(item.Item.Id) == item);
+        run.Event.SignalFurni.Where(item => run.Room.FindItem(item.Id) == item);
 }

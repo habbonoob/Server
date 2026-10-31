@@ -1,0 +1,93 @@
+{
+  "comment": "The Habbicons Collection, as habbo.com sent it (HabbiconShopData, 25 Oct 2026). Each collection lists its Habbicons in Habbo's order; a reward is claimed once the player owns every one of them. A price is credits and activity points together (activityPointType: 5 diamonds); a Habbicon or collection with none is not sold, only given (reward track prizes). name is the asset name: habbicon_<name>_name and habbicon_collection_<name>_name are the titles.",
+  "collections": [
+    {
+      "id": 5,
+      "name": "duck",
+      "reward": { "id": 38, "name": "duck_spinning" },
+      "habbicons": [
+        { "id": 28, "name": "duck_duck" },
+        { "id": 29, "name": "duck_happy" },
+        { "id": 30, "name": "duck_sad" },
+        { "id": 31, "name": "duck_shock" },
+        { "id": 32, "name": "duck_think" },
+        { "id": 33, "name": "duck_nohear" },
+        { "id": 35, "name": "duck_nosay" },
+        { "id": 34, "name": "duck_nosee" },
+        { "id": 36, "name": "duck_angel" },
+        { "id": 37, "name": "duck_devil" }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "duck2",
+      "reward": { "id": 49, "name": "duck_love" },
+      "habbicons": [
+        { "id": 41, "name": "duck_laughing" },
+        { "id": 40, "name": "duck_pleased" },
+        { "id": 39, "name": "duck_cool" },
+        { "id": 42, "name": "duck_grimace" },
+        { "id": 44, "name": "duck_metal" },
+        { "id": 43, "name": "duck_devious" },
+        { "id": 45, "name": "duck_pleading" },
+        { "id": 47, "name": "duck_wink" },
+        { "id": 46, "name": "duck_silly" },
+        { "id": 48, "name": "duck_party" }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "frank",
+      "reward": { "id": 60, "name": "frank_stareyes" },
+      "habbicons": [
+        { "id": 50, "name": "frank_frank" },
+        { "id": 51, "name": "frank_smile" },
+        { "id": 52, "name": "frank_happy" },
+        { "id": 53, "name": "frank_sad" },
+        { "id": 54, "name": "frank_scared" },
+        { "id": 55, "name": "frank_surprised" },
+        { "id": 56, "name": "frank_thinking" },
+        { "id": 57, "name": "frank_silly" },
+        { "id": 58, "name": "frank_relief" },
+        { "id": 59, "name": "frank_wink" }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "toast",
+      "priceCredits": 50,
+      "priceActivityPoints": 50,
+      "activityPointType": 5,
+      "reward": { "id": 71, "name": "toast_fine" },
+      "habbicons": [
+        { "id": 61, "name": "toast_toast", "priceCredits": 5, "priceActivityPoints": 5, "activityPointType": 5 },
+        { "id": 62, "name": "toast_happy", "priceCredits": 5, "priceActivityPoints": 5, "activityPointType": 5 },
+        { "id": 63, "name": "toast_cute", "priceCredits": 5, "priceActivityPoints": 5, "activityPointType": 5 },
+        { "id": 64, "name": "toast_wink", "priceCredits": 5, "priceActivityPoints": 5, "activityPointType": 5 },
+        { "id": 65, "name": "toast_sad", "priceCredits": 5, "priceActivityPoints": 5, "activityPointType": 5 },
+        { "id": 66, "name": "toast_cry", "priceCredits": 5, "priceActivityPoints": 5, "activityPointType": 5 },
+        { "id": 67, "name": "toast_grumpy", "priceCredits": 5, "priceActivityPoints": 5, "activityPointType": 5 },
+        { "id": 68, "name": "toast_sleep", "priceCredits": 5, "priceActivityPoints": 5, "activityPointType": 5 },
+        { "id": 69, "name": "toast_shock", "priceCredits": 5, "priceActivityPoints": 5, "activityPointType": 5 },
+        { "id": 70, "name": "toast_flustered", "priceCredits": 5, "priceActivityPoints": 5, "activityPointType": 5 }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "zombie",
+      "reward": { "id": 82, "name": "zombie_whack" },
+      "habbicons": [
+        { "id": 72, "name": "zombie_zombie" },
+        { "id": 73, "name": "zombie_glee" },
+        { "id": 74, "name": "zombie_dizzy" },
+        { "id": 75, "name": "zombie_hungry" },
+        { "id": 76, "name": "zombie_rage" },
+        { "id": 77, "name": "zombie_terror" },
+        { "id": 78, "name": "zombie_panic" },
+        { "id": 79, "name": "zombie_melt" },
+        { "id": 80, "name": "zombie_nobrain" },
+        { "id": 81, "name": "zombie_bandage" }
+      ]
+    }
+  ]
+}

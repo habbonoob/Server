@@ -31,6 +31,7 @@ Then open the client with `?relay=8791&capture=8791`, plus whatever points it at
 | `capture=8791` | Packets go to the relay's capture API (a port here, or an `http://` URL). Works on our own server too. |
 | `packets=1` | Also write them to the browser console (independent of `capture`). |
 | `copier=8791` | The room copier (habbo-pixi's `room-copier`): `:copy` or `:copy wired` in a room copies it, and the relay saves it as the G-Earth copier would (`/roomcopy`). |
+| `catalog=8791` | The catalog dumper (habbo-pixi's `catalog-dumper`): `:dumpcatalog` in a room walks Habbo's catalog (`:dumpcatalog builders_club` the warehouse), and the relay writes the seed catalog as the G-Earth dumper would (`/catalogdump`). `catalogtype=` and `catalogdelay=` set its default catalog and the ms between pages (600). |
 
 The client must also hold the hotel's RSA public key for the handshake to succeed; the relay does not touch it.
 
@@ -40,6 +41,8 @@ The client must also hold the hotel's RSA public key for the handshake to succee
 | `Relay:AllowedHosts` | `*.habbo.com`, `*.habbo.com.br`, … | Where `/game` may connect: a host, or `*.domain`. |
 | `Relay:AllowedOrigins` | the client's preview and dev servers | Pages allowed to use it. |
 | `Relay:CaptureDirectory` | `habbo-packetlogs/captures` | Absolute, or under the repository root. |
+| `Relay:CatalogSeedDirectory` | `seed` | Where `/catalogdump` writes `catalog.json` (`catalog_builders_club.json` for the warehouse): absolute, or under the repository root. |
+| `Relay:CatalogFurnidata` | `seed/furnidata.xml` | The furnidata a dump names its products from. |
 
 Settings come from `appsettings.json` beside it or environment variables (`Relay__AllowedHosts__0=…`).
 
@@ -53,5 +56,6 @@ Settings come from `appsettings.json` beside it or environment variables (`Relay
 | `/mark?label=` | Writes a section header into the capture. |
 | `/status` | The capture's path and how many packets are in it. |
 | `POST /roomcopy` | A room copy (`Habbo.Domain.Rooms.Copies.RoomCopy`) from the client's room copier: checked against the record and saved where the G-Earth copier saves its own (`Relay:RoomCopyDirectory`, else `ROOMCOPY_DIR`, else `Documents/Habbo room copies`), named and written as it writes them. |
+| `POST /catalogdump` | A catalog the client's catalog dumper walked: `{ catalogType, packets }`, the index and page packets as `/capture` takes them. Kept as `habbo-packetlogs/captures/*_catalog-<type>.jsonl` and written to the seed with Habbo.CatalogDumper's capture replay and seed writer, so the seed is what `Habbo.CatalogDumper --capture` makes of that file. Answers with where it went and what it held. |
 
 Incoming packets the client has no parser for are not captured (the client records what its parsers read).

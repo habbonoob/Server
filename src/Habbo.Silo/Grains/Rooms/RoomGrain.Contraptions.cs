@@ -57,8 +57,8 @@ public sealed partial class RoomGrain
                 // through to the other side if it is free, back where they came from if not; the door shuts either way,
                 // also behind one who left meanwhile
                 if (_entities.Find(playerId) is not null
-                    && (_entities.Slide(entity, backX, backY) ?? _entities.Slide(entity, frontX, frontY)) is { } through)
-                    Broadcast(UserUpdateMessageComposer.From([through]));
+                    && (_entities.Slide(entity, backX, backY, facing: true) ?? _entities.Slide(entity, frontX, frontY, facing: true)) is { } through)
+                    BroadcastStep(entity, through);
                 Broadcast(new OneWayDoorStatusMessageComposer(itemId, OneWayDoorInteraction.Closed));
                 return Task.CompletedTask;
             });
@@ -108,7 +108,7 @@ public sealed partial class RoomGrain
     /// <summary>Tells the room the area a hider hides, which the floor map carries only on entry.</summary>
     private void BroadcastAreaHide(RoomItemStore.PlacedItem hider)
     {
-        var area = AreaHideInteraction.Area(hider.Item.Id, hider.Data);
+        var area = AreaHideInteraction.Area(hider.Id, hider.Data);
         Broadcast(new AreaHideMessageComposer(new AreaHideWireData(area.FurniId, area.On, area.RootX, area.RootY, area.Width, area.Length, area.Invert)));
     }
 
@@ -119,18 +119,20 @@ public sealed partial class RoomGrain
 
         // "on top of the stack" is the height of what else stands on its tiles
         var hundredths = height == OnTopOfStack
-            ? (int)Math.Round((RoomItemStore.Footprint(helper).Max(t => _items.SurfaceAt(t.X, t.Y, helper.Item.Id)) - helper.Z) * HundredthsPerTile)
+            ? (int)Math.Round((RoomItemStore.Footprint(helper).Max(t => _items.SurfaceAt(t.X, t.Y, helper.Id)) - helper.Z) * HundredthsPerTile)
             : height;
         hundredths = Math.Clamp(hundredths, 0, (int)(RoomItemStore.MaxAltitude * HundredthsPerTile));
 
         await using (var db = await dbFactory.CreateDbContextAsync())
         {
-            var row = await db.FurniStackHeights.FirstOrDefaultAsync(s => s.ItemId == itemId);
+            var storedId = helper.Item.Id;
+            var row = await db.FurniStackHeights.FirstOrDefaultAsync(s => s.ItemId == storedId);
             if (row is null)
-                db.FurniStackHeights.Add(row = new FurniStackHeight { ItemId = itemId });
+                db.FurniStackHeights.Add(row = new FurniStackHeight { ItemId = storedId });
             row.Height = hundredths;
             row.MultiWalk = multiWalk ?? row.MultiWalk;
             await db.SaveChangesAsync();
+            helper.MultiWalk = row.MultiWalk;
         }
 
         helper.StackHeight = hundredths / HundredthsPerTile;
@@ -146,7 +148,11 @@ public sealed partial class RoomGrain
             return;
 
         foreach (var row in await db.FurniStackHeights.AsNoTracking().Where(s => helperIds.Contains(s.ItemId)).ToListAsync())
-            _items.Find(row.ItemId)!.StackHeight = row.Height / HundredthsPerTile;
+        {
+            var helper = _items.FindStored(row.ItemId)!;
+            helper.StackHeight = row.Height / HundredthsPerTile;
+            helper.MultiWalk = row.MultiWalk;
+        }
     }
 
     /// <summary>An item's map data set from the info stand. Staff edit any item's; a room's owner the

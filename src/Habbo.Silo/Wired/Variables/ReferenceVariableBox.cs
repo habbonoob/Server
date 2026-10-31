@@ -31,7 +31,7 @@ public sealed class ReferenceVariableBox : WiredVariableBox
         var readOnly = box.Flag(ReadOnly);
         return source with
         {
-            Id = box.Id.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            Id = box.StoredId.ToString(System.Globalization.CultureInfo.InvariantCulture),
             Kind = WiredVariableKinds.CreatedByUser,
             Name = box.Settings.StringParam,
             Availability = WiredVariableAvailability.Reference,

@@ -46,7 +46,8 @@ public abstract class GiveFromChestEffect : WiredEffect
             return;
         }
 
-        var gift = new WiredChestGift(box.Id, box.Settings.StringParam, box.Flag(OpenByDefault));
+        // the log is kept: the effect goes in it by its database id
+        var gift = new WiredChestGift(box.Item.Item.Id, box.Settings.StringParam, box.Flag(OpenByDefault));
         foreach (var user in users)
             await GiveAsync(box, run, chests, user, amount, gift);
     }

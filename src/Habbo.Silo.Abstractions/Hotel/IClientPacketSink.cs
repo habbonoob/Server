@@ -19,4 +19,9 @@ public interface IClientPacketSink
 
     /// <summary>The silo that held these rooms is gone: every session in one of them leaves it for the hotel view.</summary>
     void RoomHostLost(SiloAddress silo);
+
+    /// <summary>The room sent the session out (by the door, idle, kicked, unloaded): the client went to the hotel view
+    /// without saying so, so the session, and the player grain its friends follow by, are in no room, if it was that one.
+    /// </summary>
+    void LeftRoom(Guid sessionGuid, int roomId);
 }

@@ -25,12 +25,14 @@ public sealed partial class RoomGrain
         if (state is not ((int)AchievementResolutionState.NotStarted or (int)AchievementResolutionState.InProgress))
             return;
 
-        if (await resolutions.FindAsync(itemId) is { } resolution)
+        // the challenge is saved under the statue's database id; the client knows it by the room's
+        var storedId = statue.Item.Id;
+        if (await resolutions.FindAsync(storedId) is { } resolution)
         {
             // a challenge follows the one who took it on: a statue that changed hands starts over
             if (resolution.UserId != playerId)
             {
-                await resolutions.EndAsync(itemId);
+                await resolutions.EndAsync(storedId);
                 await SetResolutionStateAsync(statue, AchievementResolutionState.NotStarted);
             }
             else if (resolution.EndsAt <= DateTimeOffset.UtcNow)
@@ -40,7 +42,7 @@ public sealed partial class RoomGrain
             }
             else
             {
-                if (await resolutions.ProgressAsync(resolution) is { } progress)
+                if (await resolutions.ProgressAsync(resolution, statue.Id) is { } progress)
                     SendTo(playerId, progress);
                 return;
             }
@@ -52,31 +54,32 @@ public sealed partial class RoomGrain
 
         if (achievementId == 0)
         {
-            SendTo(playerId, await resolutions.OffersAsync(playerId, itemId));
+            SendTo(playerId, await resolutions.OffersAsync(playerId, statue.Id));
             return;
         }
 
-        if (await resolutions.StartAsync(playerId, itemId, achievementId) is not { } started)
+        if (await resolutions.StartAsync(playerId, storedId, achievementId) is not { } started)
             return;
 
         await SetResolutionStateAsync(statue, AchievementResolutionState.InProgress);
-        if (await resolutions.ProgressAsync(started) is { } first)
+        if (await resolutions.ProgressAsync(started, statue.Id) is { } first)
             SendTo(playerId, first);
     }
 
     public async Task ResetResolutionAsync(Guid playerId, int itemId)
     {
-        if (OwnStatue(playerId, itemId) is not { } statue || await resolutions.FindAsync(itemId) is not { } resolution
+        if (OwnStatue(playerId, itemId) is not { } statue || await resolutions.FindAsync(statue.Item.Id) is not { } resolution
                                                            || resolution.UserId != playerId)
             return;
 
-        await resolutions.EndAsync(itemId);
+        await resolutions.EndAsync(statue.Item.Id);
         await SetResolutionStateAsync(statue, AchievementResolutionState.NotStarted);
     }
 
+    /// <summary>Another grain changes an item of this room's data, naming it by its database id.</summary>
     public Task<bool> ReplaceItemDataAsync(int itemId, FurniDataView data)
     {
-        if (_items?.Find(itemId) is not { } item || _furniture is null)
+        if (_items?.FindStored(itemId) is not { } item || _furniture is null)
             return Task.FromResult(false);
 
         // this call interleaves, so it may land in the middle of the room's tick; the change itself (which can set off
@@ -84,11 +87,13 @@ public sealed partial class RoomGrain
         var furniture = _furniture;
         Schedule(TimeSpan.Zero, async () =>
         {
-            if (_items?.Find(itemId) == item)
+            if (_items?.FindStored(itemId) == item)
                 await furniture.UpdateAsync(item, data);
         });
         return Task.FromResult(true);
     }
+
+    public Task<int> StoredIdOfAsync(int itemId) => Task.FromResult(_items?.StoredIdOf(itemId) ?? itemId);
 
     /// <summary>Fails the statues here whose challenge ran out; looked for now and then, on the tick.</summary>
     private async Task ExpireResolutionsAsync()
@@ -108,7 +113,7 @@ public sealed partial class RoomGrain
 
         foreach (var resolution in await resolutions.UnderWayAsync(underWay))
         {
-            if (resolution.EndsAt <= now && _items.Find(resolution.ItemId) is { } statue)
+            if (resolution.EndsAt <= now && _items.FindStored(resolution.ItemId) is { } statue)
                 await FailResolutionAsync(statue);
         }
     }

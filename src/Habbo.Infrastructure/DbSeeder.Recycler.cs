@@ -9,7 +9,7 @@ public static partial class DbSeeder
 {
     private sealed record SeedRecycler(List<SeedRecyclerLevel>? Levels);
 
-    private sealed record SeedRecyclerLevel(int Id, int ProbabilityDenominator, List<string> Prizes);
+    private sealed record SeedRecyclerLevel(int Id, int ProbabilityDenominator, List<string> Prizes, List<int>? ChatStyles);
 
     /// <summary>seed/recycler.json, seeded while the hotel has no prize levels.</summary>
     private static async Task SeedRecyclerAsync(AppDbContext db, SeedFiles seedFiles, ILogger logger, CancellationToken ct)
@@ -24,7 +24,8 @@ public static partial class DbSeeder
             {
                 Id = level.Id,
                 ProbabilityDenominator = level.ProbabilityDenominator,
-                Prizes = level.Prizes.Where(definitions.ContainsKey).Select(name => new RecyclerPrize { DefinitionId = definitions[name] }).ToList(),
+                Prizes = level.Prizes.Where(definitions.ContainsKey).Select(name => new RecyclerPrize { DefinitionId = definitions[name] })
+                    .Concat((level.ChatStyles ?? []).Select(style => new RecyclerPrize { ChatStyleId = style })).ToList(),
             });
         }
 

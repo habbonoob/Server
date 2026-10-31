@@ -146,7 +146,20 @@ public sealed partial class RoomWired(
             .ToDictionaryAsync(w => w.ItemId, ct);
 
         foreach (var item in boxes)
-            Add(item, saved.GetValueOrDefault(item.Item.Id));
+            Add(item, saved.GetValueOrDefault(item.Item.Id) is { } settings ? InRoom(settings) : null);
+    }
+
+    /// <summary>Saved settings as the room runs them: the furni picked, and those in the snapshot, by the ids the room
+    /// knows them by. Settings are saved with database ids (a Builders Club item's room id lasts only as long as the
+    /// room), and the dialog and every box work with the room's; a pick no longer here keeps its database id, which
+    /// is what any item but Builders Club furni goes by when it comes back.</summary>
+    internal FurniWired InRoom(FurniWired saved)
+    {
+        saved.StuffIds = saved.StuffIds.Select(items.IdOfStored).ToList();
+        saved.StuffIds2 = saved.StuffIds2.Select(items.IdOfStored).ToList();
+        foreach (var snapshot in saved.Snapshots)
+            snapshot.ItemId = items.IdOfStored(snapshot.ItemId);
+        return saved;
     }
 
     /// <summary>An item was put down: if it is a wired box, it joins the room with the settings it
@@ -163,18 +176,18 @@ public sealed partial class RoomWired(
         var saved = await db.FurniWiredBoxes.AsNoTracking()
             .Include(w => w.Snapshots)
             .FirstOrDefaultAsync(w => w.ItemId == item.Item.Id);
-        Add(item, saved);
-        if (_boxes.GetValueOrDefault(item.Item.Id) is { Type: Addons.VariableFx.VariableFxAddon } display)
+        Add(item, saved is null ? null : InRoom(saved));
+        if (_boxes.GetValueOrDefault(item.Id) is { Type: Addons.VariableFx.VariableFxAddon } display)
             DisplayPlaced(display);
-        if (_boxes.GetValueOrDefault(item.Item.Id) is { Type: ReferenceVariableBox })
+        if (_boxes.GetValueOrDefault(item.Id) is { Type: ReferenceVariableBox })
             await ReferencePlacedAsync();
     }
 
     /// <summary>An item moved: stacks may have changed.</summary>
     public void Moved() => _stacks = null;
 
-    /// <summary>An item left the room. Its delayed effects are dropped when they come due; what it
-    /// held is kept only where kept; and a variable box takes its variable with it.</summary>
+    /// <summary>An item left the room (by the id the room knew it by). Its delayed effects are dropped when they come
+    /// due; what it held is kept only where kept; and a variable box takes its variable with it.</summary>
     public async Task RemovedAsync(int itemId)
     {
         var removed = _boxes.GetValueOrDefault(itemId);
@@ -185,7 +198,7 @@ public sealed partial class RoomWired(
         TellClickListening();
         ForgetItem(itemId);
         if (removed?.Type is WiredVariableBox)
-            await VariableRemovedAsync(removed.Id.ToString(CultureInfo.InvariantCulture));
+            await VariableRemovedAsync(removed.StoredId.ToString(CultureInfo.InvariantCulture));
     }
 
     public bool IsBox(int itemId) => _boxes.ContainsKey(itemId);
@@ -195,14 +208,14 @@ public sealed partial class RoomWired(
             ? registry.For(item.Item.Definition.ClassName)
             : null;
 
-    /// <summary>Takes the item in as a box, if it is one the server implements, with its settings
-    /// (a new box's when none were saved).</summary>
+    /// <summary>Takes the item in as a box, if it is one the server implements, with its settings (a new box's when
+    /// none were saved), their picks by the ids the room knows the furni by.</summary>
     public void Add(RoomItemStore.PlacedItem item, FurniWired? saved)
     {
         if (TypeOf(item) is not { } type)
             return;
 
-        _boxes[item.Item.Id] = new WiredBox(item, type, saved ?? new FurniWired { ItemId = item.Item.Id });
+        _boxes[item.Id] = new WiredBox(item, type, saved ?? new FurniWired { ItemId = item.Item.Id });
         _stacks = null;
         TellClickListening();
     }
@@ -253,10 +266,10 @@ public sealed partial class RoomWired(
         if (save.IntParams.Count > WiredBoxType.MaxIntParams)
             return null;
 
-        if (save.StringParam.Length > FurniWired.StringParamMaxLength)
+        if (save.StringParam.Length > type.MaxStringLength)
         {
             return WiredDialogs.Refusal(new WiredValidation("wiredfurni.error.too_much_text",
-                new Dictionary<string, string> { ["limit"] = FurniWired.StringParamMaxLength.ToString(CultureInfo.InvariantCulture) }));
+                new Dictionary<string, string> { ["limit"] = type.MaxStringLength.ToString(CultureInfo.InvariantCulture) }));
         }
 
         // picks: each once, still in the room, and no more than a box may hold
@@ -271,7 +284,7 @@ public sealed partial class RoomWired(
 
         var settings = new FurniWired
         {
-            ItemId = box.Id,
+            ItemId = box.StoredId,
             IntParams = save.IntParams,
             StringParam = save.StringParam,
             StuffIds = picks,
@@ -290,7 +303,7 @@ public sealed partial class RoomWired(
             return WiredDialogs.Refusal(refusal);
 
         if (type.TakesSnapshot)
-            settings.Snapshots = picks.Select(id => items.Find(id)!).Select(item => Snapshot(box.Id, item)).ToList();
+            settings.Snapshots = picks.Select(id => items.Find(id)!).Select(item => Snapshot(box.StoredId, item)).ToList();
 
         if (type is WiredVariableBox variableBox)
         {
@@ -312,7 +325,7 @@ public sealed partial class RoomWired(
                 await ClearVariableAsync(before.Id);
         }
 
-        await StoreAsync(settings);
+        await (StoreSettings ?? StoreAsync)(Stored(settings));
         box.Settings = settings;
         if (type is Addons.VariableFx.VariableFxAddon)
             DisplaySaved(box);
@@ -338,10 +351,11 @@ public sealed partial class RoomWired(
         slots.Select((slot, index) => index < chosen.Count && slot.Sources.Contains(chosen[index]) ? chosen[index] : slot.Default)
             .ToList();
 
+    /// <summary>A picked item as it stands, by the id the room knows it by, as the box keeps it while it runs.</summary>
     private static FurniWiredSnapshot Snapshot(int wiredItemId, RoomItemStore.PlacedItem item) => new()
     {
         WiredItemId = wiredItemId,
-        ItemId = item.Item.Id,
+        ItemId = item.Id,
         State = item.Data.StateText,
         X = item.X,
         Y = item.Y,
@@ -349,6 +363,35 @@ public sealed partial class RoomWired(
         Rotation = item.Rotation,
     };
 
+    /// <summary>Settings as they are saved: the furni picked, and those in the snapshot, by their database ids (those
+    /// are what last; a Builders Club item's room id is the room's for as long as it is loaded). The box goes by its
+    /// own database id already. <see cref="InRoom"/> turns them back.</summary>
+    internal FurniWired Stored(FurniWired settings) => new()
+    {
+        ItemId = settings.ItemId,
+        IntParams = [.. settings.IntParams],
+        StringParam = settings.StringParam,
+        StuffIds = settings.StuffIds.Select(items.StoredIdOf).ToList(),
+        StuffIds2 = settings.StuffIds2.Select(items.StoredIdOf).ToList(),
+        FurniSources = [.. settings.FurniSources],
+        UserSources = [.. settings.UserSources],
+        VariableIds = [.. settings.VariableIds],
+        DelayInPulses = settings.DelayInPulses,
+        Quantifier = settings.Quantifier,
+        IsFilter = settings.IsFilter,
+        IsInvert = settings.IsInvert,
+        Snapshots = settings.Snapshots.Select(snapshot => new FurniWiredSnapshot
+        {
+            WiredItemId = snapshot.WiredItemId, ItemId = items.StoredIdOf(snapshot.ItemId), State = snapshot.State,
+            X = snapshot.X, Y = snapshot.Y, Z = snapshot.Z, Rotation = snapshot.Rotation,
+        }).ToList(),
+    };
+
+    /// <summary>Where a save's settings go, as <see cref="Stored"/> makes them: the database, unless this says
+    /// otherwise (the tests, which have none, keep them).</summary>
+    internal Func<FurniWired, Task>? StoreSettings { get; set; }
+
+    /// <summary>Writes a box's settings, as they are saved, to the database.</summary>
     private async Task StoreAsync(FurniWired settings)
     {
         await using var db = await dbFactory.CreateDbContextAsync();
@@ -397,6 +440,7 @@ public sealed partial class RoomWired(
     {
         await LoadUserVariablesAsync(user);
         WelcomeToDisplays(user);
+        WelcomeToVisibility(user);
         await FireAsync(new WiredEvent(WiredEventType.UserEntered, user));
     }
 
@@ -409,17 +453,21 @@ public sealed partial class RoomWired(
             box.Type is Triggers.SaysKeywordTrigger trigger && Triggers.SaysKeywordTrigger.Hides(box) && trigger.Matches(box, said, this));
     }
 
-    /// <summary>How something was said (the @chat_type the stack's run is told).</summary>
+    /// <summary>How something was said (the @event.chat.type the stack's run is told).</summary>
     public const int Talked = 0;
 
     /// <summary>Offers what a user said to the keyword triggers, after the message went out.</summary>
     /// <summary>A user's transaction under a contract went through.</summary>
-    public Task TransactionCompletedAsync(RoomEntityStore.RoomEntity user, RoomItemStore.PlacedItem contract) =>
-        FireAsync(new WiredEvent(WiredEventType.TransactionCompleted, user, contract));
+    public Task TransactionCompletedAsync(RoomEntityStore.RoomEntity user, RoomItemStore.PlacedItem contract, WiredTransactionDone? done = null) =>
+        FireAsync(new WiredEvent(WiredEventType.TransactionCompleted, user, contract) { Transaction = done });
 
     /// <summary>A user's transaction under a contract failed, for the reason given.</summary>
     public Task TransactionFailedAsync(RoomEntityStore.RoomEntity user, RoomItemStore.PlacedItem contract, int reason) =>
         FireAsync(new WiredEvent(WiredEventType.TransactionFailed, user, contract) { FailureReason = reason });
+
+    /// <summary>A user showed a Habbicon: the stacks it sets off read it as @event.habbicon.</summary>
+    public Task HabbiconUsedAsync(RoomEntityStore.RoomEntity user, int habbiconId) =>
+        FireAsync(new WiredEvent(WiredEventType.HabbiconUsed, user) { Habbicon = habbiconId });
 
     public Task UserSaidAsync(RoomEntityStore.RoomEntity user, string text, int chatType = Talked, int chatStyle = 0) =>
         FireAsync(new WiredEvent(WiredEventType.UserSaid, user, Text: text) { ChatType = chatType, ChatStyle = chatStyle });
@@ -457,7 +505,7 @@ public sealed partial class RoomWired(
 
     /// <summary>An item's state changed, by whatever means. A box's own flashing is not a change.</summary>
     public Task FurniStateSetAsync(RoomItemStore.PlacedItem item) =>
-        _boxes.Count == 0 || IsBox(item.Item.Id)
+        _boxes.Count == 0 || IsBox(item.Id)
             ? Task.CompletedTask
             : FireAsync(new WiredEvent(WiredEventType.FurniStateSet, Item: item));
 
@@ -645,6 +693,10 @@ public sealed partial class RoomWired(
         run.Stack = stack;
         foreach (var capturer in stack.Where(box => box.Type is VariableCapturerAddon))
             await VariableCapturerAddon.CaptureAsync(capturer, triggers, run);
+        foreach (var receiver in triggers.Where(box => box.Type is ReceiveLinkDataframeTrigger))
+            await ReceiveLinkDataframeTrigger.CaptureAsync(receiver, run);
+        foreach (var speaker in stack.Where(box => box.Type is LinkSpeakerAddon))
+            LinkSpeakerAddon.Speak(speaker, run);
         foreach (var scanner in stack.Where(box => box.Type is ChestItemTypeScannerAddon))
             await ChestItemTypeScannerAddon.ScanAsync(scanner, run);
         WiredSelection.Run(stack, run);
@@ -747,6 +799,7 @@ public sealed partial class RoomWired(
             SelectedUsers = run.SelectedUsers.ToList(),
             VisitedStacks = run.VisitedStacks,
             Execution = run.Execution,
+            Placeholders = new Dictionary<string, string>(run.Placeholders, StringComparer.OrdinalIgnoreCase),
         };
         // in its turn, like a signal's receivers, so stacks that call each other do not nest
         run.Execution.Pending.Enqueue(() => ActAsync((item.X, item.Y), stack, child, passed: true, run.Event.Type));
@@ -757,7 +810,7 @@ public sealed partial class RoomWired(
     private bool VisitorDriven => _root?.Type is WiredEventType.UserWalkedOn or WiredEventType.UserWalkedOff or WiredEventType.UserSaid
         or WiredEventType.UserEntered or WiredEventType.UserLeft or WiredEventType.UserPerformedAction
         or WiredEventType.FurniClicked or WiredEventType.UserClicked or WiredEventType.FurniStateChanged
-        or WiredEventType.TransactionCompleted or WiredEventType.TransactionFailed;
+        or WiredEventType.TransactionCompleted or WiredEventType.TransactionFailed or WiredEventType.HabbiconUsed;
 
     private bool RunsSpent => (VisitorDriven ? _visitorRunsThisPulse : _runsThisPulse) > MaxRunsPerPulse;
 
@@ -885,6 +938,44 @@ public sealed partial class RoomWired(
     public IEnumerable<RoomItemStore.PlacedItem> Picked(WiredBox box) =>
         box.Settings.StuffIds.Select(items.Find).OfType<RoomItemStore.PlacedItem>();
 
+    public WiredPetStats? PetStats(RoomEntityStore.RoomEntity pet) => pet.Pet is null ? null : actions.PetStats(pet);
+
+    public int? TeleportTarget(RoomItemStore.PlacedItem teleport) => actions.TeleportTarget(teleport);
+
+    public Task<bool> SetTeleportTargetAsync(RoomItemStore.PlacedItem teleport, int targetId) =>
+        TakeWrite() ? actions.SetTeleportTarget(teleport, targetId) : Task.FromResult(false);
+
+    public Task<bool> MoveWallItemAsync(RoomItemStore.PlacedItem item, WallLocation location) =>
+        TakeMove() && TakeWrite() ? actions.MoveWallItem(item, location) : Task.FromResult(false);
+
+    public async Task<bool> ShowHabbiconAsync(RoomEntityStore.RoomEntity user, int habbiconId)
+    {
+        if (!IsPresent(user) || habbiconId <= 0)
+            return false;
+
+        await actions.ShowHabbicon(user, habbiconId);
+        return user.Habbicon == habbiconId;
+    }
+
+    public WiredTrade? TradeOf(RoomEntityStore.RoomEntity user) => user is { Bot: null, Pet: null } ? actions.TradeOf(user) : null;
+
+    public async Task<bool> UpdateFurniDataAsync(RoomItemStore.PlacedItem item, Habbo.Silo.Abstractions.Furni.FurniDataView data)
+    {
+        if (!TakeWrite())
+            return false;
+
+        await furniture.UpdateAsync(item, data);
+        // an area hider's area is its own message: the furni's data alone does not move it
+        if (item.Interaction is Habbo.Silo.Items.Interactions.AreaHideInteraction)
+        {
+            var area = Habbo.Silo.Items.Interactions.AreaHideInteraction.Area(item.Id, item.Data);
+            broadcast(new Habbo.Protocol.Messages.Outgoing.Room.Furniture.AreaHideMessageComposer(new Habbo.Protocol.Messages.Outgoing.Room.Engine.AreaHideWireData(
+                area.FurniId, area.On, area.RootX, area.RootY, area.Width, area.Length, area.Invert)));
+        }
+
+        return true;
+    }
+
     public Task SetStateAsync(RoomItemStore.PlacedItem item, string state) =>
         TakeWrite() ? furniture.UpdateAsync(item, item.Data with { State = state }) : Task.CompletedTask;
 
@@ -892,16 +983,23 @@ public sealed partial class RoomWired(
     {
         if (!TakeMove() || !TakeWrite())
             return false;
-        var moved = await actions.MoveItem(item, x, y, rotation, options);
+        var moved = await actions.MoveItem(item, x, y, rotation, Freely(item, options));
         if (moved)
             _stacks = null;
         return moved;
     }
 
-    public bool CanMoveItem(RoomItemStore.PlacedItem item, int x, int y, int rotation, WiredMoveOptions options) =>
-        item.Item.Definition!.Type == ItemType.Floor
-        && items.CanPlaceFloorItem(item.Item.Id, item.Item.Definition, x, y, rotation,
-            options.AvatarsBlock ? entities.HasAvatarAt : (_, _) => false, options.ThroughFurni, options.BlockedByFurni);
+    public bool CanMoveItem(RoomItemStore.PlacedItem item, int x, int y, int rotation, WiredMoveOptions options)
+    {
+        var free = Freely(item, options);
+        return item.Item.Definition!.Type == ItemType.Floor
+            && items.CanPlaceFloorItem(item.Id, item.Item.Definition, x, y, rotation,
+                free.AvatarsBlock ? entities.HasAvatarAt : (_, _) => false, free.ThroughFurni, free.BlockedByFurni);
+    }
+
+    /// <summary>A furni given @can_move_freely moves through furni and avatars alike.</summary>
+    private static WiredMoveOptions Freely(RoomItemStore.PlacedItem item, WiredMoveOptions options) =>
+        item.MovesFreely ? options with { AvatarsBlock = false, ThroughFurni = true, BlockedByFurni = false } : options;
 
     public async Task<bool> SetAltitudeAsync(RoomItemStore.PlacedItem item, double altitude)
     {
@@ -1012,7 +1110,15 @@ public sealed partial class RoomWired(
         return user.Sign == sign;
     }
 
-    public Task CollideAsync(RoomEntityStore.RoomEntity user, RoomItemStore.PlacedItem item) =>
+    public Task CollideAsync(RoomEntityStore.RoomEntity user, RoomItemStore.PlacedItem item)
+    {
+        // a projectile on its way counts who it ran into
+        if (item.Projectile is { } flight && flight.IsTravelling(Now()))
+            flight.UserCollisions++;
+        return Collided(user, item);
+    }
+
+    private Task Collided(RoomEntityStore.RoomEntity user, RoomItemStore.PlacedItem item) =>
         FireAsync(new WiredEvent(WiredEventType.Collision, user, item));
 
     public void ShowMessage(RoomEntityStore.RoomEntity user, string text, int style, bool toEveryone)

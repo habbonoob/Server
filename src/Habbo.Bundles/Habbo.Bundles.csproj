@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- HabFile, and SkiaSharp for decoding and the atlases' WebP -->
+    <ProjectReference Include="..\Habbo.Camera\Habbo.Camera.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Habbo.Bundles.Tests" />
+  </ItemGroup>
+
+</Project>

@@ -8,6 +8,9 @@ public sealed class RecyclerOptions
     /// <summary>How many items go in at once.</summary>
     public int ItemsRequired { get; set; } = 5;
 
+    /// <summary>What a use costs, in duckets (the client's recycler.ducket_cost: 10 on habbo.com).</summary>
+    public int DucketCost { get; set; }
+
     /// <summary>How long a player waits between uses.</summary>
     public int TimeoutSeconds { get; set; }
 

@@ -23,7 +23,7 @@ public sealed class EchoVariableBox : WiredVariableBox
 
         return source with
         {
-            Id = box.Id.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            Id = box.StoredId.ToString(System.Globalization.CultureInfo.InvariantCulture),
             Kind = WiredVariableKinds.CreatedByUser,
             Name = box.Settings.StringParam,
             EchoOf = source.Id,

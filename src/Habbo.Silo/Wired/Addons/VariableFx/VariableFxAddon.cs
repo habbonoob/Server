@@ -156,7 +156,7 @@ public abstract class VariableFxAddon : WiredAddon
     public static string RemovedKey(WiredBox box, WiredVariable variable, WiredHolder holder) =>
         string.Create(CultureInfo.InvariantCulture, $"{Key(box, variable)}|{(holder.User is null ? 'f' : 'u')}|{EntityId(holder)}");
 
-    private static int EntityId(WiredHolder holder) => holder.User?.RoomIndex ?? holder.Item?.Item.Id ?? 0;
+    private static int EntityId(WiredHolder holder) => holder.User?.RoomIndex ?? holder.Item?.Id ?? 0;
 
     /// <summary>A long the dialog sends as two ints: the high word, then the low.</summary>
     protected static long Long(WiredBox box, int highIndex) =>

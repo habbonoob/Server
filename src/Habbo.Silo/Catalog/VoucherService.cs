@@ -89,7 +89,11 @@ public sealed class VoucherService(
 
         var playerGrain = grains.GetGrain<IPlayerGrain>(player.Id);
         if (voucher.Credits > 0)
+        {
             await messenger.SendAsync(player.Id, new CreditBalanceComposer(await playerGrain.AddCreditsAsync(voucher.Credits, VoucherReason)));
+            // a voucher's credits count towards the bonus rare, as credits bought do on Habbo
+            await playerGrain.CountTowardsBonusRareAsync(voucher.Credits);
+        }
         if (voucher.ActivityPoints > 0)
             await playerGrain.AddActivityPointsAsync(voucher.ActivityPointType, voucher.ActivityPoints, VoucherReason);
 

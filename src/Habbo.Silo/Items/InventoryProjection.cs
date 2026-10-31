@@ -19,7 +19,8 @@ public static class InventoryProjection
         data,
         item.RoomId ?? NotInARoom,
         FurniCategory.Of(definition),
-        item.Recyclable,
+        // recyclable only when both the item and its kind are (furnidata: pet food, photos are not), as the recycler takes them
+        item.Recyclable && definition.Recyclable,
         item.Tradeable,
         IsGroupable(definition, data),
         item.Sellable,

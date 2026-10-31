@@ -76,6 +76,31 @@ public interface IGameRoomGrain : IGrainWithIntegerKey
     /// <summary>The "apply" button of a match-to-snapshot effect's dialog: puts its furni back.</summary>
     Task ApplyWiredSnapshotAsync(Guid playerId, int itemId);
 
+    // a WIRED Link's dialog (wf_link): each answers its owner, who alone may use it
+
+    /// <summary>The Link's connection and its owner's networks, as the client asks after the room told it to open.</summary>
+    Task OpenWiredLinkAsync(Guid playerId, int itemId);
+
+    /// <summary>Connects the Link to one of its owner's networks ("0": none), and whether it hears its own room.</summary>
+    Task SaveWiredLinkAsync(Guid playerId, int itemId, string networkId, bool receiveLocal);
+
+    Task CreateWiredLinkNetworkAsync(Guid playerId, int itemId, string name);
+    Task RenameWiredLinkNetworkAsync(Guid playerId, int itemId, string networkId, string name);
+    Task DeleteWiredLinkNetworkAsync(Guid playerId, int itemId, string networkId);
+
+    /// <summary>Every Link connected to one of the owner's networks, in whichever room.</summary>
+    Task GetWiredLinkConnectionsAsync(Guid playerId, int itemId, string networkId);
+
+    /// <summary>A message or dataframe sent through a Link in another room reached one of this room's Links over their
+    /// network. One-way, as two rooms may send to each other at once.</summary>
+    [OneWay]
+    Task ReceiveWiredLinkAsync(WiredLinkDelivery delivery);
+
+    /// <summary>A network one of this room's Links was connected to was deleted from another room: the Link is
+    /// disconnected, and its owner's open dialog told.</summary>
+    [OneWay]
+    Task WiredLinkNetworkDeletedAsync(int networkId);
+
     /// <summary>The owner gives rights to a user (by account id); null when nothing changed.</summary>
     Task<FlatControllerAdded?> AssignRightsAsync(Guid ownerId, int accountId);
 
@@ -141,6 +166,10 @@ public interface IGameRoomGrain : IGrainWithIntegerKey
 
     Task ShowSignAsync(Guid playerId, int sign);
 
+    /// <summary>Shows a Habbicon over the user's avatar, to everyone in the room. Whether they own it is the caller's
+    /// to check.</summary>
+    Task UseHabbiconAsync(Guid playerId, int habbiconId);
+
     /// <summary>Gives one of the player's respects to the user with that account id, if they are
     /// in the room and the player has any left today.</summary>
     Task RespectAsync(Guid playerId, int targetAccountId);
@@ -201,7 +230,8 @@ public interface IGameRoomGrain : IGrainWithIntegerKey
     /// <summary>Staff take the room in hand: lock its door, rename it, empty it.</summary>
     Task StaffModerateAsync(bool lockDoor, string? newName, bool kickUsers);
 
-    /// <summary>Someone is on their way in through the teleport or hopper with this id: they are let in, and arrive
+    /// <summary>Someone is on their way in through the teleport or hopper with this database id (as a link or the
+    /// hopper search found it, not the id the room gives Builders Club furni): they are let in, and arrive
     /// inside it. False when there is no such teleport here. It changes nothing another call could be halfway
     /// through, so it may run between the turns of one, and two rooms sending people to each other cannot wait on
     /// each other.</summary>
@@ -296,6 +326,13 @@ public interface IGameRoomGrain : IGrainWithIntegerKey
     /// <summary>Tears a note off the wall.</summary>
     Task RemovePostItAsync(Guid playerId, int itemId);
 
+    /// <summary>Rewrites a wired label, for one who may change the room's wired.</summary>
+    Task SetFurnitureLabelAsync(Guid playerId, int itemId, string text);
+
+    /// <summary>A wired label's bubble colour, who sees it and whether it stays open, for one who may change the room's
+    /// wired.</summary>
+    Task SetFurnitureLabelSettingsAsync(Guid playerId, int itemId, int bubbleColor, int visibility, bool alwaysOpen);
+
     Task SendDimmerPresetsAsync(Guid playerId, int itemId);
 
     /// <summary>Saves a dimmer preset; applying it shows it at once.</summary>
@@ -309,6 +346,10 @@ public interface IGameRoomGrain : IGrainWithIntegerKey
 
     /// <summary>The background toner's colour.</summary>
     Task SetBackgroundColorAsync(Guid playerId, int itemId, int hue, int saturation, int lightness);
+
+    /// <summary>Recolours a recolourable furni, and with it the room's furni the scope names (FurniRecolorMessageEvent's
+    /// scopes), to a colour of their palette.</summary>
+    Task RecolorFurniAsync(Guid playerId, int itemId, int scope, int red, int green, int blue);
 
     /// <summary>A changing gate's outfit for one gender.</summary>
     Task SetClothingChangeDataAsync(Guid playerId, int itemId, string gender, string figure);
@@ -506,9 +547,16 @@ public interface IGameRoomGrain : IGrainWithIntegerKey
     /// <summary>Gives up a resolution statue's challenge, so another can be picked.</summary>
     Task ResetResolutionAsync(Guid playerId, int itemId);
 
-    /// <summary>Changes a placed item's data from outside the room; false when the item is not here. It interleaves, as
+    /// <summary>Changes a placed item's data from outside the room, the item named by its database id; false when the
+    /// item is not here. It interleaves, as
     /// the change may come of something the room itself set off (a level reached by what a player did here). The change
     /// is made on the room's next tick, so it never lands in the middle of the room's own work.</summary>
     [Orleans.Concurrency.AlwaysInterleave]
     Task<bool> ReplaceItemDataAsync(int itemId, FurniDataView data);
+
+    /// <summary>The database id of the item the room knows by this id (the id its visitors name it by, which for
+    /// Builders Club furni is not the database's); the id as it is when no such item is here. For a service that
+    /// reads a room item the client named from the database. Reads only, so it interleaves.</summary>
+    [Orleans.Concurrency.AlwaysInterleave]
+    Task<int> StoredIdOfAsync(int itemId);
 }

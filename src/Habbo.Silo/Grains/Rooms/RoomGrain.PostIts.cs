@@ -104,7 +104,7 @@ public sealed partial class RoomGrain
             return;
 
         await using var db = await dbFactory.CreateDbContextAsync();
-        var text = await db.FurniPostIts.Where(p => p.ItemId == itemId).Select(p => p.Text).FirstOrDefaultAsync() ?? string.Empty;
+        var text = await db.FurniPostIts.Where(p => p.ItemId == note.Item.Id).Select(p => p.Text).FirstOrDefaultAsync() ?? string.Empty;
         SendTo(playerId, new ItemDataUpdateMessageComposer(itemId, note.Data.StateText + PostItSeparator + text));
     }
 
@@ -116,9 +116,9 @@ public sealed partial class RoomGrain
         text = await PostItTextAsync(text);
         await using (var db = await dbFactory.CreateDbContextAsync())
         {
-            if (await db.FurniPostIts.Where(p => p.ItemId == itemId).ExecuteUpdateAsync(s => s.SetProperty(p => p.Text, text)) == 0)
+            if (await db.FurniPostIts.Where(p => p.ItemId == note.Item.Id).ExecuteUpdateAsync(s => s.SetProperty(p => p.Text, text)) == 0)
             {
-                db.FurniPostIts.Add(new FurniPostIt { ItemId = itemId, Text = text });
+                db.FurniPostIts.Add(new FurniPostIt { ItemId = note.Item.Id, Text = text });
                 await db.SaveChangesAsync();
             }
         }

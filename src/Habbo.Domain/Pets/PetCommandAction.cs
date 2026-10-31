@@ -39,4 +39,10 @@ public enum PetCommandAction
 
     /// <summary>Goes to a breeding nest for its kind.</summary>
     Breed,
+
+    /// <summary>Says something, holding no posture.</summary>
+    Speak,
+
+    /// <summary>Goes to the nearest football and kicks it.</summary>
+    Football,
 }

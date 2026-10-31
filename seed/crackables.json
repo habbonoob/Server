@@ -1,0 +1,21 @@
+{
+  "//": "What cracking a crackable open gives: one of its prizes, drawn evenly. The 2026 bonus bags hold the six colours of their bonus rare (the Habbo X wiki, Bonus_Bag: Bag I DuckBooks, Bag II Kawaii Cat Prints, Bag III Gemstones - habbo.com's Bag III gave a Ruby Gemstone, bonusrare26_3*0, on 25 October 2026 - Bag IV not yet named there). The wiki gives no odds for these, so each colour is as likely; the 2016 bag it does give odds for had them even.",
+  "crackables": [
+    {
+      "className": "bonusbag26_1",
+      "prizes": ["bonusrare26_1*0", "bonusrare26_1*1", "bonusrare26_1*2", "bonusrare26_1*3", "bonusrare26_1*4", "bonusrare26_1*5"]
+    },
+    {
+      "className": "bonusbag26_2",
+      "prizes": ["bonusrare26_2*0", "bonusrare26_2*1", "bonusrare26_2*2", "bonusrare26_2*3", "bonusrare26_2*4", "bonusrare26_2*5"]
+    },
+    {
+      "className": "bonusbag26_3",
+      "prizes": ["bonusrare26_3*0", "bonusrare26_3*1", "bonusrare26_3*2", "bonusrare26_3*3", "bonusrare26_3*4", "bonusrare26_3*5"]
+    },
+    {
+      "className": "bonusbag26_4",
+      "prizes": ["bonusrare26_4*0", "bonusrare26_4*1", "bonusrare26_4*2", "bonusrare26_4*3", "bonusrare26_4*4", "bonusrare26_4*5"]
+    }
+  ]
+}

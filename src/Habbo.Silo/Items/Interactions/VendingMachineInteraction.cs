@@ -4,5 +4,9 @@ namespace Habbo.Silo.Items.Interactions;
 [FurniInteraction("vending_machine")]
 public sealed class VendingMachineInteraction : DispenserInteraction
 {
-    protected override void Give(FurniUse use, int id) => use.Room.SetHandItem(use.User, id);
+    protected override void Give(FurniUse use, int id)
+    {
+        use.Room.SetHandItem(use.User, id);
+        use.Room.TrackAction(use.User, RewardTracks.RewardTrackActions.FindHandItem, id.ToString(System.Globalization.CultureInfo.InvariantCulture));
+    }
 }

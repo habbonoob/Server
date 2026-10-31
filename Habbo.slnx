@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/Habbo.Bundles/Habbo.Bundles.csproj" />
     <Project Path="src/Habbo.Camera/Habbo.Camera.csproj" />
     <Project Path="src/Habbo.Domain/Habbo.Domain.csproj" />
     <Project Path="src/Habbo.Gateway/Habbo.Gateway.csproj" />
@@ -14,6 +15,7 @@
     <Project Path="src/Habbo.Web/Habbo.Web.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Habbo.Bundles.Tests/Habbo.Bundles.Tests.csproj" />
     <Project Path="tests/Habbo.Gateway.Tests/Habbo.Gateway.Tests.csproj" />
     <Project Path="tests/Habbo.Protocol.Tests/Habbo.Protocol.Tests.csproj" />
     <Project Path="tests/Habbo.Silo.Tests/Habbo.Silo.Tests.csproj" />

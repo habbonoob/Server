@@ -21,6 +21,6 @@ public sealed class StuffStateTrigger : WiredTrigger
             return false;
 
         return box.IntParam(0) != SavedStateOnly
-               || box.Settings.Snapshots.Any(snapshot => snapshot.ItemId == item.Item.Id && snapshot.State == item.Data.State);
+               || box.Settings.Snapshots.Any(snapshot => snapshot.ItemId == item.Id && snapshot.State == item.Data.State);
     }
 }

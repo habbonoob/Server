@@ -9,4 +9,7 @@ public sealed class RoomModelData
     public int DoorX { get; set; }
     public int DoorY { get; set; }
     public int DoorDirection { get; set; }
+
+    /// <summary>Whether a room made from the model opens zoomed out, as habbo.com's bigger models (i and on) do.</summary>
+    public bool UseSmallScale { get; set; }
 }

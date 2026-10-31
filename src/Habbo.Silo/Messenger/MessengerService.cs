@@ -21,7 +21,7 @@ namespace Habbo.Silo.Messenger;
 
 /// <summary>The console: messages kept until they are read and for scrolling back, group chats,
 /// following friends, inviting them and finding people.</summary>
-public sealed class MessengerService(
+public sealed partial class MessengerService(
     IDbContextFactory<AppDbContext> dbFactory,
     IGrainFactory grains,
     PlayerMessenger messenger,
@@ -101,6 +101,7 @@ public sealed class MessengerService(
                 new NewConsoleMessageComposer(chatId, ConsoleMessageType.Text, text, 0, key, NotAConfirmation, sender.AccountId, sender.Username, sender.Figure));
             await messenger.SendAsync(playerId,
                 new NewConsoleMessageComposer(chatId, ConsoleMessageType.Text, text, 0, key, confirmationId, sender.AccountId, sender.Username, sender.Figure));
+            grains.GetGrain<IPlayerGrain>(playerId).TrackActionAsync(RewardTracks.RewardTrackActions.SendMessengerMessage).Ignore();
             return;
         }
 
@@ -136,6 +137,7 @@ public sealed class MessengerService(
 
         await messenger.SendAsync(playerId,
             new NewConsoleMessageComposer(chatId, ConsoleMessageType.Text, text, 0, key, confirmationId, sender.AccountId, sender.Username, sender.Figure));
+        grains.GetGrain<IPlayerGrain>(playerId).TrackActionAsync(RewardTracks.RewardTrackActions.SendMessengerMessage).Ignore();
     }
 
     public async Task DeliverPendingAsync(Guid playerId)
@@ -150,8 +152,8 @@ public sealed class MessengerService(
         {
             message.Delivered = true;
             await messenger.SendAsync(playerId, new NewConsoleMessageComposer(
-                message.Sender!.AccountId, ConsoleMessageType.Text, message.Text, SecondsAgo(message.SentAt), message.Key, NotAConfirmation,
-                message.Sender.AccountId, message.Sender.Username, message.Sender.Figure));
+                message.Sender!.AccountId, TypeOf(message), message.Text, SecondsAgo(message.SentAt), message.Key, NotAConfirmation,
+                message.Sender.AccountId, message.Sender.Username, message.Sender.Figure, message.HabbiconId ?? NoHabbicon));
         }
 
         await db.SaveChangesAsync();
@@ -190,7 +192,8 @@ public sealed class MessengerService(
         await messenger.SendAsync(playerId, new ConsoleMessageHistoryComposer(chatId, page
             .OrderBy(m => m.Id)
             .Select(m => new MessageHistoryEntryData(
-                m.Sender!.AccountId, m.Sender.Username, m.Sender.Figure, ConsoleMessageType.Text, m.Text, SecondsAgo(m.SentAt), m.Key))
+                m.Sender!.AccountId, m.Sender.Username, m.Sender.Figure, TypeOf(m), m.Text, SecondsAgo(m.SentAt), m.Key,
+                m.HabbiconId ?? NoHabbicon))
             .ToList()));
     }
 
@@ -204,7 +207,8 @@ public sealed class MessengerService(
             return;
         }
 
-        await GoToRoomOfAsync(db, playerId, friend);
+        if (await GoToRoomOfAsync(db, playerId, friend))
+            grains.GetGrain<IPlayerGrain>(playerId).TrackActionAsync(RewardTracks.RewardTrackActions.FollowFriend).Ignore();
     }
 
     public async Task VisitAsync(Guid playerId, string userName)
@@ -226,7 +230,8 @@ public sealed class MessengerService(
 
     /// <summary>Sends the player into the room somebody is in, unless they are away, not in a room,
     /// keep people from following them, or one has blocked the other (staff follow anyone).</summary>
-    private async Task GoToRoomOfAsync(AppDbContext db, Guid playerId, User target)
+    /// <summary>Sends the player to the room the target is in; false when they may not follow them there.</summary>
+    private async Task<bool> GoToRoomOfAsync(AppDbContext db, Guid playerId, User target)
     {
         var isStaff = await permissions.HasAsync(playerId, PermissionNames.MessengerFollowAnyone);
         var online = await grains.GetGrain<IUserPresenceGrain>(IUserPresenceGrain.Key).WhichAreOnlineAsync([target.Id]);
@@ -243,9 +248,13 @@ public sealed class MessengerService(
             error = FollowFriendErrors.HotelView;
 
         if (error is { } code)
+        {
             await messenger.SendAsync(playerId, new FollowFriendFailedComposer(code));
-        else
-            await messenger.SendAsync(playerId, new RoomForwardMessageComposer(roomId!.Value));
+            return false;
+        }
+
+        await messenger.SendAsync(playerId, new RoomForwardMessageComposer(roomId!.Value));
+        return true;
     }
 
     /// <summary>Of <paramref name="others"/>, those the player blocked or who blocked the player: blocking keeps
@@ -257,23 +266,28 @@ public sealed class MessengerService(
             .ToListAsync())
         .ToHashSet();
 
+    /// <summary>Sends the player to a friend finding room: the busiest of the hotel's official rooms (the navigator's
+    /// Official Rooms) with a place free, as habbo.com sends them to one of its hallways ("Hallway 1", 26 of 75 there,
+    /// October 2026); without one, the busiest other room with people in it. Never the room they are in.</summary>
     public async Task FindNewFriendsAsync(Guid playerId)
     {
         await using var db = await dbFactory.CreateDbContextAsync();
         var population = await grains.GetGrain<IRoomPopulationGrain>(0).GetAsync();
-        var busy = population.Where(p => p.Value > 0).OrderByDescending(p => p.Value).Select(p => p.Key).ToList();
         var own = await grains.GetGrain<IPlayerGrain>(playerId).GetCurrentRoomAsync();
-
-        // the busiest open room the player is not already in
-        var roomId = await db.Rooms.AsNoTracking()
-            .Where(r => busy.Contains(r.Id) && r.Id != own && r.State == Habbo.Domain.Rooms.RoomState.Open)
-            .Select(r => r.Id)
+        var official = await db.OfficialRoomEntries.AsNoTracking()
+            .Where(e => e.Type == Habbo.Domain.Navigator.OfficialRoomEntryType.Room && e.RoomId != null && !e.IsAd)
+            .Select(e => e.RoomId!.Value).ToListAsync();
+        var open = await db.Rooms.AsNoTracking()
+            .Where(r => r.Id != own && r.State == Habbo.Domain.Rooms.RoomState.Open && (official.Contains(r.Id) || population.Keys.Contains(r.Id)))
+            .Select(r => new { r.Id, r.MaxUsers })
             .ToListAsync();
-        var target = busy.FirstOrDefault(roomId.Contains);
+        var withRoom = open.Where(r => population.GetValueOrDefault(r.Id) < r.MaxUsers).ToList();
+        var target = withRoom.Where(r => official.Contains(r.Id)).OrderByDescending(r => population.GetValueOrDefault(r.Id)).FirstOrDefault()
+                     ?? withRoom.Where(r => population.GetValueOrDefault(r.Id) > 0).OrderByDescending(r => population.GetValueOrDefault(r.Id)).FirstOrDefault();
 
-        await messenger.SendAsync(playerId, new FindFriendsProcessResultComposer(target != 0));
-        if (target != 0)
-            await messenger.SendAsync(playerId, new RoomForwardMessageComposer(target));
+        await messenger.SendAsync(playerId, new FindFriendsProcessResultComposer(target is not null));
+        if (target is not null)
+            await messenger.SendAsync(playerId, new RoomForwardMessageComposer(target.Id));
     }
 
     public async Task SearchAsync(Guid playerId, string query)
@@ -335,6 +349,8 @@ public sealed class MessengerService(
 
         var invite = new RoomInviteComposer(sender.AccountId, text);
         await messenger.SendAsync(friends.Where(f => online.Contains(f.FriendId)).Select(f => f.FriendId), invite);
+        if (friends.Any(f => online.Contains(f.FriendId)))
+            grains.GetGrain<IPlayerGrain>(playerId).TrackActionAsync(RewardTracks.RewardTrackActions.SendMessengerInvite).Ignore();
 
         var missed = accountIds.Except(friends.Where(f => online.Contains(f.FriendId)).Select(f => f.AccountId)).ToList();
         if (missed.Count > 0)
@@ -353,6 +369,7 @@ public sealed class MessengerService(
 
         friendship.Relationship = (RelationshipStatus)status;
         await db.SaveChangesAsync();
+        grains.GetGrain<IPlayerGrain>(playerId).TrackActionAsync(RewardTracks.RewardTrackActions.SetRelationshipStatus).Ignore();
 
         var view = (await friendList.GetFriendListAsync(playerId)).Friends.FirstOrDefault(f => f.AccountId == accountId);
         if (view is not null)

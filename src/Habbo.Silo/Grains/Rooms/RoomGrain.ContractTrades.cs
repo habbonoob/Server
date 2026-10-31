@@ -285,7 +285,7 @@ public sealed partial class RoomGrain
         }
 
         if (_wired is not null)
-            await _wired.TransactionCompletedAsync(user, contractFurni);
+            await _wired.TransactionCompletedAsync(user, contractFurni, Done(transaction, times));
     }
 
     /// <summary>Puts a payment into the chests in their order, up to what each may hold; what does not fit goes to the
@@ -319,7 +319,7 @@ public sealed partial class RoomGrain
             afterCommit.Add(() =>
             {
                 hold.Items.AddRange(stored.Select(i => Held(i, data[i.Id])));
-                BroadcastToChestViewers(chest.Item.Id, new ItemsChestContentsUpdatedMessageComposer(chest.Item.Id, [], stored.Select(i => ToStorage(i, data[i.Id])).ToList()));
+                BroadcastToChestViewers(chest.Item.Id, new ItemsChestContentsUpdatedMessageComposer(chest.Id, [], stored.Select(i => ToStorage(i, data[i.Id])).ToList()));
                 return Task.CompletedTask;
             });
             transaction.ChestIds.Add(chest.Item.Id);
@@ -356,7 +356,7 @@ public sealed partial class RoomGrain
             afterCommit.Add(() =>
             {
                 hold.Coins += stored;
-                BroadcastToChestViewers(chest.Item.Id, new CoinsChestContentsMessageComposer(chest.Item.Id, hold.Coins, true));
+                BroadcastToChestViewers(chest.Item.Id, new CoinsChestContentsMessageComposer(chest.Id, hold.Coins, true));
                 return Task.CompletedTask;
             });
             if (!transaction.ChestIds.Contains(chest.Item.Id))
@@ -400,7 +400,7 @@ public sealed partial class RoomGrain
             afterCommit.Add(() =>
             {
                 HoldOf(chestId).Items.RemoveAll(i => groupIds.Contains(i.ItemId));
-                BroadcastToChestViewers(chestId, new ItemsChestContentsUpdatedMessageComposer(chestId, groupIds, []));
+                BroadcastToChestViewers(chestId, new ItemsChestContentsUpdatedMessageComposer(chest.Id, groupIds, []));
                 return Task.CompletedTask;
             });
             if (!transaction.ChestIds.Contains(group.Key))
@@ -426,7 +426,7 @@ public sealed partial class RoomGrain
             afterCommit.Add(() =>
             {
                 hold.Coins -= taken;
-                BroadcastToChestViewers(chest.Item.Id, new CoinsChestContentsMessageComposer(chest.Item.Id, hold.Coins, true));
+                BroadcastToChestViewers(chest.Item.Id, new CoinsChestContentsMessageComposer(chest.Id, hold.Coins, true));
                 return Task.CompletedTask;
             });
             if (!transaction.ChestIds.Contains(chest.Item.Id))
@@ -441,14 +441,16 @@ public sealed partial class RoomGrain
         return true;
     }
 
-    /// <summary>Puts credits into a player's earnings with the caller's own save; they are told once it has committed.</summary>
-    private void Earn(AppDbContext db, Guid playerId, byte category, int credits, List<Func<Task>> afterCommit)
+    /// <summary>Puts credits into a player's earnings with the caller's own save; they are told once it has committed,
+    /// unless <paramref name="notify"/> is false.</summary>
+    private void Earn(AppDbContext db, Guid playerId, byte category, int credits, List<Func<Task>> afterCommit, bool notify = true)
     {
         if (credits <= 0)
             return;
 
         db.IncomeRewards.Add(new IncomeReward { UserId = playerId, Category = category, RewardType = IncomeRewardData.Credits, Amount = credits });
-        afterCommit.Add(() => earnings.NotifyAsync(playerId, category));
+        if (notify)
+            afterCommit.Add(() => earnings.NotifyAsync(playerId, category));
     }
 
     /// <summary>Whether every item set aside for the trade is still in the chest it was set aside from, and that chest
@@ -516,7 +518,7 @@ public sealed partial class RoomGrain
             afterCommit.Add(() =>
             {
                 hold.Coins -= taken;
-                BroadcastToChestViewers(chest.Item.Id, new CoinsChestContentsMessageComposer(chest.Item.Id, hold.Coins, true));
+                BroadcastToChestViewers(chest.Item.Id, new CoinsChestContentsMessageComposer(chest.Id, hold.Coins, true));
                 return Task.CompletedTask;
             });
             if (!transaction.ChestIds.Contains(chest.Item.Id))
@@ -556,7 +558,7 @@ public sealed partial class RoomGrain
         }
 
         if (_wired is not null)
-            await _wired.TransactionCompletedAsync(user, contractFurni);
+            await _wired.TransactionCompletedAsync(user, contractFurni, Done(transaction, terms.MaxTimes));
     }
 
     /// <summary>Calls off the users' transactions: under the contracts given, or any.</summary>
@@ -593,8 +595,13 @@ public sealed partial class RoomGrain
         new(credits.Values.Sum(), kinds.Values.GroupBy(k => k).ToDictionary(g => g.Key, g => g.Count()));
 
     /// <summary>What the log keeps for a contract transaction: the contract, and the multiplier used.</summary>
-    private static string ContractInfo(ContractTerms terms, int times) =>
-        string.Create(CultureInfo.InvariantCulture, $"{terms.ContractItemId} {times}");
+    /// <summary>What wired's transaction variables say of a transaction that went through.</summary>
+    private static Habbo.Silo.Wired.WiredTransactionDone Done(ChestTransaction transaction, int times) => new(
+        times, transaction.DepositedFurni, transaction.DepositedCoins, transaction.WithdrawnFurni, transaction.WithdrawnCoins);
+
+    /// <summary>The contract goes in the log by its database id: the log outlives the ids the room gives.</summary>
+    private string ContractInfo(ContractTerms terms, int times) =>
+        string.Create(CultureInfo.InvariantCulture, $"{_items?.StoredIdOf(terms.ContractItemId) ?? terms.ContractItemId} {times}");
 
     /// <summary>The chest notification for a payment that went past what the chests could hold.</summary>
     private const string ChestEarningsNotification = "wired_chests.earnings";

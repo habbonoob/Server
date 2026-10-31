@@ -44,6 +44,7 @@ public sealed partial class PlayerGrain
     {
         await using var db = await dbFactory.CreateDbContextAsync();
         var badges = await db.UserBadges.Where(b => b.UserId == PlayerId).ToListAsync();
+        var wornBefore = badges.Where(b => b.Slot != UserBadge.NotWorn).Select(b => b.Code).ToHashSet();
         foreach (var badge in badges)
             badge.Slot = UserBadge.NotWorn;
 
@@ -59,6 +60,9 @@ public sealed partial class PlayerGrain
         }
 
         await db.SaveChangesAsync();
+        // a badge put on, not one moved to another slot
+        if (badges.Any(b => b.Slot != UserBadge.NotWorn && !wornBefore.Contains(b.Code)))
+            await TrackActionAsync(Habbo.Silo.RewardTracks.RewardTrackActions.WearBadge);
         return await WornAsync(db, badges);
     }
 

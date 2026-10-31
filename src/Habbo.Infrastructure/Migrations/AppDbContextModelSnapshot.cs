@@ -580,6 +580,10 @@ namespace Habbo.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Choices")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
                     b.PrimitiveCollection<List<string>>("Furni")
                         .IsRequired()
                         .HasColumnType("text[]");
@@ -935,6 +939,38 @@ namespace Habbo.Infrastructure.Migrations
                     b.ToTable("crafting_recipes", (string)null);
                 });
 
+            modelBuilder.Entity("Habbo.Domain.DailyTasks.DailyTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateOnly>("Day")
+                        .HasColumnType("date");
+
+                    b.Property<int>("Repeats")
+                        .HasColumnType("integer");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("smallint");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "Day");
+
+                    b.ToTable("daily_tasks", (string)null);
+                });
+
             modelBuilder.Entity("Habbo.Domain.Friends.ConsoleMessage", b =>
                 {
                     b.Property<long>("Id")
@@ -947,6 +983,9 @@ namespace Habbo.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<int?>("GroupId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("HabbiconId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Key")
@@ -1369,6 +1408,30 @@ namespace Habbo.Infrastructure.Migrations
                     b.ToTable("furni_int_entries", (string)null);
                 });
 
+            modelBuilder.Entity("Habbo.Domain.Furniture.Data.FurniLabel", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("AlwaysOpen")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("BubbleColor")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<int>("Visibility")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ItemId");
+
+                    b.ToTable("furni_labels", (string)null);
+                });
+
             modelBuilder.Entity("Habbo.Domain.Furniture.Data.FurniMapEntry", b =>
                 {
                     b.Property<int>("ItemId")
@@ -1531,8 +1594,8 @@ namespace Habbo.Infrastructure.Migrations
 
                     b.Property<string>("StringParam")
                         .IsRequired()
-                        .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)");
+                        .HasMaxLength(3000)
+                        .HasColumnType("character varying(3000)");
 
                     b.PrimitiveCollection<List<int>>("StuffIds")
                         .IsRequired()
@@ -1603,6 +1666,51 @@ namespace Habbo.Infrastructure.Migrations
                     b.HasIndex("RenterId");
 
                     b.ToTable("rentable_space_rentals", (string)null);
+                });
+
+            modelBuilder.Entity("Habbo.Domain.Furniture.Data.WiredLinkEndpoint", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("NetworkId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("ReceiveLocal")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("ItemId");
+
+                    b.HasIndex("NetworkId");
+
+                    b.ToTable("wired_link_endpoints", (string)null);
+                });
+
+            modelBuilder.Entity("Habbo.Domain.Furniture.Data.WiredLinkNetwork", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("wired_link_networks", (string)null);
                 });
 
             modelBuilder.Entity("Habbo.Domain.Furniture.Data.WiredRewardGrant", b =>
@@ -2370,6 +2478,28 @@ namespace Habbo.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("group_membership_requests", (string)null);
+                });
+
+            modelBuilder.Entity("Habbo.Domain.Habbicons.UserHabbicon", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("HabbiconId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("AcquiredAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Favourite")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("LastUsedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("UserId", "HabbiconId");
+
+                    b.ToTable("user_habbicons", (string)null);
                 });
 
             modelBuilder.Entity("Habbo.Domain.LandingView.PromoArticle", b =>
@@ -3658,6 +3788,28 @@ namespace Habbo.Infrastructure.Migrations
                     b.ToTable("poll_responses", (string)null);
                 });
 
+            modelBuilder.Entity("Habbo.Domain.Quests.UserSeasonalQuest", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("QuestId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Progress")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserId", "QuestId");
+
+                    b.ToTable("user_seasonal_quests", (string)null);
+                });
+
             modelBuilder.Entity("Habbo.Domain.Recycler.RecyclerPrize", b =>
                 {
                     b.Property<int>("Id")
@@ -3666,7 +3818,10 @@ namespace Habbo.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DefinitionId")
+                    b.Property<int?>("ChatStyleId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("DefinitionId")
                         .HasColumnType("integer");
 
                     b.Property<int>("LevelId")
@@ -3705,6 +3860,34 @@ namespace Habbo.Infrastructure.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("recycler_uses", (string)null);
+                });
+
+            modelBuilder.Entity("Habbo.Domain.RewardTracks.RewardTrackProgress", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TrackId")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("Claimed")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Premium")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Tasks")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.HasKey("UserId", "TrackId");
+
+                    b.ToTable("reward_track_progress", (string)null);
                 });
 
             modelBuilder.Entity("Habbo.Domain.Rooms.AvatarEffect", b =>
@@ -4161,6 +4344,9 @@ namespace Habbo.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
+
+                    b.Property<bool>("UseSmallScale")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -4840,6 +5026,9 @@ namespace Habbo.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<int>("AchievementScore")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("BuildersClubBonusFurni")
                         .HasColumnType("integer");
 
                     b.Property<int>("ClubLevel")
@@ -5541,6 +5730,17 @@ namespace Habbo.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Habbo.Domain.DailyTasks.DailyTask", b =>
+                {
+                    b.HasOne("Habbo.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Habbo.Domain.Friends.ConsoleMessage", b =>
                 {
                     b.HasOne("Habbo.Domain.Groups.Group", null)
@@ -5751,6 +5951,17 @@ namespace Habbo.Infrastructure.Migrations
                     b.Navigation("Item");
                 });
 
+            modelBuilder.Entity("Habbo.Domain.Furniture.Data.FurniLabel", b =>
+                {
+                    b.HasOne("Habbo.Domain.Furniture.UserItem", "Item")
+                        .WithOne()
+                        .HasForeignKey("Habbo.Domain.Furniture.Data.FurniLabel", "ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+                });
+
             modelBuilder.Entity("Habbo.Domain.Furniture.Data.FurniMapEntry", b =>
                 {
                     b.HasOne("Habbo.Domain.Furniture.UserItem", "Item")
@@ -5892,6 +6103,35 @@ namespace Habbo.Infrastructure.Migrations
                     b.Navigation("Item");
 
                     b.Navigation("Renter");
+                });
+
+            modelBuilder.Entity("Habbo.Domain.Furniture.Data.WiredLinkEndpoint", b =>
+                {
+                    b.HasOne("Habbo.Domain.Furniture.UserItem", "Item")
+                        .WithOne()
+                        .HasForeignKey("Habbo.Domain.Furniture.Data.WiredLinkEndpoint", "ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Habbo.Domain.Furniture.Data.WiredLinkNetwork", "Network")
+                        .WithMany()
+                        .HasForeignKey("NetworkId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Network");
+                });
+
+            modelBuilder.Entity("Habbo.Domain.Furniture.Data.WiredLinkNetwork", b =>
+                {
+                    b.HasOne("Habbo.Domain.Users.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Habbo.Domain.Furniture.Data.WiredRewardGrant", b =>
@@ -6144,6 +6384,17 @@ namespace Habbo.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Habbo.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Habbo.Domain.Habbicons.UserHabbicon", b =>
+                {
                     b.HasOne("Habbo.Domain.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -6475,13 +6726,23 @@ namespace Habbo.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Habbo.Domain.Quests.UserSeasonalQuest", b =>
+                {
+                    b.HasOne("Habbo.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Habbo.Domain.Recycler.RecyclerPrize", b =>
                 {
                     b.HasOne("Habbo.Domain.Furniture.ItemDefinition", "Definition")
                         .WithMany()
                         .HasForeignKey("DefinitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Habbo.Domain.Recycler.RecyclerPrizeLevel", null)
                         .WithMany("Prizes")
@@ -6499,6 +6760,17 @@ namespace Habbo.Infrastructure.Migrations
                         .HasForeignKey("Habbo.Domain.Recycler.RecyclerUse", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Habbo.Domain.RewardTracks.RewardTrackProgress", b =>
+                {
+                    b.HasOne("Habbo.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Habbo.Domain.Rooms.CompetitionRoomEntry", b =>

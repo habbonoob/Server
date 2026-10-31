@@ -5,9 +5,13 @@ namespace Habbo.Domain.Furniture.Data;
 /// they are kept as the client sends them and read by the box that owns them.</summary>
 public sealed class FurniWired : IFurniRow
 {
-    /// <summary>The longest text a box keeps: a message to show, a keyword to listen for. The
+    /// <summary>The longest text most boxes keep: a message to show, a keyword to listen for. The
     /// dialogs allow a thousand characters.</summary>
-    public const int StringParamMaxLength = 1024;
+    public const int TextMaxLength = 1024;
+
+    /// <summary>The longest string any box keeps: a link dataframe's rows, which its dialog lets grow to 3000 bytes
+    /// (LinkDataframeCodec.MAX_TEXT_BYTES).</summary>
+    public const int StringParamMaxLength = 3000;
 
     public int ItemId { get; set; }
     public UserItem? Item { get; set; }

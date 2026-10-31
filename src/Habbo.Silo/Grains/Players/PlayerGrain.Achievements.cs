@@ -75,8 +75,16 @@ public sealed partial class PlayerGrain
     private Task SetAchievementProgressAsync(string achievementName, int value) =>
         ProgressAchievementAsync(achievementName, _ => Math.Max(0, value));
 
-    public Task ProgressAchievementAsync(string achievementName, int amount) =>
-        amount <= 0 ? Task.CompletedTask : ProgressAchievementAsync(achievementName, progress => progress + amount);
+    public async Task ProgressAchievementAsync(string achievementName, int amount)
+    {
+        if (amount <= 0)
+            return;
+
+        // what the achievement counts, a reward track task may count too
+        if (Habbo.Silo.RewardTracks.RewardTrackActions.ByAchievement.TryGetValue(achievementName, out var action))
+            await TrackActionAsync(action, amount: amount);
+        await ProgressAchievementAsync(achievementName, progress => progress + amount);
+    }
 
     /// <summary>For an achievement that counts something the player has (friends, days, furni in a room): its progress
     /// rises to the total when the total is more; it never falls.</summary>

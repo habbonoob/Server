@@ -77,8 +77,9 @@ public sealed class AchievementResolutions(IDbContextFactory<AppDbContext> dbFac
         return await db.FurniAchievementResolutions.AsNoTracking().Where(r => itemIds.Contains(r.ItemId)).ToListAsync();
     }
 
-    /// <summary>How far the challenge has got: the player's progress against what the target level needs.</summary>
-    public async Task<AchievementResolutionProgressMessageComposer?> ProgressAsync(FurniAchievementResolution resolution)
+    /// <summary>How far the challenge has got: the player's progress against what the target level needs. The statue
+    /// goes by <paramref name="furniId"/>, the id its room knows it by (the challenge is saved under its database id).</summary>
+    public async Task<AchievementResolutionProgressMessageComposer?> ProgressAsync(FurniAchievementResolution resolution, int furniId)
     {
         await using var db = await dbFactory.CreateDbContextAsync();
         var achievement = await db.Achievements.AsNoTracking().Include(a => a.Levels).FirstOrDefaultAsync(a => a.Id == resolution.AchievementId);
@@ -89,7 +90,7 @@ public sealed class AchievementResolutions(IDbContextFactory<AppDbContext> dbFac
             .Select(r => r.Progress).FirstOrDefaultAsync();
         var left = Math.Max(0, (int)(resolution.EndsAt - DateTimeOffset.UtcNow).TotalSeconds);
         return new AchievementResolutionProgressMessageComposer(
-            resolution.ItemId, resolution.AchievementId, achievement.BadgeOf(target), Math.Min(progress, target.RequiredProgress), target.RequiredProgress, left);
+            furniId, resolution.AchievementId, achievement.BadgeOf(target), Math.Min(progress, target.RequiredProgress), target.RequiredProgress, left);
     }
 
     /// <summary>Ends a statue's challenge, whatever became of it.</summary>

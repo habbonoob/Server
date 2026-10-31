@@ -17,7 +17,7 @@ public sealed class MatchSnapshotEffect : WiredEffect
 
     /// <summary>Only the snapshotted furni its furni source supplies: by default its picks, which are all of them.</summary>
     public override Task RunAsync(WiredBox box, WiredRun run) =>
-        Restore(box, run.Room, run, run.Furni(box).Select(item => item.Item.Id).ToHashSet());
+        Restore(box, run.Room, run, run.Furni(box).Select(item => item.Id).ToHashSet());
 
     /// <summary>Also what the dialog's "apply" button does, for every snapshotted furni.</summary>
     public static async Task Restore(WiredBox box, IWiredRoom room, WiredRun? run = null, IReadOnlySet<int>? only = null)

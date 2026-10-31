@@ -4,6 +4,7 @@ using Habbo.Protocol.Messages.Outgoing.Room.Chat;
 using Habbo.Protocol.Messages.Outgoing.Room.Engine;
 using Habbo.Protocol.Messages.Outgoing.Users;
 using Habbo.Silo.Abstractions.Players;
+using Habbo.Silo.Abstractions.Rooms;
 using Habbo.Silo.Rooms;
 
 namespace Habbo.Silo.Grains.Rooms;
@@ -142,6 +143,20 @@ public sealed partial class RoomGrain
 
         if (_entities!.Walk(entity, x, y))
             entity.OnArrival = then;
+    }
+
+    /// <summary>Shows a step the room made the avatar take (into a teleport, through a door), and it standing once the
+    /// step is done: its status says it walks until another says otherwise.</summary>
+    private void BroadcastStep(RoomEntityStore.RoomEntity entity, AvatarUpdateData step)
+    {
+        Broadcast(UserUpdateMessageComposer.From([step]));
+        var (x, y) = (entity.X, entity.Y);
+        Schedule(TickInterval, () =>
+        {
+            if (_entities is { } entities && entities.Avatars.Contains(entity) && entity.X == x && entity.Y == y && !entity.Walking)
+                Broadcast(UserUpdateMessageComposer.From([entities.CurrentStatus(entity)]));
+            return Task.CompletedTask;
+        });
     }
 
     private void LookAt(RoomEntityStore.RoomEntity entity, int x, int y)

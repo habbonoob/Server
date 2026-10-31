@@ -19,7 +19,7 @@ public class RoomImportWiredTests
     public void A_room_variable_becomes_its_box_by_name_not_by_number()
     {
         // Habbo numbers variables apart from furni: 52968 is no furni's id
-        var map = CopiedVariables.Map([Made("52968", "health")], new Dictionary<string, int> { ["health"] = 7 });
+        var map = CopiedVariables.Map([Made("52968", "health")], new Dictionary<string, int> { ["health"] = 7 }, InternalVariableSeed.Variables);
 
         Assert.Equal("7", map["52968"]);
     }
@@ -27,7 +27,7 @@ public class RoomImportWiredTests
     [Fact]
     public void Names_are_matched_whatever_their_case()
     {
-        var map = CopiedVariables.Map([Made("52968", "Health")], new Dictionary<string, int> { ["health"] = 7 });
+        var map = CopiedVariables.Map([Made("52968", "Health")], new Dictionary<string, int> { ["health"] = 7 }, InternalVariableSeed.Variables);
 
         Assert.Equal("7", map["52968"]);
     }
@@ -36,10 +36,12 @@ public class RoomImportWiredTests
     public void A_built_in_variable_becomes_this_hotels_own()
     {
         var map = CopiedVariables.Map(
-            [new RoomCopyVariable("-230", WiredVariableKinds.Internal, "@id", WiredVariableTargets.Furni)],
-            new Dictionary<string, int>());
+            [new RoomCopyVariable("-230", WiredVariableKinds.Internal, "@position.x", WiredVariableTargets.User),
+             new RoomCopyVariable("~146", WiredVariableKinds.Smart, "~recolorable_furni.color.rgb", WiredVariableTargets.Furni)],
+            new Dictionary<string, int>(), InternalVariableSeed.Variables);
 
-        Assert.Equal(WiredInternalVariables.IdOf(WiredVariableTargets.Furni, "@id"), map["-230"]);
+        Assert.Equal("-230", map["-230"]);
+        Assert.Equal("~146", map["~146"]);
     }
 
     [Fact]
@@ -47,7 +49,7 @@ public class RoomImportWiredTests
     {
         var map = CopiedVariables.Map(
             [new RoomCopyVariable("-999", WiredVariableKinds.Internal, "@no_such_thing", WiredVariableTargets.Furni)],
-            new Dictionary<string, int>());
+            new Dictionary<string, int>(), InternalVariableSeed.Variables);
 
         Assert.Empty(map);
     }
@@ -57,7 +59,7 @@ public class RoomImportWiredTests
     {
         var map = CopiedVariables.Map(
             [Made("52968", "xp"), new RoomCopyVariable("52968.level", WiredVariableKinds.SubVariable, "xp.level", WiredVariableTargets.User)],
-            new Dictionary<string, int> { ["xp"] = 7 });
+            new Dictionary<string, int> { ["xp"] = 7 }, InternalVariableSeed.Variables);
 
         Assert.Equal("7.level", map["52968.level"]);
     }
@@ -65,7 +67,7 @@ public class RoomImportWiredTests
     [Fact]
     public void A_variable_whose_box_was_not_copied_is_left_out()
     {
-        var map = CopiedVariables.Map([Made("52968", "health")], new Dictionary<string, int>());
+        var map = CopiedVariables.Map([Made("52968", "health")], new Dictionary<string, int>(), InternalVariableSeed.Variables);
 
         Assert.Empty(map);
     }

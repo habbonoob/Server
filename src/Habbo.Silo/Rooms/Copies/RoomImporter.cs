@@ -8,6 +8,7 @@ using Habbo.Protocol.Rooms;
 using Habbo.Silo.Grains.Rooms;
 using Habbo.Silo.Abstractions.Furni;
 using Habbo.Silo.Items;
+using Habbo.Silo.Items.Interactions;
 using Habbo.Silo.Wired;
 using Habbo.Silo.Wired.Variables;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,11 @@ namespace Habbo.Silo.Rooms.Copies;
 /// <summary>Builds a copied room (<see cref="RoomCopy"/>) here, owned by the one importing it: its floor plan as a model
 /// of its own, as the floor plan editor saves one, its walls and floor, and a new item for every furni this hotel has,
 /// placed where it stood and showing what it showed. The rest are counted and left out. Wired boxes this hotel has are
-/// set up as their dialogs showed them, picking the new items and using the room's new variables. Nothing is changed
-/// when the floor plan wouldn't pass the editor.</summary>
+/// set up as their dialogs showed them, picking the new items and using the room's new variables. Teleports linked to
+/// each other there are linked here. Nothing is changed when the floor plan wouldn't pass the editor.</summary>
 public sealed class RoomImporter(
-    IDbContextFactory<AppDbContext> dbFactory, IOptions<RoomOptions> options, WiredBoxRegistry wiredBoxes)
+    IDbContextFactory<AppDbContext> dbFactory, IOptions<RoomOptions> options, WiredBoxRegistry wiredBoxes,
+    FurniInteractionRegistry interactions, WiredInternalVariableCatalog internalVariables)
 {
     /// <summary>What the left-out furni standing outside the floor plan are counted under.</summary>
     public const string OffThePlan = "(off the floor plan)";
@@ -88,9 +90,13 @@ public sealed class RoomImporter(
         model.Name = RoomGrain.CustomModelPrefix + room.Id;
 
         var definitions = await db.ItemDefinitions.AsNoTracking()
-            .Select(d => new { d.Id, d.ClassId, d.ClassName, d.Type })
+            .Select(d => new { d.Id, d.ClassId, d.ClassName, d.Type, InteractionName = d.Interaction ?? d.Logic })
             .ToListAsync(ct);
         var classNames = definitions.ToDictionary(d => d.Id, d => d.ClassName);
+        var teleportDefinitions = definitions
+            .Where(d => interactions.For(d.InteractionName) is TeleportInteraction)
+            .Select(d => d.Id)
+            .ToHashSet();
         var byName = definitions.GroupBy(d => d.ClassName).ToDictionary(g => g.Key, g => g.First().Id);
         var byClass = definitions.GroupBy(d => (d.ClassId, d.Type)).ToDictionary(g => g.Key, g => g.First().Id);
         var missing = new Dictionary<string, int>();
@@ -153,8 +159,9 @@ public sealed class RoomImporter(
             wallItems++;
         }
 
-        // the items have their ids now, which the wired boxes pick them by
+        // the items have their ids now, which the wired boxes pick them by and the teleport links join
         await db.SaveChangesAsync(ct);
+        var (linkedTeleports, unlinkedTeleports) = LinkTeleports(db, placedFloor.Where(p => teleportDefinitions.Contains(p.Item.DefinitionId)).ToList());
         var boxes = placedFloor
             .Where(p => p.Copy.Wired is not null)
             .Select(p => (p.Copy, p.Item, Type: wiredBoxes.For(classNames[p.Item.DefinitionId])))
@@ -168,10 +175,30 @@ public sealed class RoomImporter(
             if (await PermissionQuery.HasAsync(db, ownerId, permission))
                 held.Add(permission);
         }
-        var (wiredBoxCount, refused) = SetUpWired(db, boxes, placedFloor, placedWall, copy.Variables ?? [], held);
+        var (wiredBoxCount, refused) = SetUpWired(db, boxes, placedFloor, placedWall, copy.Variables ?? [], held,
+            await internalVariables.LoadAsync(ct));
         await db.SaveChangesAsync(ct);
         await transaction.CommitAsync(ct);
-        return new RoomImportResult(room.Id, room.Name, floorItems, wallItems, missing, [], wiredBoxCount, refused);
+        return new RoomImportResult(room.Id, room.Name, floorItems, wallItems, missing, [], wiredBoxCount, refused,
+            linkedTeleports, unlinkedTeleports);
+    }
+
+    /// <summary>Links the copied teleports that were linked to each other there, from both ends as a purchase links a
+    /// pair. Returns how many teleports were linked, and how many weren't: their partner stood in another room, or the
+    /// copy predates format 4.</summary>
+    private static (int Linked, int Unlinked) LinkTeleports(AppDbContext db, List<(RoomCopyFloorItem Copy, UserItem Item)> teleports)
+    {
+        var bySource = teleports
+            .GroupBy(p => p.Copy.SourceId)
+            .ToDictionary(g => g.Key, g => g.First().Item);
+        var pairs = CopiedTeleports.Pair(teleports.Select(p => (p.Copy.SourceId, p.Copy.Extra)));
+        foreach (var (a, b) in pairs)
+        {
+            db.FurniTeleportLinks.Add(new FurniTeleportLink { ItemId = bySource[a].Id, LinkedItemId = bySource[b].Id });
+            db.FurniTeleportLinks.Add(new FurniTeleportLink { ItemId = bySource[b].Id, LinkedItemId = bySource[a].Id });
+        }
+
+        return (pairs.Count * 2, teleports.Count - pairs.Count * 2);
     }
 
     /// <summary>Each copied box this hotel implements, set up as it was and checked as a save would check it: its picks
@@ -183,7 +210,7 @@ public sealed class RoomImporter(
     private static (int Count, Dictionary<string, int> Refused) SetUpWired(AppDbContext db,
         List<(RoomCopyFloorItem Copy, UserItem Item, WiredBoxType Type)> boxes,
         List<(RoomCopyFloorItem Copy, UserItem Item)> floor, List<(RoomCopyWallItem Copy, UserItem Item)> wall,
-        IReadOnlyList<RoomCopyVariable> variables, IReadOnlySet<string> held)
+        IReadOnlyList<RoomCopyVariable> variables, IReadOnlySet<string> held, WiredInternalVariables internals)
     {
         var bySource = floor.Where(p => p.Copy.SourceId != 0).Select(p => (p.Copy.SourceId, p.Item))
             .Concat(wall.Where(p => p.Copy.SourceId != 0).Select(p => (p.Copy.SourceId, p.Item)))
@@ -206,7 +233,7 @@ public sealed class RoomImporter(
             .Where(b => b.Type is WiredVariableBox)
             .GroupBy(b => b.Copy.Wired!.StringParam, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(g => g.Key, g => g.First().Item.Id, StringComparer.OrdinalIgnoreCase);
-        var variableIds = CopiedVariables.Map(variables, boxesByName);
+        var variableIds = CopiedVariables.Map(variables, boxesByName, internals);
 
         var settled = new List<(FurniWired Settings, WiredBoxType Type, string ClassName)>();
         var refusedIds = new HashSet<string>();
@@ -226,7 +253,7 @@ public sealed class RoomImporter(
             {
                 Item = item,
                 IntParams = wired.IntParams.Take(WiredBoxType.MaxIntParams).ToList(),
-                StringParam = Clip(wired.StringParam, FurniWired.StringParamMaxLength),
+                StringParam = Clip(wired.StringParam, type.MaxStringLength),
                 StuffIds = Picks(type, wired.StuffIds),
                 StuffIds2 = Picks(type, wired.StuffIds2),
                 FurniSources = [.. wired.FurniSources],

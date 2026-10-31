@@ -146,9 +146,10 @@ public sealed partial class RoomGrain
                 takenFrom.Add((chest, taken));
             }
 
-            // credits go to the earnings window, where the user claims them
+            // credits go to the earnings window, where the user claims them; Habbo sends no earnings notification for
+            // them (the reward's own popup says where they went)
             var afterCommit = new List<Func<Task>>();
-            room.Earn(db, user.Player.Id, earningsCategory, wanted, afterCommit);
+            room.Earn(db, user.Player.Id, earningsCategory, wanted, afterCommit, notify: false);
             db.ChestTransactions.Add(transaction);
             await db.SaveChangesAsync();
             await dbTransaction.CommitAsync();
@@ -158,7 +159,7 @@ public sealed partial class RoomGrain
             {
                 var hold = room.HoldOf(chest.Item.Id);
                 hold.Coins -= taken;
-                room.BroadcastToChestViewers(chest.Item.Id, new CoinsChestContentsMessageComposer(chest.Item.Id, hold.Coins, true));
+                room.BroadcastToChestViewers(chest.Item.Id, new CoinsChestContentsMessageComposer(chest.Id, hold.Coins, true));
                 if (hold.Coins == 0)
                     emptied.Add(chest);
             }
@@ -234,7 +235,7 @@ public sealed partial class RoomGrain
                 var hold = room.HoldOf(chest.Item.Id);
                 var gone = picked.Where(p => p.Chest == chest).Select(p => p.Item).ToList();
                 hold.Items.RemoveAll(gone.Contains);
-                room.BroadcastToChestViewers(chest.Item.Id, new ItemsChestContentsUpdatedMessageComposer(chest.Item.Id, gone.Select(i => i.ItemId).ToList(), []));
+                room.BroadcastToChestViewers(chest.Item.Id, new ItemsChestContentsUpdatedMessageComposer(chest.Id, gone.Select(i => i.ItemId).ToList(), []));
                 if (hold.Items.Count == 0)
                     emptied.Add(chest);
             }

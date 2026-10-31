@@ -71,7 +71,7 @@ public sealed class InitiateTransactionEffect : WiredEffect
         if (contract is null || contractFurni is null)
             return;
 
-        var terms = new ContractTerms(contract, mode, times, run.Furni(box, 0).Select(c => c.Item.Id).ToList(), contractFurni.Item.Id);
+        var terms = new ContractTerms(contract, mode, times, run.Furni(box, 0).Select(c => c.Id).ToList(), contractFurni.Id);
         var timeout = box.Flag(TimeoutEnabled) ? Math.Clamp(box.IntParam(TimeoutSeconds), MinTimeout, MaxTimeout) : 0;
         // bots and pets have no account to pay or be paid from
         foreach (var user in run.Users(box).Where(user => user.Bot is null && user.Pet is null).ToList())

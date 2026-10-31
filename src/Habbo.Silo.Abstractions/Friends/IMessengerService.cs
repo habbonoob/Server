@@ -8,6 +8,10 @@ public interface IMessengerService
     /// <summary>A console message to a friend, or to a group chat (a negative id).</summary>
     Task SendMessageAsync(Guid playerId, int chatId, string text, int confirmationId);
 
+    /// <summary>A Habbicon sent in place of text, as a message is; whether the player owns it is the caller's to check.
+    /// Its name stands in for it with clients older than September 2026.</summary>
+    Task SendHabbiconAsync(Guid playerId, int chatId, int habbiconId, string habbiconName, int confirmationId);
+
     /// <summary>The messages that arrived while the player was away.</summary>
     Task DeliverPendingAsync(Guid playerId);
 

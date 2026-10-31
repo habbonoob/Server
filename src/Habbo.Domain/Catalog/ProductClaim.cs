@@ -12,4 +12,12 @@ public sealed class ProductClaim
 
     /// <summary>The furniture handed over, by class name.</summary>
     public List<string> Furni { get; set; } = [];
+
+    /// <summary>What the player chooses one of, besides the furniture (the client sends the choice, as the cursed dragon
+    /// adoption does: 0 blue, 1 purple); none when there is no choice.</summary>
+    public List<ProductClaimChoice> Choices { get; set; } = [];
 }
+
+/// <summary>A choice of a claim: the furniture it hands over, by class name (the cursed dragon adoption's pet boxes), and the
+/// badge that comes with it.</summary>
+public sealed record ProductClaimChoice(string Furni, string Badge);

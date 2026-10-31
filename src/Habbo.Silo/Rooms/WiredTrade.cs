@@ -21,6 +21,9 @@ public sealed class WiredTrade(Guid playerId, int chestId, int requirementType, 
     /// <summary>Tells this trade apart from one that replaced it, for a timeout set on the old one.</summary>
     public Guid Id { get; } = Guid.NewGuid();
 
+    /// <summary>When the trade began (@transaction.start_time).</summary>
+    public DateTimeOffset StartedAt { get; } = DateTimeOffset.UtcNow;
+
     /// <summary>The offered items by id, in the order they were put in.</summary>
     public Dictionary<int, TradeItemData> Items { get; } = [];
 

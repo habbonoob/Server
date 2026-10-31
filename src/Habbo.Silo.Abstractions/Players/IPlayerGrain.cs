@@ -81,6 +81,28 @@ public interface IPlayerGrain : IGrainWithGuidKey
     /// progress never falls.</summary>
     Task ReachAchievementAsync(string achievementName, int total);
 
+    /// <summary>The reward tracks and the player's progress on them, as login sends them.</summary>
+    Task SendRewardTracksAsync();
+
+    /// <summary>Counts something the player did on the reward track and daily tasks that count it (one of
+    /// RewardTrackActions, and a parameter narrowing it: a furni class, a pet type, a hand item), wearing the effect.</summary>
+    Task TrackActionAsync(string action, string parameter = "", int amount = 1, int effectId = 0);
+
+    Task ClaimRewardTrackPrizeAsync(string trackId, string prizeId);
+
+    Task PurchaseRewardTrackPremiumAsync(string trackId);
+
+    /// <summary>Wired's "progress reward track": a task's count set to the score, or raised by it.</summary>
+    Task ProgressRewardTrackTaskAsync(string trackId, string taskId, int score, bool addToExisting);
+
+    /// <summary>The player's daily tasks: today's, drawn the first time, and done ones not yet claimed.</summary>
+    Task SendDailyTasksAsync();
+
+    Task ClaimDailyTaskAsync(int taskId);
+
+    /// <summary>Wired's "reset reward track": the player's points, task counts and claims on the track start over.</summary>
+    Task ResetRewardTrackAsync(string trackId);
+
     /// <summary>Counts the pets the player owns, and their babies' colours, for the pet-owning achievements.</summary>
     Task CountPetsAsync();
 
@@ -208,6 +230,13 @@ public interface IPlayerGrain : IGrainWithGuidKey
 
     /// <summary>The chat bubbles the player has bought.</summary>
     Task SendChatStylesAsync();
+
+    /// <summary>Counts credits the player got for free (from staff, a voucher) towards the bonus rare, as Habbo counts
+    /// credits bought.</summary>
+    Task CountTowardsBonusRareAsync(int credits);
+
+    /// <summary>Gives the player a chat style, as the Furni-Matic's rarest prize does.</summary>
+    Task ReceiveChatStyleAsync(int styleId);
 
     /// <summary>Whether the player may chat in this bubble. It only reads, so the room asking may be
     /// one the player's grain is waiting on.</summary>

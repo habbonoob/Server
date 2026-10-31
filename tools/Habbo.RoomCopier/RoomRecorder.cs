@@ -4,7 +4,8 @@ using Xabbo.Core;
 namespace Habbo.RoomCopier;
 
 /// <summary>Writes down the room the client is in, from what it was sent: the floor plan and door, the walls and
-/// floor, and every furni with its place, what it shows and, for the wired boxes that were read, their settings.</summary>
+/// floor, and every furni with its place, what it shows and, for the wired boxes that were read, their settings. A
+/// floor item's extra number goes too: a teleport's is the teleport it is linked to.</summary>
 public static class RoomRecorder
 {
     /// <param name="className">The class name of a furni type, from the hotel's furnidata, when it was loaded.</param>
@@ -32,7 +33,7 @@ public static class RoomRecorder
         room.Landscape,
         room.FloorItems.Where(item => !item.IsHidden).Select(item => new RoomCopyFloorItem(
             item.Kind, Named(item) ?? className(ItemType.Floor, item.Kind), item.X, item.Y, item.Z, item.Direction,
-            Data(item.Data), (long)item.Id, wired.GetValueOrDefault((long)item.Id))).ToList(),
+            Data(item.Data), (long)item.Id, wired.GetValueOrDefault((long)item.Id), item.Extra)).ToList(),
         room.WallItems.Where(item => !item.IsHidden).Select(item => new RoomCopyWallItem(
             item.Kind, Named(item) ?? className(ItemType.Wall, item.Kind), item.Location.ToString(), item.Data ?? "",
             (long)item.Id)).ToList(),

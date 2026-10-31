@@ -17,6 +17,7 @@ public sealed partial class RoomWired
     /// <summary>Variables per diff message: a room's list arrives in chunks this big.</summary>
     private const int VariablesPerChunk = 100;
 
+    /// <summary>Furni variables' values, by variable and by the id the room knows the item by.</summary>
     private readonly Dictionary<(string Variable, int ItemId), WiredVariableValue> _furniValues = [];
     private readonly Dictionary<(string Variable, Guid UserId), WiredVariableValue> _userValues = [];
     private readonly Dictionary<string, WiredVariableValue> _roomValues = [];
@@ -27,6 +28,9 @@ public sealed partial class RoomWired
     /// <summary>How often a reference to another room's room variable reads it again: every five seconds.</summary>
     private const int ReferenceRefreshPulses = 10;
 
+    /// <summary>habbo.com's internal and smart variables, with what this server reads and writes of them.</summary>
+    public required WiredInternalVariables InternalVariables { get; init; }
+
     /// <summary>The room's id, which permanent values are kept under.</summary>
     public int RoomId { get; set; }
 
@@ -35,7 +39,7 @@ public sealed partial class RoomWired
 
     /// <summary>Every variable in the room: the internal ones, then its boxes', oldest first.</summary>
     public IReadOnlyList<WiredVariable> Variables =>
-        WiredInternalVariables.All.Select(v => v.Definition)
+        InternalVariables.All.Select(v => ShownInRoom(v.Definition))
             .Concat(_boxes.Values.Where(box => box.Type is WiredVariableBox).OrderBy(box => box.Id)
                 .SelectMany(box => SubVariables(box, DefineVariable(box)).Prepend(DefineVariable(box))))
             .ToList();
@@ -57,15 +61,56 @@ public sealed partial class RoomWired
         }
     }
 
+    /// <summary>How long the room's answer to which smart variables anything holds is kept: the client asks for the
+    /// variables' hash every second.</summary>
+    private const long SmartFamiliesHeldMilliseconds = 2000;
+
+    private (long At, HashSet<string> Families)? _smartFamiliesHeld;
+
+    /// <summary>A smart variable (~pet.energy, ~chest.capacity, ...) as habbo.com shows it in this room: listed for
+    /// everyone, but hidden unless something in the room holds its kind (captured 25 October 2026: ~pet.* and ~plant.*
+    /// came visible in a room with a pet and a monster plant, hidden in one without; ~chest.*, ~clock.* and the rest
+    /// stayed hidden in both, as neither had any).</summary>
+    private WiredVariable ShownInRoom(WiredVariable definition) =>
+        definition.Kind == WiredVariableKinds.Smart
+            ? definition with { IsInvisible = !SmartFamiliesHeld().Contains(SmartFamily(definition.Name)) }
+            : definition;
+
+    /// <summary>A smart variable's kind, the part of its name before the first dot: ~pet, ~plant, ~chest.</summary>
+    private static string SmartFamily(string name) => name.Split('.')[0];
+
+    /// <summary>The smart variables' kinds something in the room holds, asked of each kind's first variable.</summary>
+    private HashSet<string> SmartFamiliesHeld()
+    {
+        var now = System.Environment.TickCount64;
+        if (_smartFamiliesHeld is { } cached && now - cached.At < SmartFamiliesHeldMilliseconds)
+            return cached.Families;
+
+        var held = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var family in InternalVariables.All.Select(v => v.Definition).Where(d => d.Kind == WiredVariableKinds.Smart)
+                     .GroupBy(d => SmartFamily(d.Name)))
+        {
+            var first = family.First();
+            var holders = first.Target == WiredVariableTargets.Furni
+                ? items.Items.Select(WiredHolder.Of)
+                : entities.Avatars.Select(WiredHolder.Of);
+            if (holders.Any(holder => HasVariable(first, holder, null)))
+                held.Add(family.Key);
+        }
+
+        _smartFamiliesHeld = (now, held);
+        return held;
+    }
+
     /// <summary>The hash of the room's variables, which a client's cache is checked against.</summary>
     public int VariablesHash =>
         WiredVariable.StableHash(string.Join(",", Variables.Select(v => v.Id + ":" + v.Hash.ToString(System.Globalization.CultureInfo.InvariantCulture))));
 
     public WiredVariable? FindVariable(string id) =>
-        WiredInternalVariables.Find(id)?.Definition
+        InternalVariables.Find(id)?.Definition
         ?? _sharedSources.GetValueOrDefault(id)
-        ?? (int.TryParse(id, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var itemId)
-            && _boxes.GetValueOrDefault(itemId) is { Type: WiredVariableBox } box
+        ?? (int.TryParse(id, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var storedId)
+            && VariableBox(storedId) is { } box
                 ? _defining.Contains(box.Id) ? null : DefineVariable(box)
                 : FindSubVariable(id));
 
@@ -74,13 +119,17 @@ public sealed partial class RoomWired
     {
         var separator = id.IndexOf(WiredSubVariables.Separator);
         if (separator <= 0
-            || !int.TryParse(id[..separator], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var itemId)
-            || _boxes.GetValueOrDefault(itemId) is not { Type: WiredVariableBox } box
+            || !int.TryParse(id[..separator], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var storedId)
+            || VariableBox(storedId) is not { } box
             || _defining.Contains(box.Id))
             return null;
 
         return SubVariables(box, DefineVariable(box)).FirstOrDefault(v => v.Id == id);
     }
+
+    /// <summary>The variable box whose variable goes by this id: the box's database id (<see cref="WiredBox.StoredId"/>).</summary>
+    private WiredBox? VariableBox(int storedId) =>
+        items.FindStored(storedId) is { } item && _boxes.GetValueOrDefault(item.Id) is { Type: WiredVariableBox } box ? box : null;
 
     /// <summary>A sub-variable's value for a holder: what it works out from its variable's.</summary>
     private int? SubValue(WiredVariable sub, WiredHolder holder, WiredRun? run) =>
@@ -177,7 +226,7 @@ public sealed partial class RoomWired
 
     private WiredVariableValue? Stored(WiredVariable variable, WiredHolder holder, WiredRun? run) => holder.Target switch
     {
-        WiredVariableTargets.Furni when holder.Item is { } item => _furniValues.GetValueOrDefault((variable.Id, item.Item.Id)),
+        WiredVariableTargets.Furni when holder.Item is { } item => _furniValues.GetValueOrDefault((variable.Id, item.Id)),
         WiredVariableTargets.User when holder.User is { Bot: null, Pet: null } user => _userValues.GetValueOrDefault((variable.Id, user.Player.Id)),
         WiredVariableTargets.Global => _roomValues.GetValueOrDefault(variable.Id),
         WiredVariableTargets.Context => run?.ContextValues.GetValueOrDefault(variable.Id),
@@ -189,7 +238,7 @@ public sealed partial class RoomWired
         switch (holder.Target)
         {
             case WiredVariableTargets.Furni when holder.Item is { } item:
-                Set(_furniValues, (variable.Id, item.Item.Id), value);
+                Set(_furniValues, (variable.Id, item.Id), value);
                 break;
             case WiredVariableTargets.User when holder.User is { Bot: null, Pet: null } user:
                 Set(_userValues, (variable.Id, user.Player.Id), value);
@@ -216,7 +265,7 @@ public sealed partial class RoomWired
     private bool HasResolved(WiredVariable variable, WiredHolder holder, WiredRun? run) =>
         variable.SubOf is not null ? holder.Target == variable.Target && SubValue(variable, holder, run) is not null
         : holder.Target == variable.Target
-        && (WiredInternalVariables.Find(variable.Id) is { } internalVariable
+        && (InternalVariables.Find(variable.Id) is { } internalVariable
             ? internalVariable.Read(holder, run, this) is not null
             : variable.AlwaysAvailable || Stored(variable, holder, run) is not null);
 
@@ -228,14 +277,16 @@ public sealed partial class RoomWired
             return null;
         if (variable.SubOf is not null)
             return SubValue(variable, holder, run);
-        if (WiredInternalVariables.Find(variable.Id) is { } internalVariable)
+        if (InternalVariables.Find(variable.Id) is { } internalVariable)
             return internalVariable.Read(holder, run, this);
         return Stored(variable, holder, run)?.Value ?? (variable.AlwaysAvailable ? 0 : null);
     }
 
     /// <summary>When the holder was given the variable and last changed it; null when it was not.</summary>
     public WiredVariableValue? VariableTimes(WiredVariable variable, WiredHolder holder, WiredRun? run) =>
-        Resolve(variable) is var resolved && holder.Target == resolved.Target ? Stored(resolved, holder, run) : null;
+        Resolve(variable) is var resolved && holder.Target == resolved.Target
+            ? InternalVariables.Find(resolved.Id) is { } internalVariable ? internalVariable.Times(holder, run, this) : Stored(resolved, holder, run)
+            : null;
 
     /// <summary>Gives the holder the variable, with a value; one it already holds keeps its value
     /// unless the giving overrides it. An override gives it anew, as Habbo measured: a fresh creation time, and
@@ -249,6 +300,9 @@ public sealed partial class RoomWired
         variable = Resolve(variable);
         if (holder.Target != variable.Target || !variable.CanCreateAndDelete || !CanHold(holder) || !TakeVariableOp())
             return false;
+        // an internal variable is given to what it describes (a hand item into a hand), never kept as a value
+        if (InternalVariables.Find(variable.Id) is { } internalVariable)
+            return (overrideExisting || internalVariable.Read(holder, run, this) is null) && await internalVariable.GiveAsync(holder, value, this);
 
         var existing = Stored(variable, holder, run);
         if (existing is not null && !(overrideExisting && variable.HasValue))
@@ -271,7 +325,7 @@ public sealed partial class RoomWired
         variable = Resolve(variable);
         if (holder.Target != variable.Target || !variable.CanWriteValue || !TakeVariableOp())
             return false;
-        if (WiredInternalVariables.Find(variable.Id) is { } internalVariable)
+        if (InternalVariables.Find(variable.Id) is { } internalVariable)
             return internalVariable.Read(holder, run, this) is not null && await internalVariable.WriteAsync(holder, value, this);
 
         var stored = Stored(variable, holder, run);
@@ -299,6 +353,8 @@ public sealed partial class RoomWired
     private async Task<bool> RemoveVariableAsync(WiredVariable variable, WiredHolder holder, WiredRun? run, int origin)
     {
         variable = Resolve(variable);
+        if (holder.Target == variable.Target && variable.CanCreateAndDelete && InternalVariables.Find(variable.Id) is { } internalVariable)
+            return internalVariable.Read(holder, run, this) is not null && TakeVariableOp() && await internalVariable.RemoveAsync(holder, this);
         if (holder.Target != variable.Target || !variable.CanCreateAndDelete || Stored(variable, holder, run) is not { } stored
             || !TakeVariableOp() || !MayKeep(variable, holder))
             return false;
@@ -323,7 +379,7 @@ public sealed partial class RoomWired
 
         if (variable.Target == WiredVariableTargets.Furni)
         {
-            return WiredInternalVariables.Find(variable.Id) is { } furniVariable
+            return InternalVariables.Find(variable.Id) is { } furniVariable
                 ? items.Items.Select(item => (WiredHolder.Of(item), furniVariable.Read(WiredHolder.Of(item), null, this)))
                     .Where(h => h.Item2 is not null).Select(h => (h.Item1, h.Item2!.Value)).ToList()
                 : _furniValues.Where(v => v.Key.Variable == variable.Id)
@@ -333,7 +389,7 @@ public sealed partial class RoomWired
 
         if (variable.Target == WiredVariableTargets.User)
         {
-            return WiredInternalVariables.Find(variable.Id) is { } userVariable
+            return InternalVariables.Find(variable.Id) is { } userVariable
                 ? entities.Entities.Select(user => (WiredHolder.Of(user), userVariable.Read(WiredHolder.Of(user), null, this)))
                     .Where(h => h.Item2 is not null).Select(h => (h.Item1, h.Item2!.Value)).ToList()
                 : _userValues.Where(v => v.Key.Variable == variable.Id)
@@ -380,7 +436,8 @@ public sealed partial class RoomWired
     public WiredHolder? HolderOf(int target, int objectId) => target switch
     {
         WiredVariableTargets.Furni => items.Find(objectId) is { } item ? WiredHolder.Of(item) : null,
-        WiredVariableTargets.User => entities.FindByIndex(objectId) is { } user ? WiredHolder.Of(user) : null,
+        // pets and bots are users to wired, and the inspector picks them like players
+        WiredVariableTargets.User => entities.FindAvatarByIndex(objectId) is { } user ? WiredHolder.Of(user) : null,
         WiredVariableTargets.Global => WiredHolder.Room,
         _ => null,
     };
@@ -396,6 +453,7 @@ public sealed partial class RoomWired
 
     // ---------- keeping permanent values ----------
 
+    /// <summary>Who a kept value is kept for: an item by its database id, a user by theirs.</summary>
     private static (int? ItemId, Guid? UserId) Keys(WiredHolder holder) =>
         (holder.Item?.Item.Id, holder.User?.Player.Id);
 
@@ -586,10 +644,10 @@ public sealed partial class RoomWired
         foreach (var row in rows)
         {
             var value = new WiredVariableValue(row.Value, row.CreatedAt) { Updated = row.UpdatedAt };
-            if (row.ItemId is { } itemId)
+            if (row.ItemId is { } storedId)
             {
-                if (items.Find(itemId) is not null)
-                    _furniValues[(row.VariableId, itemId)] = value;
+                if (items.FindStored(storedId) is { } item)
+                    _furniValues[(row.VariableId, item.Id)] = value;
             }
             else
             {
@@ -668,7 +726,7 @@ public sealed partial class RoomWired
             .Where(r => r.RoomId == RoomId && r.ItemId == item.Item.Id && ids.Contains(r.VariableId))
             .ToListAsync();
         foreach (var row in rows)
-            _furniValues[(row.VariableId, item.Item.Id)] = new WiredVariableValue(row.Value, row.CreatedAt) { Updated = row.UpdatedAt };
+            _furniValues[(row.VariableId, item.Id)] = new WiredVariableValue(row.Value, row.CreatedAt) { Updated = row.UpdatedAt };
     }
 
     /// <summary>A variable is gone, or changed how long its values last: every value it had goes,

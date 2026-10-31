@@ -32,6 +32,7 @@ using Habbo.Silo.Commands;
 using Habbo.Silo.Items;
 using Habbo.Silo.Items.Interactions;
 using Habbo.Silo.Rooms;
+using Habbo.Silo.RewardTracks;
 using Habbo.Silo.Wired;
 using Habbo.Domain.Users;
 using Microsoft.EntityFrameworkCore;
@@ -141,8 +142,10 @@ public sealed partial class RoomGrain(
         _furniture = new RoomFurnitureUse(_items, dbFactory, GrainFactory, Broadcast, SendTo, Schedule,
             WalkThenAsync, LookAt, SetHandItem, ApplyEffect, DressInRoom, (x, y) => _entities!.HasAvatarAt(x, y));
 
+        // in the order they were put down, which is the order Builders Club furni takes its room ids in
         var placed = await WithDefinitions(db.UserItems)
             .Where(i => i.RoomId == roomId)
+            .OrderBy(i => i.Id)
             .ToListAsync(cancellationToken);
 
         _items.Load(placed, await furniData.LoadAsync(db, placed, cancellationToken));
@@ -151,11 +154,14 @@ public sealed partial class RoomGrain(
         await LoadRoomRulesAsync(db);
         await LoadEventAsync(db);
         await LoadStackHeightsAsync(db);
+        await LoadTeleportLinksAsync(db);
         _items.RefreshWaterAreas();
         await LoadBotsAsync(db);
         await LoadPetsAsync(db);
         await LoadRentalsAsync(db);
         await LoadChestHoldsAsync(db);
+        await LoadLabelsAsync(db, cancellationToken);
+        await LoadWiredLinksAsync(db, cancellationToken);
         await SyncChestCountsAsync();
         RememberLoadedFurni();
 
@@ -180,9 +186,24 @@ public sealed partial class RoomGrain(
             {
                 Bots = new WiredBotActions(WiredBotSayAsync, DressBotAsync, HandOverAsync, WalkUpToAsync),
                 SendThrough = SendThroughTeleportAsync,
+                PetStats = WiredPetStatsOf,
+                TeleportTarget = TeleportTargetOf,
+                SetTeleportTarget = SetTeleportTargetAsync,
+                MoveWallItem = (item, location) => _model is { } model && item.Item.Definition!.Type == Habbo.Domain.Furniture.ItemType.Wall
+                    && WallLocation.TryParse(location.ToString(), model, out var checkedLocation)
+                        ? MoveWallItemToAsync(item, checkedLocation)
+                        : Task.FromResult(false),
+                ShowHabbicon = (entity, habbiconId) =>
+                {
+                    ShowHabbicon(entity, habbiconId);
+                    return Task.CompletedTask;
+                },
+                TradeOf = user => _wiredTrades.GetValueOrDefault(user.Player.Id),
+                SendLink = SendThroughWiredLinkAsync,
             },
             logger)
         {
+            InternalVariables = await Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<Habbo.Silo.Wired.Variables.WiredInternalVariableCatalog>(ServiceProvider).LoadAsync(cancellationToken),
             RoomId = _room.Id,
             GroupId = _group?.Id,
         };
@@ -195,6 +216,7 @@ public sealed partial class RoomGrain(
             await _wired.FurniStateSetAsync(item);
             RefreshConfiguration();
         };
+        _furniture.OnUserAction = TrackAction;
         _games.OnPlayingChanged = (entity, playing) => SendTo(entity.Player.Id, new YouArePlayingGameMessageComposer(playing));
         _configuration = ConfigurationStates();
         await _wired.LoadAsync(db, cancellationToken);
@@ -333,9 +355,12 @@ public sealed partial class RoomGrain(
         StepOutOfArrival(entity);
         if (_wired is not null)
             await _wired.UserEnteredAsync(entity);
+        if (!welcome.IsReentry && playerId != _room!.OwnerId)
+            TrackAction(entity, RewardTrackActions.EnterOtherUsersRoom);
         if (!welcome.IsReentry)
         {
             await VisitorLoggersGreetAsync(entity, welcome.PreviousVisit);
+            await PetsGreetOwnerAsync(entity);
             await polls.OfferAsync(entity.Player, _room!.Id);
             if (entity.Player.Id == _room.OwnerId && !await settingsRules.MayPickCategoryAsync(entity.Player, _room.CategoryId))
                 SendTo(playerId, new Habbo.Protocol.Messages.Outgoing.RoomSettings.ShowEnforceRoomCategoryDialogComposer(
@@ -376,7 +401,8 @@ public sealed partial class RoomGrain(
             ConfigurationStates(),
             _wired?.ListensForUserClicks ?? false,
             wired.Modify,
-            wired.Read);
+            wired.Read,
+            Labels());
     }
 
     public Task LeaveSessionAsync(Guid playerId, Guid sessionGuid) =>
@@ -518,7 +544,7 @@ public sealed partial class RoomGrain(
 
         // a keyword trigger may hide what it hears: then only the speaker sees it
         if (_wired?.Hides(entity, text) == true)
-            SendChat(message, kind, [entity], toSpectators: false);
+            sink.TrySend(entity.SessionGuid, HiddenChatEcho(message).ToMessage());
         else if (recipient is not null)
             SendChat(message, kind, [entity, recipient], toSpectators: false);
         else if (kind == RoomChatKind.Shout)
@@ -528,6 +554,10 @@ public sealed partial class RoomGrain(
 
         if (_wired is not null)
             await _wired.UserSaidAsync(entity, text, (int)kind, styleId);
+
+        // said to someone: another user hears it
+        if (recipient is not null || _entities.Entities.Any(other => other != entity))
+            TrackAction(entity, RewardTrackActions.ChatWithSomeone);
 
         // bots and pets only answer what was said out loud
         if (recipient is null)
@@ -539,13 +569,14 @@ public sealed partial class RoomGrain(
 
     public async Task PlaceFloorItemAsync(Guid playerId, int itemId, int x, int y, int rotation)
     {
-        if (_room is null || _items is null || _entities is null || _items.Find(itemId) is not null)
+        // the inventory names the item by its database id
+        if (_room is null || _items is null || _entities is null || _items.FindStored(itemId) is not null)
             return;
 
         await using var db = await dbFactory.CreateDbContextAsync();
         var item = await LoadUnplacedItemAsync(db, itemId, playerId, ItemType.Floor);
         if (item is null || !(IsController(playerId) || RentsTiles(playerId, TilesAt(item.Definition!, x, y, rotation)))
-            || !_items.CanPlaceFloorItem(itemId, item.Definition!, x, y, rotation, _entities.HasAvatarAt))
+            || !_items.CanPlaceFloorItem(0, item.Definition!, x, y, rotation, _entities.HasAvatarAt))
             return;
         if (_items.Items.Count(i => i.Item.Definition!.Type == ItemType.Floor) >= _room.FloorItemLimit)
         {
@@ -574,7 +605,7 @@ public sealed partial class RoomGrain(
 
         Broadcast(new ObjectAddMessageComposer(FloorItemData.From(RoomItemStore.ToWireData(placed), withOwnerName: true)));
         BroadcastHeights(RoomItemStore.Footprint(placed));
-        BroadcastWaterAreas(reshaped, item.Id);
+        BroadcastWaterAreas(reshaped, placed.Id);
         return placed;
     }
 
@@ -582,10 +613,14 @@ public sealed partial class RoomGrain(
     private async Task FloorItemPlacedAsync(Guid playerId, RoomItemStore.PlacedItem placed)
     {
         await LockPlacedChestAsync(placed);
+        await LabelPlacedAsync(placed);
+        await WiredLinkPlacedAsync(placed);
+        await TeleportPlacedAsync(placed);
         if (_wired is not null)
             await _wired.PlacedAsync(placed);
         RefreshConfiguration();
         RoomBuilderAchievements(playerId);
+        TrackAction(playerId, placed.Item.BuildersClub ? RewardTrackActions.PlaceBuildersClubFurni : RewardTrackActions.PlaceItem, FloorPlacement);
     }
 
     /// <summary>The logic Habbo's furnidata gives floor holes.</summary>
@@ -608,7 +643,7 @@ public sealed partial class RoomGrain(
 
     public async Task PlaceWallItemAsync(Guid playerId, int itemId, string wallLocation)
     {
-        if (_room is null || _items is null || _items.Find(itemId) is not null || !IsController(playerId)
+        if (_room is null || _items is null || _items.FindStored(itemId) is not null || !IsController(playerId)
             || !WallLocation.TryParse(wallLocation, _model!, out var location))
             return;
 
@@ -629,6 +664,7 @@ public sealed partial class RoomGrain(
         ShowPlacedWallItem(item, data);
         SendTo(playerId, FurniListRemoveComposer.Item(itemId));
         RoomBuilderAchievements(playerId);
+        TrackAction(playerId, RewardTrackActions.PlaceItem, WallPlacement);
     }
 
     private void ShowPlacedWallItem(UserItem item, FurniDataView data) =>
@@ -642,8 +678,14 @@ public sealed partial class RoomGrain(
         // a renter moves their own furniture about the space they rent
         var renterMove = placed.Item.OwnerId == playerId && RentsTiles(playerId, RoomItemStore.Footprint(placed))
                          && RentsTiles(playerId, TilesAt(placed.Item.Definition!, x, y, rotation));
-        if (IsController(playerId) || renterMove)
-            await MovePlacedFloorItemAsync(placed, x, y, rotation, wired: null);
+        var (fromX, fromY, fromRotation) = (placed.X, placed.Y, placed.Rotation);
+        if ((IsController(playerId) || renterMove) && await MovePlacedFloorItemAsync(placed, x, y, rotation, wired: null))
+        {
+            if (fromX != x || fromY != y)
+                TrackAction(playerId, RewardTrackActions.MoveItem);
+            if (fromRotation != rotation)
+                TrackAction(playerId, RewardTrackActions.RotateItem);
+        }
     }
 
     /// <summary>Shows everyone the stacking heights of tiles that changed, in as many messages as they take.</summary>
@@ -673,7 +715,7 @@ public sealed partial class RoomGrain(
     private async Task<bool> MovePlacedFloorItemAsync(RoomItemStore.PlacedItem placed, int x, int y, int rotation, WiredMoveOptions? wired,
         bool intoFurni = false, bool anyDirection = false)
     {
-        var itemId = placed.Item.Id;
+        var itemId = placed.Id;
         // a hand moves and turns furniture onto whoever stands there (Habbo: a bed turned onto a standing avatar, a
         // sandwich moved onto one, both went); wired goes by its stack's option
         var avatarsBlock = wired?.AvatarsBlock ?? false;
@@ -687,7 +729,7 @@ public sealed partial class RoomGrain(
         // the row first: an item the database no longer has in this room is not moved in memory either; wired's
         // temporary copies have none
         await using var db = await dbFactory.CreateDbContextAsync();
-        var row = placed.Temporary ? null : await db.UserItems.FirstOrDefaultAsync(i => i.Id == itemId && i.RoomId == _room!.Id);
+        var row = placed.Temporary ? null : await db.UserItems.FirstOrDefaultAsync(i => i.Id == placed.Item.Id && i.RoomId == _room!.Id);
         if (row is null && !placed.Temporary)
             return false;
 
@@ -773,15 +815,8 @@ public sealed partial class RoomGrain(
             || !WallLocation.TryParse(wallLocation, _model!, out var location))
             return;
 
-        await using var db = await dbFactory.CreateDbContextAsync();
-        if (await db.UserItems.FirstOrDefaultAsync(i => i.Id == itemId && i.RoomId == _room!.Id) is not { } row)
-            return;
-
-        row.WallPosition = location.ToString();
-        placed.Item.WallPosition = row.WallPosition;
-        await db.SaveChangesAsync();
-
-        Broadcast(new ItemUpdateMessageComposer(WallItemData.From(RoomItemStore.ToWireData(placed), withOwnerName: false)));
+        if (await MoveWallItemToAsync(placed, location))
+            TrackAction(playerId, RewardTrackActions.MoveItem);
     }
 
     public async Task PickupItemAsync(Guid playerId, int itemId, bool confirmed)
@@ -847,15 +882,16 @@ public sealed partial class RoomGrain(
             row.WallPosition = null;
         }
 
+        await WiredLinksTakenAsync(db, taken.Select(p => p.Item.Id).ToList());
         await db.SaveChangesAsync();
 
         var floor = taken.Where(p => p.Item.Definition!.Type != ItemType.Wall).ToList();
         var vacated = floor.SelectMany(RoomItemStore.Footprint).Distinct().ToList();
         foreach (var item in taken)
         {
-            var itemId = item.Item.Id;
+            var itemId = item.Id;
             _items!.Remove(itemId);
-            ForgetChest(itemId);
+            ForgetChest(item.Item.Id);
             EmptyBreedingNest(itemId);
             if (_wired is not null)
                 await _wired.RemovedAsync(itemId);
@@ -864,18 +900,17 @@ public sealed partial class RoomGrain(
         var reshaped = _items!.RefreshWaterAreas();
 
         foreach (var wall in taken.Where(p => p.Item.Definition!.Type == ItemType.Wall))
-            Broadcast(new ItemRemoveMessageComposer(wall.Item.Id, pickerAccountId));
+            Broadcast(new ItemRemoveMessageComposer(wall.Id, pickerAccountId));
         if (floor.Count == 1)
-            Broadcast(new ObjectRemoveMessageComposer(floor[0].Item.Id, IsExpired: false, pickerAccountId, Delay: 0));
+            Broadcast(new ObjectRemoveMessageComposer(floor[0].Id, IsExpired: false, pickerAccountId, Delay: 0));
         else if (floor.Count > 1)
-            Broadcast(new ObjectRemoveMultipleMessageComposer(floor.Select(p => p.Item.Id).ToList(), pickerAccountId));
+            Broadcast(new ObjectRemoveMultipleMessageComposer(floor.Select(p => p.Id).ToList(), pickerAccountId));
         if (vacated.Count > 0)
             BroadcastHeights(vacated);
         ResettleOn(vacated, []);
 
-        var takenIds = taken.Select(p => p.Item.Id).ToHashSet();
-        foreach (var item in reshaped.Where(item => !takenIds.Contains(item.Item.Id)))
-            Broadcast(new ObjectDataUpdateMessageComposer(item.Item.Id, FurniStuffData.From(item.Data)));
+        foreach (var item in reshaped.Where(item => !taken.Contains(item)))
+            Broadcast(new ObjectDataUpdateMessageComposer(item.Id, FurniStuffData.From(item.Data)));
         RefreshConfiguration();
 
         // The room already holds the items' data, so the inventory entries are built from that
@@ -1155,7 +1190,7 @@ public sealed partial class RoomGrain(
 
         SendTo(playerId, new WiredAllVariableHoldersComposer(variable.Target, variable.ToWire(),
             _wired.VariableHolders(variable)
-                .Select(h => new WiredVariableHolderData(h.Holder.Item?.Item.Id ?? h.Holder.User?.RoomIndex ?? 0, h.Value))
+                .Select(h => new WiredVariableHolderData(h.Holder.Item?.Id ?? h.Holder.User?.RoomIndex ?? 0, h.Value))
                 .ToList()));
         return Task.CompletedTask;
     }
@@ -1426,8 +1461,8 @@ public sealed partial class RoomGrain(
     /// change was about already carries its state in the message that announced it.</summary>
     private void BroadcastWaterAreas(List<RoomItemStore.PlacedItem> reshaped, int announcedItemId)
     {
-        foreach (var item in reshaped.Where(item => item.Item.Id != announcedItemId))
-            Broadcast(new ObjectDataUpdateMessageComposer(item.Item.Id, FurniStuffData.From(item.Data)));
+        foreach (var item in reshaped.Where(item => item.Id != announcedItemId))
+            Broadcast(new ObjectDataUpdateMessageComposer(item.Id, FurniStuffData.From(item.Data)));
     }
 
     public async Task UseItemAsync(Guid playerId, int itemId, FurniAction action, int param)
@@ -1478,8 +1513,16 @@ public sealed partial class RoomGrain(
         if (_items.Find(itemId) is { } boxed && (await OfferPackagedPetAsync(entity, boxed) || await PlantSeedAsync(entity, boxed)))
             return;
 
+        // a bonus bag is hit until it cracks open
+        if (_items.Find(itemId) is { } crackable && await CrackAsync(entity, crackable))
+            return;
+
         // friendship furniture is locked by two friends together
         if (_items.Find(itemId) is { } friendFurni && await StartFriendLockAsync(entity, friendFurni))
+            return;
+
+        // using a WIRED Link opens its dialog, for its owner
+        if (_items.Find(itemId) is { } wiredLink && OpenWiredLinkOnUse(entity, wiredLink))
             return;
 
         // using a chest opens it, and a contract its dialog
@@ -1547,6 +1590,8 @@ public sealed partial class RoomGrain(
                 Broadcast(new ExpressionMessageComposer(entity.RoomIndex, expression));
                 if (WiredActionFor((AvatarExpression)expression) is { } action)
                     await ActedAsync(entity, action);
+                if ((AvatarExpression)expression == AvatarExpression.Jump)
+                    TrackAction(entity, RewardTrackActions.Jump);
                 return;
             // the club's: the expression, then the line the client draws for it (Habbo sends both, in that order)
             case AvatarExpression.Expression67 when entity.Player.ClubLevel != Habbo.Domain.Users.ClubLevel.None:
@@ -1566,6 +1611,9 @@ public sealed partial class RoomGrain(
         _ => null,
     };
 
+    /// <summary>How many dance together for a crew (habbo.com's daily task, per the Habbo X wiki).</summary>
+    private const int DanceCrewSize = 4;
+
     public async Task DanceAsync(Guid playerId, int style)
     {
         if (_entities?.Find(playerId) is not { } entity
@@ -1579,7 +1627,14 @@ public sealed partial class RoomGrain(
 
         Broadcast(new DanceMessageComposer(entity.RoomIndex, style));
         if (style != AvatarActions.NoDance)
+        {
             await ActedAsync(entity, WiredUserActions.Dance, WiredUserActions.DanceExtra(style));
+            // a crew: four dancing together, dancing bots among them
+            var dancers = _entities.Avatars.Where(a => a.DanceStyle != AvatarActions.NoDance).ToList();
+            if (dancers.Count >= DanceCrewSize)
+                foreach (var dancer in dancers)
+                    TrackAction(dancer, RewardTrackActions.DanceCrew);
+        }
     }
 
     public async Task ShowSignAsync(Guid playerId, int sign)
@@ -1638,6 +1693,7 @@ public sealed partial class RoomGrain(
     {
         SendTo(entity.Player.Id, new CloseConnectionMessageComposer());
         await LeaveAsync(entity.Player.Id);
+        SentOut(entity);
     }
 
     /// <summary>Sends the user out of the room: the client leaves it, told it was kicked.</summary>
@@ -1646,6 +1702,15 @@ public sealed partial class RoomGrain(
         SendTo(entity.Player.Id, new GenericErrorComposer(GenericErrorCodes.Kicked));
         SendTo(entity.Player.Id, new CloseConnectionMessageComposer());
         await LeaveAsync(entity.Player.Id);
+        SentOut(entity);
+    }
+
+    /// <summary>The user was sent out of the room: the client goes to the hotel view without saying so (no Quit), so its
+    /// session is told it is in no room, or the player would stay in this one for their friends to follow into.</summary>
+    private void SentOut(RoomEntityStore.RoomEntity entity)
+    {
+        if (entity.SessionGuid != Guid.Empty)
+            sink.LeftRoom(entity.SessionGuid, _room!.Id);
     }
 
     /// <summary>Holds a Freeze player where they stand, or lets them go: frozen, a walk under way is dropped.</summary>
@@ -1682,9 +1747,38 @@ public sealed partial class RoomGrain(
     private async Task ActedAsync(RoomEntityStore.RoomEntity entity, int action, string extra = "")
     {
         _entities?.RecordAction(entity, action, extra);
+        if (action switch
+            {
+                WiredUserActions.Wave => RewardTrackActions.Wave,
+                WiredUserActions.Dance => RewardTrackActions.Dance,
+                WiredUserActions.Sign => RewardTrackActions.ShowSign,
+                WiredUserActions.Sit => RewardTrackActions.Sit,
+                WiredUserActions.Lay => RewardTrackActions.Lay,
+                _ => null,
+            } is { } tracked
+            // a sign is held up to someone: another avatar next to them
+            && (action != WiredUserActions.Sign || _entities!.Avatars.Any(other => other != entity
+                && Math.Abs(other.X - entity.X) <= 1 && Math.Abs(other.Y - entity.Y) <= 1)))
+            TrackAction(entity, tracked, action == WiredUserActions.Sign ? extra : "");
         if (_wired is not null)
             await _wired.UserActedAsync(entity, action, extra);
     }
+
+    /// <summary>Counts what a user did on their reward track tasks; bots and pets have none.</summary>
+    private void TrackAction(RoomEntityStore.RoomEntity entity, string action) => TrackAction(entity, action, "");
+
+    private void TrackAction(RoomEntityStore.RoomEntity entity, string action, string parameter)
+    {
+        if (entity.Bot is null && entity.Pet is null)
+            GrainFactory.GetGrain<IPlayerGrain>(entity.Player.Id).TrackActionAsync(action, parameter, effectId: entity.EffectId).Ignore();
+    }
+
+    private void TrackAction(Guid playerId, string action, string parameter = "") =>
+        GrainFactory.GetGrain<IPlayerGrain>(playerId).TrackActionAsync(action, parameter).Ignore();
+
+    /// <summary>What a placement is, for the tasks that count only floor items.</summary>
+    private const string FloorPlacement = "floor";
+    private const string WallPlacement = "wall";
 
     /// <summary>Passes on what happened to avatars as they moved: postures to wired, a dance a seat
     /// stopped and an idle avatar falling asleep to the room.</summary>
@@ -1736,6 +1830,13 @@ public sealed partial class RoomGrain(
 
                     if (entity.Bot is not null && _wired is not null)
                         await _wired.BotArrivedAsync(entity);
+                    break;
+                case RoomEntityStore.EntityChange.LastStep:
+                    if (entity.OnLastStep is { } setOff)
+                    {
+                        entity.OnLastStep = null;
+                        await setOff();
+                    }
                     break;
             }
         }
@@ -1851,6 +1952,7 @@ public sealed partial class RoomGrain(
                 {
                     await _games.UserSteppedOnAsync(entity, item, fromX, fromY, arriving);
                     await item.Interaction.WalkedOnAsync(new FurniWalk(item, entity, _furniture!));
+                    TrackAction(entity, RewardTrackActions.WalkOverStuff, item.Item.Definition!.ClassName);
                 }
             }
 
@@ -1942,6 +2044,11 @@ public sealed partial class RoomGrain(
         foreach (var spectator in SpectatorSessions)
             sink.TrySend(spectator, forSpectators);
     }
+
+    /// <summary>What the speaker gets back of chat a keyword trigger hid: a whisper to themselves, whatever kind it was
+    /// said as, untracked (Habbo, 2026-10-22).</summary>
+    internal static IComposer HiddenChatEcho(ChatMessage message) =>
+        WhisperMessageComposer.From(message, message.RoomIndex, toSpeaker: false);
 
     private static IComposer ChatComposer(ChatMessage message, RoomChatKind kind, int receiverRoomIndex, bool toSpeaker) => kind switch
     {

@@ -33,6 +33,7 @@ public sealed class MultiStateInteraction : FurniInteraction
             : 0;
         var next = states[(states.IndexOf(current) + 1) % states.Count];
 
+        use.Room.TrackAction(use.User, RewardTracks.RewardTrackActions.SwitchItemState);
         return use.Room.UpdateAsync(use.Item, data with { State = next.ToString(CultureInfo.InvariantCulture) });
     }
 }

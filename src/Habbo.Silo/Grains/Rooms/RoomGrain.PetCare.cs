@@ -65,18 +65,22 @@ public sealed partial class RoomGrain
         return true;
     }
 
-    /// <summary>Hungry or tired, the pet goes to eat or rest by itself; false when it needs neither, or
-    /// there is nothing for it.</summary>
+    /// <summary>Hungry or tired, the pet goes to eat, rest or drink by itself (<see cref="PetRules.Needs"/>); false when
+    /// it needs none of them, or there is nothing for it. Setting off for a drink it says it is thirsty ("*looking for
+    /// water*"), as a pet with no energy left for a command says it is hungry.</summary>
     private async Task<bool> SeeToNeedsAsync(RoomEntityStore.RoomEntity entity)
     {
-        var rules = petOptions.Value;
-        var data = entity.Pet!.Data;
-        var now = DateTimeOffset.UtcNow;
-        if (petRules.Nutrition(data, now) * 100 < petRules.MaxNutrition(data.Level) * rules.HungryBelowPercent
-            && await SeekCareAsync(entity, PetCare.Eat))
+        foreach (var care in petRules.Needs(entity.Pet!.Data, DateTimeOffset.UtcNow))
+        {
+            if (!await SeekCareAsync(entity, care))
+                continue;
+
+            if (care == PetCare.Drink)
+                await PetSaysAsync(entity, PetSpeech.Thirsty);
             return true;
-        return petRules.Energy(data, now) * 100 < petRules.MaxEnergy(data.Level) * rules.TiredBelowPercent
-               && await SeekCareAsync(entity, PetCare.Rest);
+        }
+
+        return false;
     }
 
     /// <summary>The first posture of the kind's for the care, by the configured order.</summary>
@@ -99,6 +103,7 @@ public sealed partial class RoomGrain
         pet.Posture = posture;
         pet.PostureUntilTick = 0;
         Broadcast(UserUpdateMessageComposer.From([_entities.CurrentStatus(entity)]));
+        PetSaysAsync(entity, care switch { PetCare.Eat => PetSpeech.Eat, PetCare.Drink => PetSpeech.Drink, _ => PetSpeech.Sleep }).Ignore();
 
         var seconds = care switch { PetCare.Eat => rules.EatSeconds, PetCare.Drink => rules.DrinkSeconds, _ => rules.RestSeconds };
         Schedule(TimeSpan.FromSeconds(seconds), () => FinishCareAsync(entity, item, care, posture));
@@ -130,6 +135,8 @@ public sealed partial class RoomGrain
             {
                 case PetCare.Eat:
                     row.Nutrition = Math.Min(row.Nutrition + rules.FoodNutrition, petRules.MaxNutrition(row.Level));
+                    // habbo.com's food gives the energy commands take, even past the most it holds
+                    row.Energy += rules.FoodEnergy;
                     break;
                 case PetCare.Drink:
                     row.Energy = Math.Min(row.Energy + rules.DrinkEnergy, petRules.MaxEnergy(row.Level));
@@ -215,9 +222,11 @@ public sealed partial class RoomGrain
             return;
 
         await using var db = await dbFactory.CreateDbContextAsync();
+        // one in the room goes by the id the room knows it by, one in the inventory by its database id
         var placed = _items.Find(itemId);
+        var storedId = placed?.Item.Id ?? itemId;
         var row = await db.UserItems.Include(i => i.Definition)
-            .FirstOrDefaultAsync(i => i.Id == itemId && i.OwnerId == playerId && !i.InMarketplace && i.ChestId == null && (i.RoomId == null || i.RoomId == _room.Id));
+            .FirstOrDefaultAsync(i => i.Id == storedId && i.OwnerId == playerId && !i.InMarketplace && i.ChestId == null && (i.RoomId == null || i.RoomId == _room.Id));
         if (row?.Definition is not { } product || (row.RoomId is not null && placed is null)
             || !Enum.IsDefined((PetProductKind)product.SpecialType))
             return;
@@ -464,7 +473,7 @@ public sealed partial class RoomGrain
             return false;
 
         if (item.Item.OwnerId == user.Player.Id && await PackagedPetAsync(item) is { } pet)
-            SendTo(user.Player.Id, new OpenPetPackageRequestedMessageComposer(item.Item.Id, PetFigureWireData.From(pet)));
+            SendTo(user.Player.Id, new OpenPetPackageRequestedMessageComposer(item.Id, PetFigureWireData.From(pet)));
         return true;
     }
 
@@ -522,6 +531,23 @@ public sealed partial class RoomGrain
         db.Pets.Add(pet);
         await db.SaveChangesAsync();
         pet.Type = type;
+
+        // what the box holds besides the pet, put down where it stood: its furnidata names it after the pet's kind (Habbo's
+        // own: "1 newbie_nest", "2 waterbowl*2", the cursed dragons' "37 newbie_nest")
+        // in a context of its own: the pet's, holding its kind, would add the kind again
+        await using var extraDb = await dbFactory.CreateDbContextAsync();
+        if (item.Item.Definition!.CustomParams.Split(' ', StringSplitOptions.RemoveEmptyEntries) is [_, var besides, ..]
+            && await extraDb.ItemDefinitions.FirstOrDefaultAsync(d => d.ClassName == besides && d.Type == ItemType.Floor) is { } definition)
+        {
+            var extra = new UserItem
+            {
+                OwnerId = playerId, DefinitionId = definition.Id, Definition = definition, RoomId = _room.Id, X = x, Y = y,
+                Z = _items.SurfaceAt(x, y), Rotation = rotation,
+            };
+            extraDb.UserItems.Add(extra);
+            await extraDb.SaveChangesAsync();
+            ShowPlacedFloorItem(extra, await furniData.LoadAsync(extraDb, extra));
+        }
 
         var entity = AddPet(pet, owner.Player.AccountId, owner.Player.Username, x, y, rotation);
         Broadcast(UsersMessageComposer.From([_entities.ToWireData(entity)]));

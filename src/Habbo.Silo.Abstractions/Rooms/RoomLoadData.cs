@@ -43,4 +43,6 @@ public partial record RoomLoadData(
     [property: Id(25)] bool WiredListensForUserClicks = false,
     /// <summary>Whether the entrant may change, and read, the room's wired.</summary>
     [property: Id(26)] bool CanModifyWired = false,
-    [property: Id(27)] bool CanReadWired = false);
+    [property: Id(27)] bool CanReadWired = false,
+    /// <summary>The room's wired labels; the client shows each to those its visibility allows.</summary>
+    [property: Id(28)] List<RoomLabelData>? Labels = null);

@@ -7,5 +7,5 @@ public interface IProductClaimService
 {
     Task SendHasClaimedAsync(PlayerData player, string claimId);
 
-    Task ClaimAsync(PlayerData player, string claimId);
+    Task ClaimAsync(PlayerData player, string claimId, int? choice = null);
 }

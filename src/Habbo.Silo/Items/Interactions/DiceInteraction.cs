@@ -58,7 +58,7 @@ public sealed class DiceInteraction : FurniInteraction
             await use.Room.SaveAsync(use.Item, data);
         else
             use.Item.Data = data;
-        use.Room.Broadcast(new DiceValueMessageComposer(use.Item.Item.Id, value));
+        use.Room.Broadcast(new DiceValueMessageComposer(use.Item.Id, value));
     }
 
     /// <summary>The unbroken run of states from 1: a dice's SWF draws its faces there, and keeps

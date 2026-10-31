@@ -8,8 +8,10 @@ namespace Habbo.Silo.Wired;
 /// <summary>Builds the message that opens a wired box's dialog, filled in with its saved settings.</summary>
 public static class WiredDialogs
 {
-    /// <summary>Dialogs open with the advanced section closed; the player opens it for the sources.</summary>
-    private const bool AdvancedSectionOpen = false;
+    /// <summary>Every dialog has its advanced section: the client builds it only when this is set (and the box has sources
+    /// to choose or a quantifier), and opens it by itself when the box already uses a source other than its default.
+    /// Sent false, no dialog showed one.</summary>
+    private const bool AdvancedSection = true;
 
     public static IComposer For(WiredBox box, RoomItemStore items, IReadOnlyList<WiredContextEntryData> contextEntries)
     {
@@ -32,11 +34,11 @@ public static class WiredDialogs
             ItemId: box.Id,
             StringParam: settings.StringParam,
             IntParams: settings.IntParams.Count > 0 ? settings.IntParams : type.DefaultIntParams,
-            VariableIds: settings.VariableIds,
+            VariableIds: settings.VariableIds.Count > 0 ? settings.VariableIds : type.DefaultVariableIds,
             FurniSources: settings.FurniSources.Count == furniSlots.Count ? settings.FurniSources : defaultFurni,
             UserSources: settings.UserSources.Count == userSlots.Count ? settings.UserSources : defaultUsers,
             Code: type.Code);
-        var options = new WiredBoxOptionsData(AdvancedSectionOpen, furniSlots, userSlots, defaultFurni, defaultUsers, type.AllowsWallFurni);
+        var options = new WiredBoxOptionsData(AdvancedSection, furniSlots, userSlots, defaultFurni, defaultUsers, type.AllowsWallFurni);
         var context = new WiredBoxContextData(contextEntries, type.ResetIntParams);
 
         return type.Kind switch

@@ -44,6 +44,8 @@ public sealed partial class RoomGrain
     /// <summary>The poster, the one wall item whose kind is told apart by its state.</summary>
     private const string PosterClassName = "poster";
 
+    /// <summary>Who has each chest's window open, by the chest's database id, as what it holds is kept; the client
+    /// names a chest by the id the room knows it by.</summary>
     private readonly Dictionary<int, HashSet<Guid>> _chestViewers = [];
 
     /// <summary>Using a chest opens it for whoever may look inside; false for anything else.</summary>
@@ -53,7 +55,7 @@ public sealed partial class RoomGrain
             return false;
 
         if (MayOpenChest(user, item))
-            SendTo(user.Player.Id, new OpenChestMessageComposer(item.Item.Id));
+            SendTo(user.Player.Id, new OpenChestMessageComposer(item.Id));
         return true;
     }
 
@@ -62,15 +64,16 @@ public sealed partial class RoomGrain
         if (_entities?.Find(playerId) is not { } user || Chest(chestId) is not { } chest || !MayOpenChest(user, chest))
             return;
 
-        _chestViewers.TryAdd(chestId, []);
-        _chestViewers[chestId].Add(playerId);
+        var storedId = chest.Item.Id;
+        _chestViewers.TryAdd(storedId, []);
+        _chestViewers[storedId].Add(playerId);
 
         await using var db = await dbFactory.CreateDbContextAsync();
         if (IsCoinChest(chest))
-            SendTo(playerId, new CoinsChestContentsMessageComposer(chestId, await CoinsInAsync(db, chestId), false));
+            SendTo(playerId, new CoinsChestContentsMessageComposer(chestId, await CoinsInAsync(db, storedId), false));
         else
         {
-            var storages = await StoragesAsync(db, db.UserItems.Where(i => i.ChestId == chestId).OrderBy(i => i.StoredAt));
+            var storages = await StoragesAsync(db, db.UserItems.Where(i => i.ChestId == storedId).OrderBy(i => i.StoredAt));
             var size = Math.Max(1, chestOptions.Value.ContentsFragmentSize);
             var fragments = Math.Max(1, (storages.Count + size - 1) / size);
             for (var fragment = 0; fragment < fragments; fragment++)
@@ -82,7 +85,7 @@ public sealed partial class RoomGrain
 
     public async Task CloseChestAsync(Guid playerId, int chestId)
     {
-        if (_chestViewers.TryGetValue(chestId, out var viewers) && viewers.Remove(playerId) && Chest(chestId) is { } chest)
+        if (Chest(chestId) is { } chest && _chestViewers.TryGetValue(chest.Item.Id, out var viewers) && viewers.Remove(playerId))
             await RefreshChestLookAsync(chest);
     }
 
@@ -92,8 +95,9 @@ public sealed partial class RoomGrain
             return;
 
         await using var db = await dbFactory.CreateDbContextAsync();
+        var storedId = chest.Item.Id;
         var kind = await db.UserItems.AsNoTracking().Include(i => i.Definition)
-            .Where(i => i.ChestId == chestId && i.Definition!.ClassId == typeId && (i.Definition.Type == ItemType.Wall) == isWallItem)
+            .Where(i => i.ChestId == storedId && i.Definition!.ClassId == typeId && (i.Definition.Type == ItemType.Wall) == isWallItem)
             .OrderBy(i => i.StoredAt).ToListAsync();
         var data = await furniData.LoadAsync(db, kind);
         var taken = kind.Where(i => PosterOf(i, data[i.Id]) == posterId).Take(amount).Select(i => i.Id).ToList();
@@ -115,10 +119,11 @@ public sealed partial class RoomGrain
             return;
 
         await using var db = await dbFactory.CreateDbContextAsync();
+        var storedId = chest.Item.Id;
         if (IsCoinChest(chest))
-            await TakeFromChestAsync(db, user, chest, [], await CoinsInAsync(db, chestId));
+            await TakeFromChestAsync(db, user, chest, [], await CoinsInAsync(db, storedId));
         else
-            await TakeFromChestAsync(db, user, chest, await db.UserItems.Where(i => i.ChestId == chestId).Select(i => i.Id).ToListAsync(), 0);
+            await TakeFromChestAsync(db, user, chest, await db.UserItems.Where(i => i.ChestId == storedId).Select(i => i.Id).ToListAsync(), 0);
     }
 
     /// <summary>Moves items and credits out of the chest to the player: the items into their inventory, the credits into their purse.</summary>
@@ -160,7 +165,7 @@ public sealed partial class RoomGrain
         if (items.Count > 0)
         {
             await GrainFactory.GetGrain<IPlayerGrain>(user.Player.Id).AnnounceItemsAsync(items.Select(i => i.Id).ToList());
-            BroadcastToChestViewers(chestId, new ItemsChestContentsUpdatedMessageComposer(chestId, items.Select(i => i.Id).ToList(), []));
+            BroadcastToChestViewers(chestId, new ItemsChestContentsUpdatedMessageComposer(chest.Id, items.Select(i => i.Id).ToList(), []));
         }
 
         if (coins > 0)
@@ -176,7 +181,7 @@ public sealed partial class RoomGrain
                 logger.LogError(e, "Paying player {Player} {Credits} credits taken from chest {Chest} failed", user.Player.Id, coins, chestId);
             }
 
-            BroadcastToChestViewers(chestId, new CoinsChestContentsMessageComposer(chestId, coinRow!.Coins, true));
+            BroadcastToChestViewers(chestId, new CoinsChestContentsMessageComposer(chest.Id, coinRow!.Coins, true));
         }
 
         SendTo(user.Player.Id, WiredTransactionSuccessMessageComposer.Of(WiredTransactionSuccessMessageComposer.Withdrawn));
@@ -335,9 +340,9 @@ public sealed partial class RoomGrain
     /// <summary>The owner leaving locks their chests set to lock then, and stops them looking into any.</summary>
     private async Task LeaveChestsAsync(Guid playerId)
     {
-        foreach (var (chestId, viewers) in _chestViewers.ToList())
+        foreach (var (storedId, viewers) in _chestViewers.ToList())
         {
-            if (viewers.Remove(playerId) && Chest(chestId) is { } viewed)
+            if (viewers.Remove(playerId) && _items?.FindStored(storedId) is { Interaction: ChestInteraction } viewed)
                 await RefreshChestLookAsync(viewed);
         }
 
@@ -352,6 +357,7 @@ public sealed partial class RoomGrain
         }
     }
 
+    /// <summary>The chest the client names, by the id the room knows it by.</summary>
     private RoomItemStore.PlacedItem? Chest(int chestId) => _items?.Find(chestId) is { Interaction: ChestInteraction } chest ? chest : null;
 
     private static bool IsCoinChest(RoomItemStore.PlacedItem chest) => chest.Interaction is ChestInteraction { HoldsCoins: true };
@@ -501,6 +507,7 @@ public sealed partial class RoomGrain
             FurniCategory.Of(item.Definition), FurniStuffData.From(data), isWall ? null : item.Extra);
     }
 
+    /// <summary>Tells everyone looking into the chest (by its database id).</summary>
     private void BroadcastToChestViewers(int chestId, Habbo.Protocol.Composers.IComposer composer)
     {
         if (!_chestViewers.TryGetValue(chestId, out var viewers))

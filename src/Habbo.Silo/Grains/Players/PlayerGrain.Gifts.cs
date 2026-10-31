@@ -188,6 +188,17 @@ public sealed partial class PlayerGrain
         return itemIds;
     }
 
+    public async Task ReceiveChatStyleAsync(int styleId)
+    {
+        await using var db = await dbFactory.CreateDbContextAsync();
+        var owner = await LoadUserAsync(db);
+        var offer = new ShopOffer(0, string.Empty, 0, Habbo.Domain.Users.ClubLevel.None, 1,
+            [new ShopProduct(null, 0, false, string.Empty, 1, ProductTypes.ChatStyle, ClassId: styleId)], 0, 0, 0, false, false, false, string.Empty);
+        var granted = await GrantProductsAsync(db, offer, 1, string.Empty, owner, serial: null);
+        await db.SaveChangesAsync();
+        await AnnounceGrantAsync(granted);
+    }
+
     /// <summary>So many of one item, with the parameter its product gives it (a poster's number), as an offer to hand over.</summary>
     private static ShopOffer PrizeOffer(int definitionId, string productParam, int amount) => new(0, string.Empty, 0, Habbo.Domain.Users.ClubLevel.None, 1,
         [new ShopProduct(definitionId, 0, false, productParam, amount)], 0, 0, 0, false, false, false, string.Empty);

@@ -212,7 +212,7 @@ public sealed partial class RoomGrain
             await db.SaveChangesAsync();
             await dbTransaction.CommitAsync();
             HoldOf(chestId).Coins += adding;
-            BroadcastToChestViewers(chestId, new CoinsChestContentsMessageComposer(chestId, row.Coins, true));
+            BroadcastToChestViewers(chestId, new CoinsChestContentsMessageComposer(chest.Id, row.Coins, true));
         }
         else
         {
@@ -234,7 +234,7 @@ public sealed partial class RoomGrain
             await dbTransaction.CommitAsync();
             var data = await furniData.LoadAsync(db, items);
             HoldOf(chestId).Items.AddRange(items.Select(i => Held(i, data[i.Id])));
-            BroadcastToChestViewers(chestId, new ItemsChestContentsUpdatedMessageComposer(chestId, [], items.Select(i => ToStorage(i, data[i.Id])).ToList()));
+            BroadcastToChestViewers(chestId, new ItemsChestContentsUpdatedMessageComposer(chest.Id, [], items.Select(i => ToStorage(i, data[i.Id])).ToList()));
         }
 
         await PruneChestLogsAsync(db);

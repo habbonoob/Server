@@ -1,0 +1,610 @@
+{
+  "//": "Reward tracks as habbo.com sent them on 25 October 2026 (RewardTracksMessageEvent), without the player's own progress. A prize's type is the client's product type: 0 wall furni, 1 floor furni (item: its class id), 2 effect, 4 badge (item: its code), 6 bot (extra: its figure), 8 currency (item: the activity point type), 9 chat style, 10 pet (item: its type, extra: its figure), 12 Habbicon (item: its id).",
+  "tracks": [
+    {
+      "id": "introduction",
+      "theme": "blue",
+      "premium": {
+        "taskPointsBoost": 1.2,
+        "instantPoints": 0,
+        "costCredits": 100,
+        "costDiamonds": 100
+      },
+      "tasks": [
+        {
+          "id": "visit_rooms",
+          "action": "ENTER_OTHER_USERS_ROOM",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 10, "premium": false },
+            { "count": 5, "points": 20, "premium": false },
+            { "count": 20, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "chat_with_users",
+          "action": "CHAT_WITH_SOMEONE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 5, "points": 10, "premium": false },
+            { "count": 20, "points": 20, "premium": false },
+            { "count": 50, "points": 30, "premium": false },
+            { "count": 200, "points": 40, "premium": false }
+          ]
+        },
+        {
+          "id": "dance_in_room",
+          "action": "DANCE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 20, "premium": false }
+          ]
+        },
+        {
+          "id": "wave_at_user",
+          "action": "WAVE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 10, "premium": false }
+          ]
+        },
+        {
+          "id": "use_habbicon",
+          "action": "USE_HABBICON",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 10, "premium": false },
+            { "count": 5, "points": 20, "premium": false },
+            { "count": 20, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "give_respect",
+          "action": "GIVE_RESPECT",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 3, "points": 10, "premium": false },
+            { "count": 6, "points": 20, "premium": false },
+            { "count": 24, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "replenish_respect",
+          "action": "REPLENISH_RESPECT",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 20, "premium": false },
+            { "count": 3, "points": 40, "premium": false }
+          ]
+        },
+        {
+          "id": "make_friends",
+          "action": "REQUEST_FRIEND",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 10, "premium": false },
+            { "count": 5, "points": 20, "premium": false },
+            { "count": 10, "points": 30, "premium": false },
+            { "count": 20, "points": 40, "premium": false }
+          ]
+        },
+        {
+          "id": "pet_a_pet",
+          "action": "PET_RESPECT",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 3, "points": 10, "premium": false },
+            { "count": 6, "points": 20, "premium": false },
+            { "count": 9, "points": 30, "premium": false },
+            { "count": 15, "points": 50, "premium": false }
+          ]
+        },
+        {
+          "id": "feed_pet",
+          "action": "PET_EAT",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 4, "points": 10, "premium": false },
+            { "count": 10, "points": 20, "premium": false },
+            { "count": 40, "points": 50, "premium": false }
+          ]
+        },
+        {
+          "id": "level_pet",
+          "action": "PET_LEVEL",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 10, "premium": false },
+            { "count": 3, "points": 20, "premium": false },
+            { "count": 6, "points": 50, "premium": false },
+            { "count": 10, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "change_motto",
+          "action": "CHANGE_MOTTO",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "change_outfit",
+          "action": "CHANGE_FIGURE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "wear_badge",
+          "action": "WEAR_BADGE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "close_love_lock",
+          "action": "FRIEND_FURNI_LOCKED",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 50, "premium": false }
+          ]
+        },
+        {
+          "id": "use_teleport",
+          "action": "TELEPORT",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 20, "premium": false }
+          ]
+        },
+        {
+          "id": "grab_drink",
+          "action": "FIND_HAND_ITEM",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 20, "premium": false }
+          ]
+        },
+        {
+          "id": "use_furniture",
+          "action": "SWITCH_ITEM_STATE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 5, "points": 10, "premium": false },
+            { "count": 10, "points": 20, "premium": false },
+            { "count": 20, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "go_swimming",
+          "action": "SWIM",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 20, "premium": false }
+          ]
+        },
+        {
+          "id": "create_room",
+          "action": "CREATE_ROOM",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 50, "premium": false }
+          ]
+        },
+        {
+          "id": "buy_catalog_furni",
+          "action": "BUY_FROM_CATALOGUE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 50, "premium": false }
+          ]
+        },
+        {
+          "id": "place_furniture",
+          "action": "PLACE_ITEM",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 5, "points": 10, "premium": false },
+            { "count": 10, "points": 20, "premium": false },
+            { "count": 20, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "place_builders_club_furni",
+          "action": "PLACE_BUILDERS_CLUB_FURNI",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 10, "points": 10, "premium": false },
+            { "count": 20, "points": 20, "premium": false },
+            { "count": 50, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "move_furniture",
+          "action": "MOVE_ITEM",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 5, "points": 10, "premium": false },
+            { "count": 10, "points": 20, "premium": false },
+            { "count": 20, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "rotate_furniture",
+          "action": "ROTATE_ITEM",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 5, "points": 10, "premium": false },
+            { "count": 10, "points": 20, "premium": false }
+          ]
+        },
+        {
+          "id": "send_messenger_message",
+          "action": "SEND_MESSENGER_MESSAGE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 5, "points": 10, "premium": false },
+            { "count": 20, "points": 20, "premium": false }
+          ]
+        },
+        {
+          "id": "send_messenger_invite",
+          "action": "SEND_MESSENGER_INVITE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "follow_friend",
+          "action": "FOLLOW_FRIEND",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "set_relationship_status",
+          "action": "SET_RELATIONSHIP_STATUS",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "publish_picture",
+          "action": "PUBLISH_PICTURE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 50, "premium": false }
+          ]
+        }
+      ],
+      "prizes": [
+        { "id": "free_001", "points": 50, "type": 12, "item": "28", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_002", "points": 100, "type": 12, "item": "29", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_001", "points": 100, "type": 12, "item": "50", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_003", "points": 150, "type": 12, "item": "30", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_004", "points": 200, "type": 8, "item": "0", "extra": "", "amount": 50, "premium": false },
+        { "id": "premium_002", "points": 200, "type": 12, "item": "51", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_005", "points": 250, "type": 12, "item": "31", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_006", "points": 300, "type": 12, "item": "32", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_003", "points": 300, "type": 12, "item": "52", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_007", "points": 350, "type": 12, "item": "33", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_008", "points": 400, "type": 10, "item": "1", "extra": "1 0 ABABAB", "amount": 1, "premium": false },
+        { "id": "premium_004", "points": 400, "type": 10, "item": "2", "extra": "2 0 88E70D", "amount": 1, "premium": true },
+        { "id": "free_009", "points": 450, "type": 12, "item": "34", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_010", "points": 500, "type": 1, "item": "1534", "extra": "", "amount": 10, "premium": false },
+        { "id": "premium_005", "points": 500, "type": 1, "item": "2131", "extra": "", "amount": 10, "premium": true },
+        { "id": "free_011", "points": 550, "type": 12, "item": "35", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_012", "points": 600, "type": 12, "item": "36", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_006", "points": 600, "type": 12, "item": "53", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_013", "points": 650, "type": 4, "item": "ACH_TraderPass1", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_014", "points": 700, "type": 12, "item": "37", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_007", "points": 700, "type": 12, "item": "54", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_015", "points": 750, "type": 1, "item": "195", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_016", "points": 800, "type": 12, "item": "39", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_008", "points": 800, "type": 1, "item": "4582", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_017", "points": 850, "type": 12, "item": "40", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_018", "points": 900, "type": 12, "item": "41", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_009", "points": 900, "type": 12, "item": "55", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_019", "points": 950, "type": 8, "item": "0", "extra": "", "amount": 50, "premium": false },
+        { "id": "free_020", "points": 1000, "type": 12, "item": "42", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_010", "points": 1000, "type": 12, "item": "56", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_021", "points": 1050, "type": 12, "item": "43", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_022", "points": 1100, "type": 1, "item": "18976", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_011", "points": 1100, "type": 6, "item": "GENERIC", "extra": "hr-3020-34.hd-3091-2.ch-225-92.lg-3058-100.sh-3089-1338.ca-3084-78-108.wa-2005", "amount": 1, "premium": true },
+        { "id": "free_023", "points": 1150, "type": 12, "item": "44", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_024", "points": 1200, "type": 1, "item": "18490", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_012", "points": 1200, "type": 12, "item": "57", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_025", "points": 1250, "type": 12, "item": "45", "extra": "", "amount": 1, "premium": false },
+        { "id": "free_026", "points": 1300, "type": 12, "item": "46", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_013", "points": 1300, "type": 12, "item": "58", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_027", "points": 1350, "type": 12, "item": "47", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_014", "points": 1350, "type": 8, "item": "5", "extra": "", "amount": 25, "premium": true },
+        { "id": "free_028", "points": 1400, "type": 12, "item": "48", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_015", "points": 1400, "type": 1, "item": "6348", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_029", "points": 1450, "type": 8, "item": "0", "extra": "", "amount": 100, "premium": false },
+        { "id": "premium_016", "points": 1450, "type": 8, "item": "5", "extra": "", "amount": 25, "premium": true },
+        { "id": "free_030", "points": 1500, "type": 1, "item": "18975", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_017", "points": 1500, "type": 12, "item": "59", "extra": "", "amount": 1, "premium": true },
+        { "id": "free_031", "points": 1650, "type": 4, "item": "JRH31", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium_018", "points": 1650, "type": 4, "item": "JRH32", "extra": "", "amount": 1, "premium": true }
+      ]
+    },
+    {
+      "id": "habboween2026",
+      "theme": "red",
+      "premium": {
+        "taskPointsBoost": 1.2,
+        "instantPoints": 0,
+        "costCredits": 75,
+        "costDiamonds": 75
+      },
+      "tasks": [
+        {
+          "id": "start_campaign",
+          "action": "CUSTOM_WIRED_ACTION",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "game1",
+          "action": "CUSTOM_WIRED_ACTION",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "game2",
+          "action": "CUSTOM_WIRED_ACTION",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "game3",
+          "action": "CUSTOM_WIRED_ACTION",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "game4",
+          "action": "CUSTOM_WIRED_ACTION",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "finish_campaign",
+          "action": "CUSTOM_WIRED_ACTION",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 200, "premium": false }
+          ]
+        },
+        {
+          "id": "find_frogs",
+          "action": "CUSTOM_WIRED_ACTION",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 10, "premium": false },
+            { "count": 10, "points": 20, "premium": false },
+            { "count": 25, "points": 30, "premium": false },
+            { "count": 40, "points": 40, "premium": false },
+            { "count": 50, "points": 50, "premium": false }
+          ]
+        },
+        {
+          "id": "grow_plants",
+          "action": "CUSTOM_WIRED_ACTION",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 10, "premium": false },
+            { "count": 6, "points": 40, "premium": false }
+          ]
+        },
+        {
+          "id": "greenhouse",
+          "action": "CUSTOM_WIRED_ACTION",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "scratch_pets",
+          "action": "PET_RESPECT",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 3, "points": 10, "premium": false },
+            { "count": 9, "points": 30, "premium": false },
+            { "count": 18, "points": 50, "premium": false },
+            { "count": 30, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "feed_pets",
+          "action": "PET_EAT",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 10, "premium": false },
+            { "count": 5, "points": 30, "premium": false },
+            { "count": 10, "points": 50, "premium": false },
+            { "count": 20, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "level_pets",
+          "action": "PET_LEVEL",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 10, "premium": false },
+            { "count": 3, "points": 30, "premium": false },
+            { "count": 5, "points": 50, "premium": false },
+            { "count": 10, "points": 100, "premium": false }
+          ]
+        },
+        {
+          "id": "pet_visit",
+          "action": "PET_OTHER_USERS_ROOM",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 20, "premium": false }
+          ]
+        },
+        {
+          "id": "hween_outfit",
+          "action": "CHANGE_FIGURE",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "plant_mnstr",
+          "action": "PLANT_MONSTER_PLANT",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 30, "premium": false }
+          ]
+        },
+        {
+          "id": "treat_mnstr",
+          "action": "TREAT_MONSTER_PLANT",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 50, "premium": false }
+          ]
+        },
+        {
+          "id": "breed_mnstr",
+          "action": "BREED_MONSTER_PLANT",
+          "parameter": "",
+          "premium": false,
+          "levels": [
+            { "count": 1, "points": 100, "premium": false }
+          ]
+        }
+      ],
+      "prizes": [
+        { "id": "free1", "points": 100, "type": 12, "item": "72", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium1", "points": 100, "type": 8, "item": "0", "extra": "", "amount": 250, "premium": true },
+        { "id": "free2", "points": 150, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": false },
+        { "id": "premium2", "points": 150, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": true },
+        { "id": "free3", "points": 200, "type": 12, "item": "73", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium3", "points": 200, "type": 1, "item": "4582", "extra": "", "amount": 1, "premium": true },
+        { "id": "free4", "points": 250, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": false },
+        { "id": "premium4", "points": 250, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": true },
+        { "id": "free5", "points": 300, "type": 1, "item": "14388", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium5", "points": 300, "type": 1, "item": "19144", "extra": "", "amount": 1, "premium": true },
+        { "id": "free6", "points": 350, "type": 1, "item": "19112", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium6", "points": 350, "type": 1, "item": "4593", "extra": "", "amount": 3, "premium": true },
+        { "id": "free7", "points": 400, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": false },
+        { "id": "premium7", "points": 400, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": true },
+        { "id": "free8", "points": 450, "type": 12, "item": "74", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium8", "points": 450, "type": 1, "item": "19120", "extra": "", "amount": 1, "premium": true },
+        { "id": "free9", "points": 500, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": false },
+        { "id": "premium9", "points": 500, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": true },
+        { "id": "free10", "points": 550, "type": 12, "item": "75", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium10", "points": 550, "type": 8, "item": "5", "extra": "", "amount": 10, "premium": true },
+        { "id": "free11", "points": 600, "type": 1, "item": "19129", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium11", "points": 600, "type": 8, "item": "0", "extra": "", "amount": 250, "premium": true },
+        { "id": "free12", "points": 650, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": false },
+        { "id": "premium12", "points": 650, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": true },
+        { "id": "free13", "points": 700, "type": 12, "item": "76", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium13", "points": 700, "type": 1, "item": "19128", "extra": "", "amount": 1, "premium": true },
+        { "id": "free14", "points": 750, "type": 1, "item": "14388", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium14", "points": 750, "type": 8, "item": "7", "extra": "", "amount": 10, "premium": true },
+        { "id": "free15", "points": 800, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": false },
+        { "id": "premium15", "points": 800, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": true },
+        { "id": "free16", "points": 850, "type": 12, "item": "77", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium16", "points": 850, "type": 8, "item": "0", "extra": "", "amount": 300, "premium": true },
+        { "id": "free17", "points": 900, "type": 1, "item": "19110", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium17", "points": 900, "type": 1, "item": "4578", "extra": "", "amount": 1, "premium": true },
+        { "id": "free18", "points": 950, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": false },
+        { "id": "premium18", "points": 950, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": true },
+        { "id": "free19", "points": 1000, "type": 12, "item": "78", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium19", "points": 1000, "type": 6, "item": "GENERIC", "extra": "hr-3020-34.hd-3091-2.ch-225-92.lg-3058-100.sh-3089-1338.ca-3084-78-108.wa-2005", "amount": 1, "premium": true },
+        { "id": "free20", "points": 1050, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": false },
+        { "id": "premium20", "points": 1050, "type": 8, "item": "104", "extra": "", "amount": 100, "premium": true },
+        { "id": "free21", "points": 1100, "type": 12, "item": "79", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium21", "points": 1100, "type": 8, "item": "0", "extra": "", "amount": 400, "premium": true },
+        { "id": "free22", "points": 1150, "type": 8, "item": "104", "extra": "", "amount": 150, "premium": false },
+        { "id": "premium22", "points": 1150, "type": 8, "item": "104", "extra": "", "amount": 150, "premium": true },
+        { "id": "free23", "points": 1200, "type": 1, "item": "19141", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium23", "points": 1200, "type": 1, "item": "19412", "extra": "", "amount": 1, "premium": true },
+        { "id": "free24", "points": 1250, "type": 8, "item": "104", "extra": "", "amount": 150, "premium": false },
+        { "id": "premium24", "points": 1250, "type": 8, "item": "104", "extra": "", "amount": 150, "premium": true },
+        { "id": "free25", "points": 1300, "type": 12, "item": "80", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium25", "points": 1300, "type": 8, "item": "7", "extra": "", "amount": 25, "premium": true },
+        { "id": "free26", "points": 1350, "type": 8, "item": "104", "extra": "", "amount": 200, "premium": false },
+        { "id": "premium26", "points": 1350, "type": 8, "item": "104", "extra": "", "amount": 200, "premium": true },
+        { "id": "free27", "points": 1400, "type": 1, "item": "19109", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium27", "points": 1400, "type": 1, "item": "2131", "extra": "", "amount": 5, "premium": true },
+        { "id": "free28", "points": 1450, "type": 8, "item": "104", "extra": "", "amount": 200, "premium": false },
+        { "id": "premium28", "points": 1450, "type": 8, "item": "104", "extra": "", "amount": 200, "premium": true },
+        { "id": "free29", "points": 1500, "type": 12, "item": "81", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium29", "points": 1500, "type": 8, "item": "5", "extra": "", "amount": 25, "premium": true },
+        { "id": "free30", "points": 1650, "type": 4, "item": "DAD18", "extra": "", "amount": 1, "premium": false },
+        { "id": "premium30", "points": 1650, "type": 4, "item": "DAD19", "extra": "", "amount": 1, "premium": true }
+      ]
+    }
+  ]
+}

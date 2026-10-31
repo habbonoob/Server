@@ -150,6 +150,8 @@ internal static class RoomEntry
         if (load.Configuration is { } configuration)
             await context.SendAsync(ConfigurationItemStatesMessageComposer.From(configuration), ct);
         await context.SendAsync(new WiredEnvironmentMessageComposer(load.WiredListensForUserClicks, EnabledAchievements: []), ct);
+        await context.SendAsync(new FurnitureLabelsAndRegionsComposer((load.Labels ?? []).Select(label => new FurnitureLabelData(
+            FurnitureLabelData.LabelType, label.ItemId, label.Text, label.BubbleColor, label.Visibility, label.AlwaysOpen)).ToList()), ct);
         // the rights come in among the wired packets: the level, the wired permissions, then the ownership (Habbo's
         // own room entry, measured)
         if (load.RoomControllerLevel > RoomControllerLevels.None)

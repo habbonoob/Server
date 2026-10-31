@@ -34,6 +34,7 @@ internal sealed class PostAuthenticationSequence(
     ICampaignCalendarService campaignCalendar,
     IClubService club,
     IDeferredNotificationService deferredNotifications,
+    Habbo.Silo.Abstractions.Habbicons.IHabbiconService habbicons,
     IOptions<HotelOptions> hotel)
 {
     /// <param name="previousLoginAt">When the player last logged in before now, or null when
@@ -64,6 +65,10 @@ internal sealed class PostAuthenticationSequence(
         await context.SendAsync(
             SubscriptionEvents.From(await subscriptions.GetBuildersClubAsync(player.Id, ct)), ct);
         await playerGrain.SendFigureSetsAsync();
+        // the reward tracks come before the newness level (Habbo's own login, captured)
+        await playerGrain.SendRewardTracksAsync();
+        // then the Habbicons owned and the Habbicons Collection (also captured)
+        await habbicons.SendLoginAsync(player);
         await context.SendAsync(new NoobnessLevelMessageComposer(NoobnessOf(previousLoginAt)), ct);
         await context.SendAsync(UserRightsMessageComposer.From(player), ct);
         var hours = availability.GetAvailability();

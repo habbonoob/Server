@@ -28,6 +28,19 @@ public sealed class PetRules(IOptions<PetOptions> options)
     public int Nutrition(Pet pet, DateTimeOffset now) =>
         Math.Clamp(pet.Nutrition - (int)(MinutesSince(pet, now) * Rules.NutritionLostPerMinute), 0, MaxNutrition(pet.Level));
 
+    /// <summary>What a pet left to itself goes to furniture for, most pressing first: hungry, it eats; tired, it rests in
+    /// a nest, or failing one drinks, a drink giving back some of its energy. Nothing when it is neither.</summary>
+    public IEnumerable<PetCare> Needs(Pet pet, DateTimeOffset now)
+    {
+        if (Nutrition(pet, now) * 100 < MaxNutrition(pet.Level) * Rules.HungryBelowPercent)
+            yield return PetCare.Eat;
+        if (Energy(pet, now) * 100 < MaxEnergy(pet.Level) * Rules.TiredBelowPercent)
+        {
+            yield return PetCare.Rest;
+            yield return PetCare.Drink;
+        }
+    }
+
     /// <summary>Brings the pet's energy and nutrition up to now, so a change can be made to them.</summary>
     public void Settle(Pet pet, DateTimeOffset now)
     {

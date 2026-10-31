@@ -28,6 +28,28 @@ internal sealed class ParsingMessageHandler<TMessage>(IMessageHandler<TMessage> 
     /// <summary>The handler this wraps, so the registry can read its attributes.</summary>
     public object Inner => inner;
 
-    public Task<bool> HandleAsync(GatewaySessionContext context, MessageReader reader, CancellationToken ct) =>
-        inner.HandleAsync(context, TMessage.Read(reader), ct);
+    public Task<bool> HandleAsync(GatewaySessionContext context, MessageReader reader, CancellationToken ct)
+    {
+        TMessage message;
+        try
+        {
+            message = TMessage.Read(reader);
+        }
+        catch (Exception ex)
+        {
+            throw new MalformedMessageException(typeof(TMessage).Name, ex);
+        }
+
+        return inner.HandleAsync(context, message, ct);
+    }
+}
+
+/// <summary>A message whose payload did not read as its layout says: a client release that writes it differently,
+/// or a field this server reads that the client never sent. Its frame had its own length, so the stream is still
+/// in step; only this message is lost.</summary>
+public sealed class MalformedMessageException(string message, Exception inner)
+    : Exception($"{message} did not read: {inner.Message}", inner)
+{
+    /// <summary>The message's name, as the server knows it.</summary>
+    public string Name { get; } = message;
 }

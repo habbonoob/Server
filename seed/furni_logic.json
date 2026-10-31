@@ -16027,9 +16027,81 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_a_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_alpha_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25
+  ],
+  "transitions": []
+ },
  "bc_alpha1_b": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_b_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16057,9 +16129,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_c_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_d": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_d_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16088,9 +16190,40 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_e_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   135
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_f": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_f_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16118,9 +16251,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_g_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_h": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_h_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16148,9 +16311,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_i_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_j": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_j_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16178,9 +16371,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_k_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_l": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_l_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16208,9 +16431,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_m_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_n": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_n_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16249,9 +16502,50 @@
   ],
   "transitions": []
  },
+ "bc_alpha1_num_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "transitions": []
+ },
  "bc_alpha1_o": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_o_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16279,9 +16573,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_p_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_q": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_q_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16309,9 +16633,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_r_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_s": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_s_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16339,9 +16693,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_t_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_u": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_u_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16369,9 +16753,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_v_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_w": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_w_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16399,9 +16813,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_x_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_alpha1_y": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_alpha1_y_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16429,9 +16873,47 @@
   "states": [],
   "transitions": []
  },
+ "bc_alpha1_z_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_block_0": {
   "logic": "furniture_multiheight",
   "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
+ "bc_block_0_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16473,9 +16955,45 @@
   ],
   "transitions": []
  },
+ "bc_block_1_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
  "bc_block_artdeco1": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_block_artdeco1_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16503,9 +17021,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_block_glass_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_block_grass": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_block_grass_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16533,9 +17081,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_block_industrial_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_block_marble": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_block_marble_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16563,9 +17141,39 @@
   "states": [],
   "transitions": []
  },
+ "bc_block_metalgrip_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_block_redbrick": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_block_redbrick_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16593,9 +17201,46 @@
   "states": [],
   "transitions": []
  },
+ "bc_block_sand_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_block_small": {
   "logic": "furniture_multiheight",
   "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
+ "bc_block_small_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16647,9 +17292,56 @@
   ],
   "transitions": []
  },
+ "bc_block_water_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      },
+      {
+       "size": "32"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
  "bc_block_wool": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_block_wool_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16696,9 +17388,49 @@
   ],
   "transitions": []
  },
+ "bc_cone_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   1,
+   2,
+   3
+  ],
+  "transitions": []
+ },
  "bc_curvedramp": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   45,
+   90,
+   135,
+   180,
+   225,
+   270,
+   315
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_curvedramp_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16738,9 +17470,45 @@
   ],
   "transitions": []
  },
+ "bc_cylinder_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
  "bc_flowerhedge": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_flowerhedge_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16828,9 +17596,43 @@
   "states": [],
   "transitions": []
  },
+ "bc_glasspanel_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 2.0
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_halfcylinder": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   1
+  ],
+  "transitions": []
+ },
+ "bc_halfcylinder_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16867,9 +17669,44 @@
   ],
   "transitions": []
  },
+ "bc_hemisphere_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "transitions": []
+ },
  "bc_lavarock": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_lavarock_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16897,9 +17734,47 @@
   "states": [],
   "transitions": []
  },
+ "bc_metalcrate_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_panel": {
   "logic": "furniture_multiheight",
   "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 1.0,
+   "z": 2.01
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
+ "bc_panel_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 2.0,
    "y": 1.0,
@@ -16939,9 +17814,49 @@
   ],
   "transitions": []
  },
+ "bc_pyramidtip_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   0,
+   1,
+   2
+  ],
+  "transitions": []
+ },
  "bc_quartercircle": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   45,
+   90,
+   135,
+   180,
+   225,
+   270,
+   315
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_quartercircle_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -16979,9 +17894,48 @@
   ],
   "transitions": []
  },
+ "bc_quarterring_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   1,
+   2,
+   3
+  ],
+  "transitions": []
+ },
  "bc_ramp": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   1,
+   2
+  ],
+  "transitions": []
+ },
+ "bc_ramp_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -17022,6 +17976,29 @@
   ],
   "transitions": []
  },
+ "bc_round_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
  "bc_sphere": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -17037,9 +18014,41 @@
   "states": [],
   "transitions": []
  },
+ "bc_sphere_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_sphere_small": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_sphere_small_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -17075,9 +18084,52 @@
   "states": [],
   "transitions": []
  },
+ "bc_stairs_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.5
+  },
+  "directions": [
+   0,
+   45,
+   90,
+   135,
+   180,
+   225,
+   270,
+   315
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_standinghalfcylinder": {
   "logic": "furniture_multiheight",
   "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
+ "bc_standinghalfcylinder_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -17120,9 +18172,52 @@
   ],
   "transitions": []
  },
+ "bc_standingtriangularprism_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
  "bc_stick": {
   "logic": "furniture_multiheight",
   "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 4.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
+ "bc_stick_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -17155,9 +18250,42 @@
   "states": [],
   "transitions": []
  },
+ "bc_stone_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_terra": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "bc_terra_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -17188,6 +18316,21 @@
   "states": [],
   "transitions": []
  },
+ "bc_tile_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "bc_triangularprism": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -17206,9 +18349,48 @@
   ],
   "transitions": []
  },
+ "bc_triangularprism_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
  "bc_wedge": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   0,
+   1,
+   2
+  ],
+  "transitions": []
+ },
+ "bc_wedge_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -17247,9 +18429,44 @@
   ],
   "transitions": []
  },
+ "bc_wedgecrnr_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   1,
+   2
+  ],
+  "transitions": []
+ },
  "bc_wood": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "bc_wood_recolorable": {
+  "logic": "furniture_recolorable",
+  "visualization": "furniture_recolorable",
   "dimensions": {
    "x": 1.0,
    "y": 1.0,
@@ -32695,6 +33912,42 @@
   ],
   "transitions": []
  },
+ "clothing_acornbackpack": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "clothing_acornkeyring": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.1
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
  "clothing_acousticguitar": {
   "logic": "furniture_purchasable_clothing",
   "visualization": "furniture_animated",
@@ -33173,6 +34426,24 @@
    90
   ],
   "states": [],
+  "transitions": []
+ },
+ "clothing_autumnberet2": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
   "transitions": []
  },
  "clothing_autumnjacket": {
@@ -46945,6 +48216,126 @@
   "states": [],
   "transitions": []
  },
+ "clothing_nft26_bananahelmet": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "clothing_nft26_birdnest": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "clothing_nft26_camopaint": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "clothing_nft26_cottoncandy": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "clothing_nft26_cutlery": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "clothing_nft26_determinedface": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "clothing_nft26_haircomb": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "clothing_nft26_hopefulface": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
  "clothing_nft26_nftwitchcape": {
   "logic": "furniture_purchasable_clothing",
   "visualization": "furniture_animated",
@@ -46961,6 +48352,62 @@
    0,
    1
   ],
+  "transitions": []
+ },
+ "clothing_nft26_nightgoggles": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "clothing_nft26_tacticalvest": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "clothing_nft26_trashcan": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "clothing_nft26_zigzagmustache": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
   "transitions": []
  },
  "clothing_nftabcd": {
@@ -47093,6 +48540,20 @@
   "transitions": []
  },
  "clothing_nftbackmonkey": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "clothing_nftballoonbuddy": {
   "logic": "furniture_purchasable_clothing",
   "visualization": "furniture_animated",
   "dimensions": {
@@ -48204,6 +49665,20 @@
   "states": [],
   "transitions": []
  },
+ "clothing_nftcollectiblesprint": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
  "clothing_nftcolorbandana": {
   "logic": "furniture_purchasable_clothing",
   "visualization": "furniture_animated",
@@ -48696,6 +50171,20 @@
   "transitions": []
  },
  "clothing_nftelvenface2": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "clothing_nftemeraldskin": {
   "logic": "furniture_purchasable_clothing",
   "visualization": "furniture_animated",
   "dimensions": {
@@ -68390,6 +69879,24 @@
   ],
   "transitions": []
  },
+ "conf_chooser_disable": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 2.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
  "conf_handitem_block": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -68415,6 +69922,24 @@
    "x": 1.0,
    "y": 1.0,
    "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "conf_kickwars_enable": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 2.0
   },
   "directions": [
    0,
@@ -78954,6 +80479,60 @@
   "states": [],
   "transitions": []
  },
+ "drago_cursed_1_package": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0
+  ],
+  "transitions": []
+ },
+ "drago_cursed_2_package": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0
+  ],
+  "transitions": []
+ },
  "dragonlamp_shinobi": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -80553,6 +82132,29 @@
    90
   ],
   "states": [],
+  "transitions": []
+ },
+ "ducket_c26_acorndecor": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.5
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
   "transitions": []
  },
  "ducket_c26_anchorpillow": {
@@ -127915,6 +129517,53 @@
   "states": [],
   "transitions": []
  },
+ "house_c26_mokapot": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "transitions": []
+ },
+ "house_c26_pastamaker": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "transitions": []
+ },
  "house_sofa": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
@@ -168239,6 +169888,36 @@
   ],
   "transitions": []
  },
+ "newbie_bronze_cave_dragon_package": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      },
+      {
+       "size": "32"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0
+  ],
+  "transitions": []
+ },
  "newbie_cat_package": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -171211,6 +172890,21 @@
   "states": [],
   "transitions": []
  },
+ "nft_diamond_painting18": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.7,
+   "y": 0.4,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
  "nft_diamond_painting20": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
@@ -172525,6 +174219,38 @@
   "states": [],
   "transitions": []
  },
+ "nft_duck_zombie": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      },
+      {
+       "size": "32"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
  "nft_easel_buildcomp": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
@@ -173472,6 +175198,24 @@
    0
   ],
   "states": [],
+  "transitions": []
+ },
+ "nft_emerald_tome_5000": {
+  "logic": "furniture_nft_credit",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.3
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [
+   0,
+   1
+  ],
   "transitions": []
  },
  "nft_emerald_xmastree_2000": {
@@ -188100,6 +189844,65 @@
   "states": [],
   "transitions": []
  },
+ "nft_h26_annivfrosty": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "nft_h26_antiquewidescreen": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 2.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1,
+   2
+  ],
+  "transitions": []
+ },
  "nft_h26_aprilshrimp": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
@@ -188113,6 +189916,74 @@
    90
   ],
   "states": [],
+  "transitions": []
+ },
+ "nft_h26_axe_bronze": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   1
+  ],
+  "transitions": []
+ },
+ "nft_h26_axe_gold": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   1
+  ],
+  "transitions": []
+ },
+ "nft_h26_axe_silver": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   1
+  ],
+  "transitions": []
+ },
+ "nft_h26_axe_trippy": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   1
+  ],
   "transitions": []
  },
  "nft_h26_bamboochair": {
@@ -188305,6 +190176,52 @@
    0,
    1,
    2
+  ],
+  "transitions": []
+ },
+ "nft_h26_cactussofa": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 2.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_h26_campfire": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
   ],
   "transitions": []
  },
@@ -188734,6 +190651,21 @@
    90,
    180,
    270
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_h26_emplacement": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 2.0,
+   "y": 2.0,
+   "z": 0.025
+  },
+  "directions": [
+   0,
+   90
   ],
   "states": [],
   "transitions": []
@@ -189190,6 +191122,21 @@
   ],
   "transitions": []
  },
+ "nft_h26_overgrownplant": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 4.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "nft_h26_pillowssofa": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -189319,6 +191266,21 @@
   "states": [],
   "transitions": []
  },
+ "nft_h26_recyccooncarpet": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 3.0,
+   "y": 2.0,
+   "z": 0.1
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "nft_h26_retrofuturetv": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -189403,6 +191365,23 @@
   "directions": [
    90,
    180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_h26_royalfootrest": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.9
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
   ],
   "states": [],
   "transitions": []
@@ -189545,6 +191524,31 @@
   ],
   "transitions": []
  },
+ "nft_h26_springchair": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 2.4
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
  "nft_h26_sunlounger": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
@@ -189558,6 +191562,24 @@
    90
   ],
   "states": [],
+  "transitions": []
+ },
+ "nft_h26_survivalgear": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
   "transitions": []
  },
  "nft_h26_treasuremap1": {
@@ -189582,6 +191604,21 @@
    "x": 1.05,
    "y": 0.2,
    "z": 1.3
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_h26_treehouseshelter": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 2.0,
+   "y": 2.0,
+   "z": 4.7
   },
   "directions": [
    90,
@@ -189633,6 +191670,35 @@
    90
   ],
   "states": [],
+  "transitions": []
+ },
+ "nft_h26_trippypatch": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 2.0,
+   "z": 0.0001
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
   "transitions": []
  },
  "nft_h26_witchchair": {
@@ -190410,6 +192476,57 @@
   ],
   "transitions": []
  },
+ "nft_hween09_organ": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 1.0,
+   "z": 0.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2
+  ],
+  "transitions": []
+ },
+ "nft_hween11_fountain": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 2.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "32"
+      },
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
  "nft_hween12_duck": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -190470,6 +192587,37 @@
   "states": [
    0,
    1
+  ],
+  "transitions": []
+ },
+ "nft_hween12_moon": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.01
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1,
+   2,
+   3
   ],
   "transitions": []
  },
@@ -190567,6 +192715,171 @@
   ],
   "transitions": []
  },
+ "nft_hween13_throne": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 2.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween14_doll1": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween14_doll10": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween14_doll2": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween14_doll3": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween14_doll4": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween14_doll5": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween14_doll6": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween14_doll7": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween14_doll8": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween14_doll9": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
  "nft_hween14_rare1": {
   "logic": "furniture_basic",
   "visualization": "furniture_animated",
@@ -190597,6 +192910,211 @@
   ],
   "transitions": []
  },
+ "nft_hween15_evilfrank": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "nft_hween15_evilraider": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0
+  ],
+  "transitions": []
+ },
+ "nft_hween15_horseman5": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "nft_hween15_saintini": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.001
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "nft_hween15_saintta": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.001
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0
+  ],
+  "transitions": []
+ },
+ "nft_hween_c16_cabinet": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 4.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween_c16_cabinet2": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 4.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "nft_hween_c17_mimic": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
  "nft_hween_r18_antiquechemset": {
   "logic": "furniture_basic",
   "visualization": "furniture_animated",
@@ -190622,6 +193140,68 @@
   },
   "states": [
    0
+  ],
+  "transitions": []
+ },
+ "nft_hween_r19_weepingwillow": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 2.0,
+   "z": 0.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "transitions": []
+ },
+ "nft_hween_r19_witchfamiliar": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1,
+   2,
+   3
   ],
   "transitions": []
  },
@@ -193966,6 +196546,53 @@
    1,
    2
   ],
+  "transitions": []
+ },
+ "nft_sc26_transmogrification": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
+ "nft_sc26_wanddisplay": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
   "transitions": []
  },
  "nft_sc_bodybag": {
@@ -219352,6 +221979,302 @@
   "states": [],
   "transitions": []
  },
+ "rec26_artsupplies": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.1
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "rec26_cloth_painthat": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.2
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "rec26_cloth_paintoutfit": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "rec26_paintbust": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.1
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "rec26_paintcans": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.5
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "transitions": []
+ },
+ "rec26_paintchair": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.1
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "rec26_paintcolumn": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 3.5
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "rec26_paintcouch": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 1.0,
+   "z": 1.1
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "rec26_paintcupboard": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 1.0,
+   "z": 1.88
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "rec26_painteasel": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 2.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "transitions": []
+ },
+ "rec26_paintlamp": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "transitions": []
+ },
+ "rec26_paintshelf": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 1.0,
+   "z": 0.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "transitions": []
+ },
+ "rec26_paintsplatter": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.1
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "transitions": []
+ },
+ "rec26_painttable": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 2.0,
+   "z": 1.27
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "rec26_paintwallart": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 0.2,
+   "z": 1.8
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [
+   0,
+   1,
+   2
+  ],
+  "transitions": []
+ },
  "recycler_basketplant": {
   "logic": "furniture_basic",
   "visualization": "furniture_static",
@@ -240867,6 +243790,961 @@
   "states": [],
   "transitions": []
  },
+ "survival_c26_burntgrass": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 2.0,
+   "z": 0.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
+ "survival_c26_cave": {
+  "logic": "furniture_change_state_when_step_on",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 3.0,
+   "y": 3.0,
+   "z": 0.0001
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_c26_craftingtable": {
+  "logic": "furniture_crafting_gizmo",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 2.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_c26_dystopiabg": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 6.0,
+   "y": 0.2,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_c26_dystopiafence": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 2.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_c26_dystopiagate": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 2.0,
+   "z": 0.0001
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_c26_dystopiawall": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 0.2,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1,
+   2
+  ],
+  "transitions": []
+ },
+ "survival_c26_factionsymbols": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "transitions": []
+ },
+ "survival_c26_firekit": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_c26_flare": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   2880
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_c26_floortarget": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.0025
+  },
+  "directions": [
+   0
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_c26_foliage": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.7
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0
+  ],
+  "transitions": []
+ },
+ "survival_c26_foliagefloor": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 2.0,
+   "y": 2.0,
+   "z": 0.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0
+  ],
+  "transitions": []
+ },
+ "survival_c26_foodsupplies": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.25
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "transitions": []
+ },
+ "survival_c26_hammock": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 3.0,
+   "z": 2.3
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_c26_knife": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.1
+  },
+  "directions": [
+   0,
+   45,
+   90,
+   135,
+   180,
+   225,
+   270,
+   315
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_c26_medpack": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.248
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "transitions": []
+ },
+ "survival_c26_podium": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.8
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "transitions": []
+ },
+ "survival_c26_rope": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.2
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2
+  ],
+  "transitions": []
+ },
+ "survival_c26_sleepingbag": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_c26_stonesymbol": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_c26_stream": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 2.0,
+   "z": 0.4
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_c26_supplycrate": {
+  "logic": "furniture_crackable",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1,
+   2
+  ],
+  "transitions": []
+ },
+ "survival_c26_supplycrateb": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_c26_surveillancetree": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 5.7
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_c26_trap": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.025
+  },
+  "directions": [
+   0,
+   90,
+   2880
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_c26_treebridge": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 3.0,
+   "z": 0.5
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "transitions": []
+ },
+ "survival_c26_walltarget": {
+  "logic": "furniture_basic",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 0.2,
+   "z": 1.0
+  },
+  "directions": [
+   90,
+   180
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_c26_weaponcase": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90,
+   2880
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1,
+   2
+  ],
+  "transitions": []
+ },
+ "survival_c26_weaponcaseb": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_cloth_c26_bow": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_cloth_c26_braid": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.95
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_cloth_c26_cyberlimbs": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_cloth_c26_drone": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 2.5
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_cloth_c26_grenade": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.2
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_cloth_c26_survivaljumpsuit": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 2.8
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_cloth_c26_survivalmask": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
+ "survival_cloth_c26_sword": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 2.7
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   1
+  ],
+  "transitions": []
+ },
+ "survival_cloth_c26_tomahawk": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_cloth_c26_weapon": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_cloth_r26_bloodbath": {
+  "logic": "furniture_purchasable_clothing",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 2.7
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "survival_r26_coffin": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 3.0,
+   "z": 1.1
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "transitions": []
+ },
+ "survival_r26_prizemoney": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "transitions": []
+ },
+ "survival_r26_scifispeakercorner": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.9
+  },
+  "directions": [
+   0,
+   90,
+   180,
+   270
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": []
+ },
  "svnr_aus": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -246076,6 +249954,28 @@
   "states": [
    0
   ],
+  "transitions": []
+ },
+ "trophy_c26_duckbergine": {
+  "logic": "furniture_trophy",
+  "visualization": "furniture_static",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.2
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "trophy": [
+    {
+     "type": "1"
+    }
+   ]
+  },
+  "states": [],
   "transitions": []
  },
  "trophy_chatterbox_bronze": {
@@ -258801,6 +262701,37 @@
    101
   ]
  },
+ "wf_act_progress_ach": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.65
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
  "wf_act_rel_mov": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -258911,6 +262842,48 @@
    101
   ]
  },
+ "wf_act_send_dataframe": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.65
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
+ "wf_act_send_message": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.65
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
  "wf_act_send_signal": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -258966,6 +262939,48 @@
     }
    ]
   },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
+ "wf_act_set_highlight": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.65
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
+ "wf_act_set_visibility": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.65
+  },
+  "directions": [
+   0,
+   270
+  ],
   "states": [
    0,
    1
@@ -260899,6 +264914,53 @@
   ],
   "transitions": []
  },
+ "wf_label": {
+  "logic": "furniture_label",
+  "visualization": "furniture_label",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.11
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
+ "wf_link": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.8
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
  "wf_ltdproto_act_toggle_state": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -262239,6 +266301,41 @@
   ],
   "transitions": []
  },
+ "wf_test_26secret1": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
+ "wf_test_26secret2": {
+  "logic": "furniture_8d4e73",
+  "visualization": "furniture_8d4e73",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.15
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "states": [],
+  "transitions": []
+ },
  "wf_test_act": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -263124,6 +267221,48 @@
    101
   ]
  },
+ "wf_trg_receive_dataframe": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.65
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
+ "wf_trg_receive_message": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.65
+  },
+  "directions": [
+   0,
+   270
+  ],
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
  "wf_trg_recv_signal": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -263147,6 +267286,27 @@
     }
    ]
   },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
+ "wf_trg_room_initializes": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.65
+  },
+  "directions": [
+   0,
+   270
+  ],
   "states": [
    0,
    1
@@ -263499,6 +267659,46 @@
    109
   ]
  },
+ "wf_var_dailytask": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.2
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   9
+  ],
+  "transitions": [
+   100,
+   101,
+   102,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109
+  ]
+ },
  "wf_var_echo": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -263540,6 +267740,46 @@
   ]
  },
  "wf_var_furni": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.2
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   9
+  ],
+  "transitions": [
+   100,
+   101,
+   102,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109
+  ]
+ },
+ "wf_var_pointer": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
   "dimensions": {
@@ -263888,6 +268128,37 @@
   ],
   "transitions": []
  },
+ "wf_xtra_achievement_enabler": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.74
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
  "wf_xtra_anim_time": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
@@ -264092,6 +268363,38 @@
   ]
  },
  "wf_xtra_filter_users_by_var": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 1.0
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0,
+   1
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
+ "wf_xtra_link_speaker": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
   "dimensions": {
@@ -264495,7 +268798,100 @@
    101
   ]
  },
+ "wf_xtra_var_import": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.75
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
+ "wf_xtra_var_leaderboard": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.75
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
  "wf_xtra_var_lvlup_system": {
+  "logic": "furniture_multistate",
+  "visualization": "furniture_animated",
+  "dimensions": {
+   "x": 1.0,
+   "y": 1.0,
+   "z": 0.75
+  },
+  "directions": [
+   0,
+   90
+  ],
+  "logicData": {
+   "particlesystems": [
+    {
+     "particlesystem": [
+      {
+       "size": "64"
+      }
+     ]
+    }
+   ]
+  },
+  "states": [
+   0
+  ],
+  "transitions": [
+   100,
+   101
+  ]
+ },
+ "wf_xtra_var_share": {
   "logic": "furniture_multistate",
   "visualization": "furniture_animated",
   "dimensions": {

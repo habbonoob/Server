@@ -43,6 +43,10 @@ public static class WiredFurni
     public static bool IsAntenna(RoomItemStore.PlacedItem item) =>
         item.Item.Definition!.InteractionName == Items.Interactions.WiredAntennaInteraction.Name;
 
+    /// <summary>Whether the item is a WIRED Link, which link messages and dataframes go through.</summary>
+    public static bool IsLink(RoomItemStore.PlacedItem item) =>
+        item.Item.Definition!.InteractionName == Items.Interactions.WiredLinkInteraction.Name;
+
     // movement, as the move dialogs number it: none, a random direction, left or right, up or down,
     // then the four straight and the four diagonal directions
     private const int RandomDirection = 1;

@@ -11,7 +11,13 @@ public sealed class WiredBox(RoomItemStore.PlacedItem item, WiredBoxType type, F
     public WiredBoxType Type { get; } = type;
     public FurniWired Settings { get; set; } = settings;
 
-    public int Id => Item.Item.Id;
+    /// <summary>The box's id as the room and the client know it (a Builders Club box's is in the club's range).</summary>
+    public int Id => Item.Id;
+
+    /// <summary>The box's database id: what its settings, its rewards and its variable's values are kept under. A
+    /// variable box's variable goes by it too, as the values kept and the references made to it outlive the ids the
+    /// room gives.</summary>
+    public int StoredId => Item.Item.Id;
 
     /// <summary>A periodic trigger's countdown: pulses until it fires next.</summary>
     public int PulsesUntilNext { get; set; }

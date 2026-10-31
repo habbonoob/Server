@@ -48,6 +48,9 @@ public sealed class PetOptions
     public int DrinkSeconds { get; set; }
     public int RestSeconds { get; set; }
     public int FoodNutrition { get; set; }
+
+    /// <summary>The energy a bite of food gives, which may take a pet past its most.</summary>
+    public int FoodEnergy { get; set; }
     public int DrinkEnergy { get; set; }
 
     /// <summary>What something handed to a pet to eat gives it.</summary>

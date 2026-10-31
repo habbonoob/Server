@@ -24,7 +24,7 @@ public sealed partial class RoomGrain
             return false;
 
         if (WiredRights(user).Read)
-            SendTo(user.Player.Id, new WiredOpenContractMessageComposer(item.Item.Id));
+            SendTo(user.Player.Id, new WiredOpenContractMessageComposer(item.Id));
         return true;
     }
 
@@ -35,7 +35,7 @@ public sealed partial class RoomGrain
 
         await using var db = await dbFactory.CreateDbContextAsync();
         var contract = await ContractOfAsync(db, furni);
-        SendTo(playerId, new WiredContractContentsMessageComposer(contract.ItemId, contract.Type, ContractWire.Definition(contract),
+        SendTo(playerId, new WiredContractContentsMessageComposer(furni.Id, contract.Type, ContractWire.Definition(contract),
             contract.Type == WiredContract.Payment ? contract.PaymentMode : null,
             contract.Type == WiredContract.Payment ? contract.ReceiveText : null,
             contract.Type == WiredContract.Payment ? contract.LayoutType : null,

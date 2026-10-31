@@ -28,7 +28,7 @@ public sealed class MoveToDirectionEffect : WiredEffect
     {
         foreach (var item in run.Furni(box).ToList())
         {
-            var direction = box.FurniDirections.GetValueOrDefault(item.Item.Id, box.IntParam(StartDirection) % 8);
+            var direction = box.FurniDirections.GetValueOrDefault(item.Id, box.IntParam(StartDirection) % 8);
             var (x, y) = WiredFurni.Step(item.X, item.Y, direction);
 
             if (run.Room.Entities.Entities.FirstOrDefault(user => user.X == x && user.Y == y) is { } user)
@@ -39,11 +39,11 @@ public sealed class MoveToDirectionEffect : WiredEffect
             }
             else if (await run.MoveAsync(item, x, y, item.Rotation))
             {
-                box.FurniDirections[item.Item.Id] = direction;
+                box.FurniDirections[item.Id] = direction;
                 continue;
             }
 
-            box.FurniDirections[item.Item.Id] = box.IntParam(WhenBlocked) switch
+            box.FurniDirections[item.Id] = box.IntParam(WhenBlocked) switch
             {
                 Wait => direction,
                 Right45 => (direction + 1) % 8,

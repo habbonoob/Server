@@ -13,6 +13,7 @@ public sealed partial class RoomGrain
 {
     private const char CommandPrefix = ':';
     private const string PickAllCommand = "pickall";
+    private const string PickAllBuildersClubCommand = "pickallbc";
     private const string EjectAllCommand = "ejectall";
     private const string EjectPetsCommand = "ejectpets";
     private const string ResetScoresCommand = "resetscores";
@@ -74,7 +75,12 @@ public sealed partial class RoomGrain
         }
 
         foreach (var receiver in receivers)
+        {
             await currencies.GiveAsync(receiver, type, amount, $"given by {giver.Player.Username}");
+            // credits staff give count towards the bonus rare, as credits bought do on Habbo
+            if (type == Habbo.Silo.Users.CurrencyService.Credits && amount > 0)
+                GrainFactory.GetGrain<IPlayerGrain>(receiver).CountTowardsBonusRareAsync(amount).Ignore();
+        }
         TellPlayer(giver, $"{amount} {parts[0]} to {receivers.Count} player(s)");
     }
 
@@ -97,6 +103,19 @@ public sealed partial class RoomGrain
     /// <summary>Everything the player may pick up, back to whoever owns each item.</summary>
     private Task PickAllAsync(RoomEntityStore.RoomEntity picker) =>
         ReturnToOwnersAsync(_items!.Items.Where(item => MayPickUp(picker, item)).ToList(), picker.Player.AccountId);
+
+    /// <summary>The player's own Builders Club furni in the room goes back to the warehouse: "You're about to remove all of
+    /// your Builders Club items from this room."</summary>
+    private async Task PickAllBuildersClubAsync(RoomEntityStore.RoomEntity picker)
+    {
+        var borrowed = _items!.Items.Where(item => item.Item.BuildersClub && item.Item.OwnerId == picker.Player.Id && MayPickUp(picker, item)).ToList();
+        if (borrowed.Count == 0)
+            return;
+
+        await ReturnToOwnersAsync(borrowed, picker.Player.AccountId);
+        await using var db = await dbFactory.CreateDbContextAsync();
+        await SendBuildersClubCountAsync(db, picker.Player.Id);
+    }
 
     /// <summary>The owner (or staff) sends home everyone else's furniture, or only the named player's.</summary>
     private Task EjectAllAsync(RoomEntityStore.RoomEntity ejector, string username)

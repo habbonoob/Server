@@ -24,6 +24,9 @@ public static class WiredVariableAvailability
     public const int PermanentShared = 11;
     public const int Reference = 20;
 
+    /// <summary>What habbo.com gives its internal and smart variables: they last as long as what holds them.</summary>
+    public const int BuiltIn = 999;
+
     public static bool IsPermanent(int availability) => availability is Permanent or PermanentShared;
 }
 
@@ -68,11 +71,25 @@ public sealed record WiredVariable(
     /// <summary>The texts a text connector gives its values; none for most variables.</summary>
     public IReadOnlyDictionary<int, string> TextConnector { get; init; } = new Dictionary<int, string>();
 
+    /// <summary>Whether it is read only inside a stack's run (a trigger's context), as habbo.com marks some internal ones.</summary>
+    public bool RequiresExecutionContext { get; init; }
+
+    /// <summary>What a text connector shows for a value it has no text for; null for none.</summary>
+    public string? TextConnectorFallback { get; init; }
+
+    /// <summary>Whether the client is told of a text connector even with no texts in it: habbo.com sends an empty one
+    /// for the packed values the client spells out itself (@position, @occupation, a recolourable furni's rgb).</summary>
+    public bool AlwaysHasTextConnector { get; init; }
+
+    public bool HasTextConnector => AlwaysHasTextConnector || TextConnector.Count > 0;
+
     public WiredVariableData ToWire() => new(
         Id, Kind, Name, Availability, Target, AlwaysAvailable, CanCreateAndDelete, HasValue, CanWriteValue,
-        CanInterceptChanges, IsInvisible, CanReadCreationTime, CanReadLastUpdateTime,
-        TextConnector.Count > 0,
-        TextConnector.Count > 0 ? TextConnector.Select(t => new WiredTextConnectorEntryData(t.Key, t.Value)).ToList() : null);
+        CanInterceptChanges, IsInvisible, RequiresExecutionContext, CanReadCreationTime, CanReadLastUpdateTime,
+        HasTextConnector,
+        HasTextConnector ? TextConnector.Select(t => new WiredTextConnectorEntryData(t.Key, t.Value)).ToList() : null,
+        HasTextConnector ? TextConnectorFallback is not null : null,
+        HasTextConnector ? TextConnectorFallback : null);
 
     /// <summary>A hash of everything the client is told, which it caches the variable by: stable
     /// across restarts, so a client's cache stays good while nothing changed.</summary>
@@ -84,7 +101,9 @@ public sealed record WiredVariable(
                 .Append(Id).Append('|').Append(Kind).Append('|').Append(Name).Append('|').Append(Availability).Append('|')
                 .Append(Target).Append('|').Append(AlwaysAvailable).Append(CanCreateAndDelete).Append(HasValue)
                 .Append(CanWriteValue).Append(CanInterceptChanges).Append(IsInvisible).Append(CanReadCreationTime)
-                .Append(CanReadLastUpdateTime);
+                .Append(CanReadLastUpdateTime).Append(RequiresExecutionContext).Append('|').Append(TextConnectorFallback);
+            if (AlwaysHasTextConnector)
+                text.Append("|texts");
             foreach (var (value, name) in TextConnector.OrderBy(t => t.Key))
                 text.Append('|').Append(value.ToString(CultureInfo.InvariantCulture)).Append('=').Append(name);
             return StableHash(text.ToString());

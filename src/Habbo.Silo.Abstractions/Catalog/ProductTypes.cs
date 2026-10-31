@@ -10,4 +10,5 @@ public static class ProductTypes
     public const int Club = 4;
     public const int Bot = 5;
     public const int Pet = 6;
+    public const int BuildersClub = 7;
 }

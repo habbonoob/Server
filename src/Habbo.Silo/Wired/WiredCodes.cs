@@ -33,6 +33,8 @@ public static class TriggerCodes
     public const int UserClicksUser = 24;
     public const int TransactionCompleted = 25;
     public const int TransactionFailed = 26;
+    public const int ReceiveLinkMessage = 29;
+    public const int ReceiveLinkDataframe = 30;
 }
 
 public static class EffectCodes
@@ -70,6 +72,7 @@ public static class EffectCodes
     public const int PlaceFurni = 55;
     public const int RemoveFurni = 56;
     public const int MoveAsGroup = 57;
+    public const int SetFurniTransparency = 61;
     public const int SendSignal = 30;
     public const int FreezeUser = 31;
     public const int UnfreezeUser = 32;
@@ -90,6 +93,8 @@ public static class EffectCodes
     public const int CancelTransaction = 48;
     public const int WriteToLogs = 49;
     public const int NegativeWriteToLogs = 50;
+    public const int SendLinkMessage = 63;
+    public const int SendLinkDataframe = 64;
 }
 
 public static class ConditionCodes
@@ -177,6 +182,7 @@ public static class AddonCodes
     public const int VariableFxStatus = 1203;
     public const int VariableFxBoss = 1204;
     public const int VariableFxNumber = 1205;
+    public const int LinkSpeaker = 2003;
 }
 
 /// <summary>Where a box's targets come from, one source per target slot of its dialog. The numbers

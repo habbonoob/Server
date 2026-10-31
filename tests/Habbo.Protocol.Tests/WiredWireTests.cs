@@ -233,7 +233,7 @@ public class WiredWireTests
     public void AVariableCarriesItsTextConnectorOnlyWhenItHasOne()
     {
         var entry = WiredContextEntryData.RoomVariable(
-            new WiredVariableData("5", 0, "score", 1, -10, true, false, true, true, true, false, true, true, false, null), 12);
+            new WiredVariableData("5", 0, "score", 1, -10, true, false, true, true, true, false, false, true, true, false, null, null, null), 12);
         var r = Written(new WiredFurniVariableComposer(Box(),
             new WiredBoxOptionsData(false, [], [], [], [], false), new WiredBoxContextData([entry], [])));
         ReadBox(r);
@@ -251,5 +251,43 @@ public class WiredWireTests
         Assert.Equal(12, r.ReadInt());
         Assert.Equal(0, r.ReadInt()); // default int params
         Assert.Equal(0, r.Remaining);
+    }
+
+    [Fact]
+    public void TheTransparenciesMatchTheClientsParsers()
+    {
+        // WiredFurniTransparencyEvent and WiredUserTransparencyEvent: ids, transparency, click through, easing
+        var furni = Written(new WiredFurniTransparencyComposer([7, -8], 100, true, 3));
+        Assert.Equal([7, -8], Ints(furni));
+        Assert.Equal(100, furni.ReadInt());
+        Assert.True(furni.ReadBoolean());
+        Assert.Equal(3, furni.ReadInt());
+        Assert.Equal(0, furni.Remaining);
+
+        var users = Written(new WiredUserTransparencyComposer([4], 0, false, 0));
+        Assert.Equal([4], Ints(users));
+        Assert.Equal(0, users.ReadInt());
+        Assert.False(users.ReadBoolean());
+        Assert.Equal(0, users.ReadInt());
+        Assert.Equal(0, users.Remaining);
+    }
+
+    [Fact]
+    public void TheVisualizationStatesAreTransparenciesThenHighlights()
+    {
+        // FurniTransparencyData (id, transparency, click through, easing), then FurniHighlightData's six ints
+        var r = Written(new WiredFurniVisualizationStateComposer(
+            [new WiredTransparencyData(7, 100, true, 2)], [new WiredHighlightData(7, 1, 2, 3, 4, 5)]));
+        Assert.Equal(1, r.ReadInt());
+        Assert.Equal((7, 100), (r.ReadInt(), r.ReadInt()));
+        Assert.True(r.ReadBoolean());
+        Assert.Equal(2, r.ReadInt());
+        Assert.Equal(1, r.ReadInt());
+        Assert.Equal([7, 1, 2, 3, 4, 5], new[] { r.ReadInt(), r.ReadInt(), r.ReadInt(), r.ReadInt(), r.ReadInt(), r.ReadInt() });
+        Assert.Equal(0, r.Remaining);
+
+        var users = Written(new WiredUserVisualizationStateComposer([], []));
+        Assert.Equal((0, 0), (users.ReadInt(), users.ReadInt()));
+        Assert.Equal(0, users.Remaining);
     }
 }

@@ -22,7 +22,7 @@ public sealed partial class RoomGrain
 
         var state = DimmerStateOf(dimmer);
         SendTo(playerId, new RoomDimmerPresetsMessageComposer(state.PresetId,
-            (await DimmerPresetsAsync(itemId)).Select(p => new RoomDimmerPresetData(p.PresetId, p.EffectType, p.ColorHex, p.Brightness)).ToList(),
+            (await DimmerPresetsAsync(dimmer.Item.Id)).Select(p => new RoomDimmerPresetData(p.PresetId, p.EffectType, p.ColorHex, p.Brightness)).ToList(),
             state.IsOn, itemId));
     }
 
@@ -37,9 +37,9 @@ public sealed partial class RoomGrain
 
         await using (var db = await dbFactory.CreateDbContextAsync())
         {
-            var preset = await db.FurniDimmerPresets.FirstOrDefaultAsync(p => p.ItemId == itemId && p.PresetId == presetId);
+            var preset = await db.FurniDimmerPresets.FirstOrDefaultAsync(p => p.ItemId == dimmer.Item.Id && p.PresetId == presetId);
             if (preset is null)
-                db.FurniDimmerPresets.Add(preset = new FurniDimmerPreset { ItemId = itemId, PresetId = presetId, ColorHex = colorHex });
+                db.FurniDimmerPresets.Add(preset = new FurniDimmerPreset { ItemId = dimmer.Item.Id, PresetId = presetId, ColorHex = colorHex });
             preset.EffectType = effectType;
             preset.ColorHex = colorHex;
             preset.Brightness = brightness;
@@ -60,7 +60,7 @@ public sealed partial class RoomGrain
             return;
 
         var state = DimmerStateOf(dimmer);
-        var preset = (await DimmerPresetsAsync(itemId)).First(p => p.PresetId == state.PresetId);
+        var preset = (await DimmerPresetsAsync(dimmer.Item.Id)).First(p => p.PresetId == state.PresetId);
         await _furniture!.UpdateAsync(dimmer, dimmer.Data with
         {
             State = new DimmerState(!state.IsOn, preset.PresetId, preset.EffectType, preset.ColorHex, preset.Brightness).ToString(),

@@ -81,10 +81,10 @@ public sealed partial class PlayerGrain
         return await db.UserEffects.AnyAsync(e => e.UserId == PlayerId && e.EffectId == effectId && e.ActivatedAt != null);
     }
 
-    public Task EffectSelectedAsync(int effectId)
+    public async Task EffectSelectedAsync(int effectId)
     {
         Send(new AvatarEffectSelectedMessageComposer(effectId));
-        return Task.CompletedTask;
+        await TrackActionAsync(Habbo.Silo.RewardTracks.RewardTrackActions.WearEffect, effectId.ToString(System.Globalization.CultureInfo.InvariantCulture));
     }
 
     private void ScheduleExpiry(int effectId, DateTimeOffset expiresAt)

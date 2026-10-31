@@ -168,6 +168,7 @@ public sealed partial class RoomGrain
         Broadcast(UsersMessageComposer.From([_entities!.ToWireData(entity)]));
         ShowPlant(entity);
         GrainFactory.GetGrain<IPlayerGrain>(user.Player.Id).CountPetsAsync().Ignore();
+        TrackAction(user, Habbo.Silo.RewardTracks.RewardTrackActions.PlantMonsterPlant);
         return true;
     }
 
@@ -270,7 +271,7 @@ public sealed partial class RoomGrain
             return;
 
         await PlaceFloorItemAsync(playerId, compost.Id, x, y, rotation);
-        if (_items!.Find(compost.Id) is null)
+        if (_items!.FindStored(compost.Id) is null)
             await GrainFactory.GetGrain<IPlayerGrain>(playerId).AnnounceItemsAsync([compost.Id]);
     }
 

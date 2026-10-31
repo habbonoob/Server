@@ -6306,6 +6306,63 @@
     "trn"
    ],
    "gestures": []
+  },
+  {
+   "id": 37,
+   "code": "curseddragon",
+   "palettes": [
+    {
+     "id": 0,
+     "sellable": true,
+     "breed": 0,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 1,
+     "sellable": true,
+     "breed": 1,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    },
+    {
+     "id": 2,
+     "sellable": false,
+     "breed": 2,
+     "colorTag": -1,
+     "tags": [],
+     "master": false
+    }
+   ],
+   "layers": [],
+   "postures": [
+    "std",
+    "ded",
+    "mv",
+    "rll",
+    "rng",
+    "spk",
+    "flm",
+    "eat",
+    "wng",
+    "pla",
+    "jmp",
+    "swg",
+    "lay",
+    "grn",
+    "trn",
+    "hg"
+   ],
+   "gestures": [
+    "thr",
+    "trd",
+    "plf",
+    "hng",
+    "sad",
+    "sml"
+   ]
   }
  ]
 }

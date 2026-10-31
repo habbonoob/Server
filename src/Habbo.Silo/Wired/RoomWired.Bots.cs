@@ -38,7 +38,7 @@ public sealed partial class RoomWired
     }
 
     public Task SendThroughAsync(RoomEntityStore.RoomEntity user, RoomItemStore.PlacedItem teleport) =>
-        user.Bot is null && user.Pet is null && IsPresent(user) && items.Find(teleport.Item.Id) == teleport
+        user.Bot is null && user.Pet is null && IsPresent(user) && items.Find(teleport.Id) == teleport
             ? actions.SendThrough(user, teleport)
             : Task.CompletedTask;
 

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Net;
 using Habbo.Gateway;
 using Habbo.Host;
@@ -91,11 +92,20 @@ public static class GameServices
         services.AddSingleton<Habbo.Silo.Achievements.AchievementResolutions>();
         services.Configure<Habbo.Silo.Competitions.RoomCompetitionOptions>(configuration.GetSection("RoomCompetitions"));
         services.AddSingleton<IRoomCompetitionService, Habbo.Silo.Competitions.RoomCompetitionService>();
-        services.AddSingleton<Habbo.Infrastructure.SeedFiles>();
+        services.TryAddSingleton<Habbo.Infrastructure.SeedFiles>();
+        services.TryAddSingleton<Habbo.Silo.Wired.Variables.WiredInternalVariableCatalog>();
         services.AddSingleton<Habbo.Silo.Games.SnowWar.Arenas.SnowWarArenaCatalog>();
+        services.AddSingleton<Habbo.Silo.RewardTracks.RewardTrackCatalog>();
+        services.AddSingleton<Habbo.Silo.RewardTracks.DailyTaskPool>();
+        services.AddSingleton<Habbo.Silo.Items.CrackableCatalog>();
+        services.AddSingleton<Habbo.Silo.Pets.PetSpeech>();
         services.AddSingleton<Habbo.Silo.Games.SnowWar.SnowWarAccounts>();
         services.AddSingleton<ISnowWarLeaderboards, Habbo.Silo.Games.SnowWar.SnowWarLeaderboards>();
         services.AddSingleton<ICatalogExtrasService, Habbo.Silo.Catalog.CatalogExtrasService>();
+        services.AddSingleton<Habbo.Silo.Habbicons.HabbiconCatalog>();
+        services.AddSingleton<Habbo.Silo.Abstractions.Habbicons.IHabbiconService, Habbo.Silo.Habbicons.HabbiconService>();
+        services.AddSingleton<Habbo.Silo.Quests.SeasonalQuestCatalog>();
+        services.AddSingleton<Habbo.Silo.Abstractions.Quests.ISeasonalQuestService, Habbo.Silo.Quests.SeasonalQuestService>();
         services.AddSingleton<ITargetedOfferService, Habbo.Silo.Catalog.TargetedOfferService>();
         services.Configure<Habbo.Silo.Users.BadgeRarityOptions>(configuration.GetSection("BadgeRarity"));
         services.Configure<Habbo.Silo.Users.BadgeLeaderboardOptions>(configuration.GetSection("BadgeLeaderboards"));

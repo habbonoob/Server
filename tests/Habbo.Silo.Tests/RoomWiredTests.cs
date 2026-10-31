@@ -21,7 +21,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Habbo.Silo.Tests;
 
-public class RoomWiredTests
+public partial class RoomWiredTests
 {
     private static readonly FurniInteractionRegistry Interactions = new();
     private static readonly WiredBoxRegistry Boxes = new();
@@ -51,6 +51,9 @@ public class RoomWiredTests
             IReadOnlyList<RoomEntityStore.RoomEntity>? Listeners)> Said { get; } = [];
         public Dictionary<string, string> Texts { get; } = [];
         public NoChests Chests { get; } = new();
+
+        /// <summary>What the room's wired sent through its WIRED Links, for the grain to deliver.</summary>
+        public List<(RoomItemStore.PlacedItem Link, WiredLinkPayload Payload)> LinkSends { get; } = [];
 
         public Room()
         {
@@ -113,8 +116,22 @@ public class RoomWiredTests
                         SentThrough.Add((user, teleport));
                         return Task.CompletedTask;
                     },
+                    ShowHabbicon = (user, habbicon) =>
+                    {
+                        user.Habbicon = habbicon;
+                        user.HabbiconShownAt = DateTimeOffset.UtcNow;
+                        return Task.CompletedTask;
+                    },
+                    SendLink = (link, payload) =>
+                    {
+                        LinkSends.Add((link, payload));
+                        return Task.CompletedTask;
+                    },
                 },
-                NullLogger.Instance);
+                NullLogger.Instance)
+            {
+                InternalVariables = InternalVariableSeed.Variables,
+            };
             Games.OnEvent = Wired.GameEventAsync;
         }
 
@@ -185,7 +202,7 @@ public class RoomWiredTests
         {
             MoveOptions.Add(options);
             Func<int, int, bool> avatarAt = options.AvatarsBlock ? Entities.HasAvatarAt : (_, _) => false;
-            if (!Items.CanPlaceFloorItem(item.Item.Id, item.Item.Definition!, x, y, rotation, avatarAt, options.ThroughFurni, options.BlockedByFurni))
+            if (!Items.CanPlaceFloorItem(item.Id, item.Item.Definition!, x, y, rotation, avatarAt, options.ThroughFurni, options.BlockedByFurni))
                 return Task.FromResult(false);
 
             Items.MoveTo(item, x, y, rotation, options.KeepAltitude ? item.Z : null);
@@ -222,11 +239,11 @@ public class RoomWiredTests
             return Task.CompletedTask;
         }
 
-        public Task<bool> RemoveAsync(RoomItemStore.PlacedItem item) => Task.FromResult(Items.Remove(item.Item.Id));
+        public Task<bool> RemoveAsync(RoomItemStore.PlacedItem item) => Task.FromResult(Items.Remove(item.Id));
         public Task GiveCreditsAsync(RoomEntityStore.RoomEntity user, int credits) => Task.CompletedTask;
         public void Broadcast(IComposer composer) => Broadcasts.Add(composer);
         public void Schedule(TimeSpan delay, Func<Task> action) { }
-        public void ShowData(RoomItemStore.PlacedItem item) => Broadcasts.Add(new Habbo.Protocol.Messages.Outgoing.Room.Engine.ObjectDataUpdateMessageComposer(item.Item.Id, Habbo.Protocol.Messages.Outgoing.Room.Engine.FurniStuffData.From(item.Data)));
+        public void ShowData(RoomItemStore.PlacedItem item) => Broadcasts.Add(new Habbo.Protocol.Messages.Outgoing.Room.Engine.ObjectDataUpdateMessageComposer(item.Id, Habbo.Protocol.Messages.Outgoing.Room.Engine.FurniStuffData.From(item.Data)));
         public Task BatchedAsync(Func<Task> work) => work();
         public bool IsOccupied(RoomItemStore.PlacedItem item) => Entities.HasAvatarAt(item.X, item.Y);
         public void Tell(RoomEntityStore.RoomEntity user, IComposer composer) => Sent.Add((user.Player.Id, composer));
@@ -305,7 +322,7 @@ public class RoomWiredTests
         Guid.NewGuid(), 1, name, "hd-180-1", Gender.Male, "", 0, SecurityLevel.AboveNone, "", false, 0, 3, 3, true, false, false,
         ClubLevel.None, false, 0, false, DateTimeOffset.UtcNow, PlayerData.NoHomeRoom, 0, false, "");
 
-    private static FurniWired Picks(params RoomItemStore.PlacedItem[] items) => new() { StuffIds = items.Select(i => i.Item.Id).ToList() };
+    private static FurniWired Picks(params RoomItemStore.PlacedItem[] items) => new() { StuffIds = items.Select(i => i.Id).ToList() };
 
     [Fact]
     public async Task WalkingOnAPickedFurniRunsTheEffectsStackedWithTheTrigger()
@@ -1151,6 +1168,21 @@ public class RoomWiredTests
 
         Assert.True(room.Wired.Hides(user, "please OPEN SESAME now"));
         Assert.False(room.Wired.Hides(user, "open the door"));
+    }
+
+    [Fact]
+    public void HiddenChatComesBackToTheSpeakerAsAnUntrackedWhisper()
+    {
+        var message = new Habbo.Silo.Abstractions.Chat.ChatMessage(0, "claudedidit", Habbo.Silo.Abstractions.Chat.Gesture.None, 0, Links: [], TrackingId: 1);
+
+        var composer = Habbo.Silo.Grains.Rooms.RoomGrain.HiddenChatEcho(message);
+        var buffer = new System.Buffers.ArrayBufferWriter<byte>();
+        composer.Compose(new Habbo.Protocol.IO.MessageWriter(buffer));
+
+        // Habbo's, saying a hidden keyword at room index 0
+        Assert.IsType<Habbo.Protocol.Messages.Outgoing.Room.Chat.WhisperMessageComposer>(composer);
+        Assert.Equal("00000000000B636C617564656469646974000000000000000000000000FFFFFFFF00000000FFFFFFFF",
+            Convert.ToHexString(buffer.WrittenSpan));
     }
 
     [Fact]
@@ -2201,11 +2233,12 @@ public class RoomWiredTests
     [Fact]
     public void EveryDialogsParametersFitWhatASaveMayCarry()
     {
-        // a save past the limit is dropped; Habbo's neighbourhood dialog sends 18, its levelling add-on 22
+        // a save past the limit is dropped; Habbo's neighbourhood dialog sends 18, its link dataframe effect 37
         var registry = new WiredBoxRegistry();
         Assert.All(registry.ClassNames, name => Assert.InRange(registry.For(name)!.DefaultIntParams.Count, 0, WiredBoxType.MaxIntParams));
         Assert.Equal(18, registry.For("wf_slc_furni_neighborhood")!.DefaultIntParams.Count);
-        Assert.Equal(22, WiredBoxType.MaxIntParams);
+        Assert.Equal(37, registry.For("wf_act_send_dataframe")!.DefaultIntParams.Count);
+        Assert.Equal(37, WiredBoxType.MaxIntParams);
     }
 
     [Fact]
@@ -2448,7 +2481,7 @@ public class RoomWiredTests
     {
         var room = new Room();
         var ball = room.Furni(2, 2, "ball");
-        var position = room.Wired.FindVariable("@internal.0.@position_x")!;
+        var position = room.Wired.FindVariable("-120")!;
 
         Assert.Equal(2, room.Wired.VariableValue(position, Habbo.Silo.Wired.Variables.WiredHolder.Of(ball), null));
         Assert.True(await room.Wired.SetVariableAsync(position, Habbo.Silo.Wired.Variables.WiredHolder.Of(ball), null, 5));
@@ -2496,7 +2529,7 @@ public class RoomWiredTests
     {
         var room = new Room();
         var ball = room.Furni(2, 2, "ball");
-        var echo = Variable(room, "wf_var_echo", new FurniWired { StringParam = "x", VariableIds = ["@internal.0.@position_x"] });
+        var echo = Variable(room, "wf_var_echo", new FurniWired { StringParam = "x", VariableIds = ["-120"] });
         var variable = room.Wired.FindVariable(echo)!;
 
         Assert.Equal(WiredVariableTargets.Furni, variable.Target);
@@ -2943,12 +2976,17 @@ public class RoomWiredTests
     {
         var room = new Room();
         var lamp = room.Furni(6, 1);
-        var fresh = int.MaxValue - RoomItemStore.FirstTemporaryId;
+        // as many as the client takes for temporary: any above it shows as Builders Club furni
+        var fresh = RoomItemStore.LastTemporaryId - RoomItemStore.FirstTemporaryId + 1;
         for (var copy = 0; copy < fresh; copy++)
-            Assert.True(room.Items.Remove(room.Items.AddCopy(lamp, lamp.Data, 1, 1, null, 0)!.Item.Id));
+        {
+            var made = room.Items.AddCopy(lamp, lamp.Data, 1, 1, null, 0)!;
+            Assert.InRange(made.Id, RoomItemStore.FirstTemporaryId, RoomItemStore.LastTemporaryId);
+            Assert.True(room.Items.Remove(made.Id));
+        }
 
         var reused = room.Items.AddCopy(lamp, lamp.Data, 1, 1, null, 0);
-        Assert.Equal(RoomItemStore.FirstTemporaryId, reused!.Item.Id);
+        Assert.Equal(RoomItemStore.FirstTemporaryId, reused!.Id);
     }
 
     [Fact]
@@ -2960,5 +2998,92 @@ public class RoomWiredTests
         await room.Games.AddScoreAsync(1, 5);
 
         Assert.Equal(int.MaxValue, room.Games.Score(1));
+    }
+
+    [Fact]
+    public async Task SetVisibilityHidesItsFurniFromEveryoneAndShowsLaterComersAsTheyAre()
+    {
+        RoomItemStore.PlacedItem lamp = null!;
+        var (room, user) = Stack(r =>
+        {
+            lamp = r.Furni(6, 1);
+            // to everyone, invisible, clicks through, the second easing
+            r.Box(0, 3, "wf_act_set_visibility", Effect, new FurniWired
+            {
+                StuffIds = [lamp.Item.Id], IntParams = [1, WiredTransparency.Invisible, 1, 2, 0],
+            });
+        });
+
+        await room.StepAsync(user, 3, 1);
+
+        var hidden = Assert.Single(room.Broadcasts.OfType<WiredFurniTransparencyComposer>());
+        Assert.Equal([lamp.Item.Id], hidden.FurniIds);
+        Assert.Equal((WiredTransparency.Invisible, true, 2), (hidden.Transparency, hidden.AllowClickThrough, hidden.EasingMode));
+        Assert.True(lamp.Invisible);
+
+        var later = room.User(1, 1, "later");
+        await room.Wired.UserEnteredAsync(later);
+        var state = Assert.Single(room.Sent.Where(sent => sent.To == later.Player.Id).Select(sent => sent.Message)
+            .OfType<WiredFurniVisualizationStateComposer>());
+        Assert.Equal([new WiredTransparencyData(lamp.Item.Id, WiredTransparency.Invisible, true, 2)], state.Transparencies);
+        Assert.Empty(state.Highlights);
+    }
+
+    [Fact]
+    public async Task SetVisibilityShowsOnlyItsAudienceAndKeepsNothing()
+    {
+        RoomItemStore.PlacedItem lamp = null!;
+        var (room, user) = Stack(r =>
+        {
+            lamp = r.Furni(6, 1);
+            r.Box(0, 3, "wf_act_set_visibility", Effect, new FurniWired
+            {
+                StuffIds = [lamp.Item.Id], IntParams = [0, WiredTransparency.Invisible, 0, 0, 0],
+            });
+        });
+        var other = room.User(1, 1, "other");
+
+        await room.StepAsync(user, 3, 1);
+
+        Assert.Empty(room.Broadcasts.OfType<WiredFurniTransparencyComposer>());
+        var sent = Assert.Single(room.Sent, sent => sent.Message is WiredFurniTransparencyComposer);
+        Assert.Equal(user.Player.Id, sent.To);
+        Assert.False(lamp.Invisible);
+        Assert.Null(lamp.Transparency);
+        Assert.DoesNotContain(room.Sent, sent => sent.To == other.Player.Id);
+    }
+
+    [Fact]
+    public async Task SetVisibilityHidesUsersByRoomIndexAndShowsThemAgain()
+    {
+        var (room, user) = Stack(r =>
+            r.Box(0, 3, "wf_act_set_visibility", Effect, new FurniWired
+            {
+                IntParams = [1, WiredTransparency.Invisible, 0, 0, 1],
+                UserSources = [WiredSources.Triggerer, WiredSources.Triggerer],
+            }));
+
+        await room.StepAsync(user, 3, 1);
+
+        var hidden = Assert.Single(room.Broadcasts.OfType<WiredUserTransparencyComposer>());
+        Assert.Equal([user.RoomIndex], hidden.RoomIndices);
+        Assert.Equal(WiredTransparency.Invisible, hidden.Transparency);
+        Assert.Empty(room.Broadcasts.OfType<WiredFurniTransparencyComposer>());
+        Assert.NotNull(user.Transparency);
+
+        room.Wired.SetTransparency([], [user], new WiredTransparency(WiredTransparency.Visible, false, 0), audience: null);
+        Assert.Null(user.Transparency);
+    }
+
+    [Fact]
+    public void SetVisibilityNamesAWallItemByItsIdNegated()
+    {
+        var room = new Room();
+        var poster = room.Furni(0, 0, "poster");
+        poster.Item.Definition!.Type = ItemType.Wall;
+
+        room.Wired.SetTransparency([poster], [], new WiredTransparency(WiredTransparency.Invisible, false, 0), audience: null);
+
+        Assert.Equal([-poster.Item.Id], Assert.Single(room.Broadcasts.OfType<WiredFurniTransparencyComposer>()).FurniIds);
     }
 }

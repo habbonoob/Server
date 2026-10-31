@@ -9,4 +9,11 @@ public sealed class WaterAreaInteraction : FurniInteraction
 {
     /// <summary>The name <c>seed/furni_interactions.json</c> maps the water visualization to.</summary>
     public const string WaterArea = "water_area";
+
+    /// <summary>Walking into the water is a swim, for the reward tracks.</summary>
+    public override Task WalkedOnAsync(FurniWalk walk)
+    {
+        walk.Room.TrackAction(walk.User, RewardTracks.RewardTrackActions.Swim);
+        return Task.CompletedTask;
+    }
 }
