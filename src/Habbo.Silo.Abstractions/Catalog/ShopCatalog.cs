@@ -126,8 +126,12 @@ public interface IShopCatalog
         int pageId, SecurityLevel rank, CancellationToken ct = default, bool buildersClub = false);
 
     /// <summary>A Builders Club offer as listed on a warehouse page this rank may see, for borrowing; null for one that
-    /// is not listed there.</summary>
+    /// is not listed there. Page <see cref="AnyBuildersClubPage"/> is any such page: the info stand's "Place More" names
+    /// no page, only the furni's bcofferid.</summary>
     Task<ShopOffer?> GetBuildersClubOfferAsync(int pageId, int offerId, SecurityLevel rank, CancellationToken ct = default);
+
+    /// <summary>The page the client names when it places Builders Club furni from the info stand (InfoStandWidget: -1).</summary>
+    const int AnyBuildersClubPage = -1;
 
     Task<ShopOffer?> GetOfferAsync(int offerId, CancellationToken ct = default);
 

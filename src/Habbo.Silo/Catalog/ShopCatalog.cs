@@ -87,7 +87,8 @@ public sealed class ShopCatalog(IDbContextFactory<AppDbContext> dbFactory) : ISh
     {
         await using var db = await dbFactory.CreateDbContextAsync(ct);
         var now = DateTimeOffset.UtcNow;
-        var listed = await db.CatalogListings.AnyAsync(listing => listing.OfferId == offerId && listing.PageId == pageId
+        var listed = await db.CatalogListings.AnyAsync(listing => listing.OfferId == offerId
+                                                                  && (pageId == IShopCatalog.AnyBuildersClubPage || listing.PageId == pageId)
                                                                   && listing.Page!.BuildersClub && listing.Page.MinRank <= rank
                                                                   && (listing.Page.ExpiresAt == null || listing.Page.ExpiresAt > now), ct);
         return listed ? await LoadOfferAsync(db, offerId, ct) : null;
