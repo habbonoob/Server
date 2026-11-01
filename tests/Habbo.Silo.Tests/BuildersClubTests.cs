@@ -99,6 +99,31 @@ public class BuildersClubTests
     private static Subscription Membership(string tier, DateTimeOffset expiresAt) =>
         new() { ProductName = tier, ExpiresAt = expiresAt };
 
+    [Theory]
+    [InlineData(true, false, true)]
+    [InlineData(true, true, false)]
+    [InlineData(false, false, false)]
+    public void ALockedRoomUnlocksWhenTheLastBorrowedFurniLeaves(bool locked, bool holdsFurni, bool unlocks) =>
+        Assert.Equal(unlocks, BuildersClubFurni.UnlocksWithoutFurni(locked, holdsFurni));
+
+    [Fact]
+    public void AnUnlockedRoomGoesBackToTheDoorItHad()
+    {
+        Assert.Equal(Habbo.Domain.Rooms.RoomState.Locked,
+            BuildersClubFurni.DoorWhenUnlocked(Habbo.Domain.Rooms.RoomState.Locked, Habbo.Domain.Rooms.RoomState.Invisible));
+        Assert.Equal(Habbo.Domain.Rooms.RoomState.Invisible,
+            BuildersClubFurni.DoorWhenUnlocked(Habbo.Domain.Rooms.RoomState.Invisible, Habbo.Domain.Rooms.RoomState.Invisible));
+    }
+
+    [Fact]
+    public void ARoomLockedBeforeItsDoorWasKeptOpensUnlessStaffSetADoorSince()
+    {
+        Assert.Equal(Habbo.Domain.Rooms.RoomState.Open,
+            BuildersClubFurni.DoorWhenUnlocked(null, Habbo.Domain.Rooms.RoomState.Invisible));
+        Assert.Equal(Habbo.Domain.Rooms.RoomState.Locked,
+            BuildersClubFurni.DoorWhenUnlocked(null, Habbo.Domain.Rooms.RoomState.Locked));
+    }
+
     [Fact]
     public void BoughtDaysGoOnTopOfTheTimeLeft()
     {

@@ -44,7 +44,8 @@ public sealed partial class PlayerGrain
         var club = await subscriptions.GetBuildersClubAsync(PlayerId);
         Send(new BuildersClubSubscriptionStatusMessageComposer(
             club.SecondsLeft, club.FurniLimit, club.MaxFurniLimit, club.SecondsLeftWithGrace));
-        await subscriptions.UnhideBuildersClubRoomsAsync(PlayerId);
+        foreach (var roomId in await subscriptions.GetBuildersClubLockedRoomsAsync(PlayerId))
+            await GrainFactory.GetGrain<Habbo.Silo.Abstractions.Rooms.IGameRoomGrain>(roomId).UnlockForBuildersClubMemberAsync();
         Send(new NotificationDialogMessageComposer(wasRunning ? BuildersClubExtended : BuildersClubMade,
             [new NotificationParameterData(FurniLimitParameter, club.FurniLimit.ToString(System.Globalization.CultureInfo.InvariantCulture))]));
     }

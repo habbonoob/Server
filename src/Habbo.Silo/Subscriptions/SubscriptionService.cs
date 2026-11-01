@@ -49,11 +49,10 @@ public sealed class SubscriptionService(IDbContextFactory<AppDbContext> dbFactor
         return await Rooms.BuildersClubFurni.CountAsync(db, playerId, ct);
     }
 
-    public async Task<int> UnhideBuildersClubRoomsAsync(Guid playerId, CancellationToken ct = default)
+    public async Task<IReadOnlyList<int>> GetBuildersClubLockedRoomsAsync(Guid playerId, CancellationToken ct = default)
     {
         await using var db = await dbFactory.CreateDbContextAsync(ct);
-        return await db.Rooms.Where(room => room.OwnerId == playerId && room.HiddenByBuildersClub)
-            .ExecuteUpdateAsync(set => set.SetProperty(room => room.HiddenByBuildersClub, false), ct);
+        return await db.Rooms.Where(room => room.OwnerId == playerId && room.HiddenByBuildersClub).Select(room => room.Id).ToListAsync(ct);
     }
 
     public async Task<BuildersClubView> GetBuildersClubAsync(Guid playerId, CancellationToken ct = default)

@@ -50,7 +50,10 @@ public sealed partial class RoomGrain
         {
             var row = await db.Rooms.FirstAsync(r => r.Id == _room.Id);
             if (lockDoor)
-                row.State = _room.State = RoomState.Locked;
+            {
+                SetDoor(RoomState.Locked);
+                (row.State, row.DoorBeforeBuildersClub) = (_room.State, _room.DoorBeforeBuildersClub);
+            }
             if (newName is not null)
                 row.Name = _room.Name = newName;
             await db.SaveChangesAsync();

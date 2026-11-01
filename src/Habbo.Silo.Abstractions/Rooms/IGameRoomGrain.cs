@@ -213,6 +213,9 @@ public interface IGameRoomGrain : IGrainWithIntegerKey
     /// <summary>The badges of the groups the player sees here (HabboGroupBadges).</summary>
     Task SendGroupBadgesAsync(Guid playerId);
 
+    /// <summary>Lifts the room's lock from the Builders Club trial, now that its owner has membership time.</summary>
+    Task UnlockForBuildersClubMemberAsync();
+
     /// <summary>Sends everything this owner has in the room back to their inventory.</summary>
     Task ReturnFurniOfAsync(Guid ownerId);
 

@@ -163,6 +163,9 @@ public sealed partial class RoomGrain(
         await LoadLabelsAsync(db, cancellationToken);
         await LoadWiredLinksAsync(db, cancellationToken);
         await SyncChestCountsAsync();
+        // a room whose last borrowed furni left before leaving unlocked the room
+        if (BuildersClubFurni.UnlocksWithoutFurni(_room.HiddenByBuildersClub, _items.Items.Any(item => item.Item.BuildersClub)))
+            await UnlockFromBuildersClubAsync();
         RememberLoadedFurni();
 
         _games = new RoomGames(_items, _entities, _furniture, avatarEffects, ApplyEffect, new GameRoomActions(
@@ -924,6 +927,8 @@ public sealed partial class RoomGrain(
                 .Select(p => InventoryFurniData.From(InventoryProjection.From(rows[p.Item.Id], p.Item.Definition!, p.Data))).ToList());
             await GrainFactory.GetGrain<IPlayerGrain>(owner.Key).SendAsync(returned.ToMessage());
         }
+
+        await UnlockIfNoBuildersClubFurniLeftAsync();
     }
 
     /// <summary>The bubble that says the room holds all the furni it may.</summary>

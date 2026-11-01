@@ -4011,6 +4011,9 @@ namespace Habbo.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<int?>("DoorBeforeBuildersClub")
+                        .HasColumnType("integer");
+
                     b.Property<int>("FixedWallsHeight")
                         .HasColumnType("integer");
 

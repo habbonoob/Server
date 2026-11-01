@@ -115,10 +115,7 @@ public sealed partial class RoomGrain
         if (!BuildersClubFurni.IsTrial(club))
             return true;
 
-        // read, not remembered: the owner's login unhides their rooms when their membership is back
-        await using var db = await dbFactory.CreateDbContextAsync();
-        _room!.HiddenByBuildersClub = await db.Rooms.Where(r => r.Id == _room.Id).Select(r => r.HiddenByBuildersClub).FirstAsync();
-        if (_room.HiddenByBuildersClub)
+        if (_room!.HiddenByBuildersClub)
             return true;
         if (!placement.Confirmed)
         {
@@ -126,23 +123,66 @@ public sealed partial class RoomGrain
             return false;
         }
 
-        await LockForBuildersClubAsync(db, playerId);
+        await LockForBuildersClubAsync(playerId);
         return true;
     }
 
     /// <summary>The room locked for the trial, as habbo.com does it (25 October 2026): its door goes invisible (it was
-    /// a doorbell's before, and stays invisible after), the builder is told "This room has been locked!", and the
-    /// room hears its info, chat and look again.</summary>
-    private async Task LockForBuildersClubAsync(Habbo.Infrastructure.AppDbContext db, Guid playerId)
+    /// a doorbell's before), the builder is told "This room has been locked!", and the room hears its info, chat and look
+    /// again. The door it had is kept for when it is unlocked.</summary>
+    private async Task LockForBuildersClubAsync(Guid playerId)
     {
-        await db.Rooms.Where(r => r.Id == _room!.Id).ExecuteUpdateAsync(set => set
-            .SetProperty(r => r.HiddenByBuildersClub, true)
-            .SetProperty(r => r.State, RoomState.Invisible));
-        _room!.HiddenByBuildersClub = true;
-        _room.State = RoomState.Invisible;
+        var room = _room!;
+        room.HiddenByBuildersClub = true;
+        room.DoorBeforeBuildersClub = room.State;
+        room.State = RoomState.Invisible;
+        await SaveBuildersClubLockAsync();
 
         SendTo(playerId, new NotificationDialogMessageComposer(RoomLocked, []));
-        Broadcast(new RoomInfoUpdatedComposer(_room.Id));
+        BroadcastBuildersClubLock();
+    }
+
+    /// <summary>The lock lifted, the room back at its door: nothing borrowed is left in it, or its owner has membership time.
+    /// </summary>
+    private async Task UnlockFromBuildersClubAsync()
+    {
+        var room = _room!;
+        room.State = BuildersClubFurni.DoorWhenUnlocked(room.DoorBeforeBuildersClub, room.State);
+        room.HiddenByBuildersClub = false;
+        room.DoorBeforeBuildersClub = null;
+        await SaveBuildersClubLockAsync();
+        BroadcastBuildersClubLock();
+    }
+
+    public async Task UnlockForBuildersClubMemberAsync()
+    {
+        if (_room?.HiddenByBuildersClub == true)
+            await UnlockFromBuildersClubAsync();
+    }
+
+    /// <summary>The last borrowed furni has gone: "The room has been restored to its original access rights."</summary>
+    private async Task UnlockIfNoBuildersClubFurniLeftAsync()
+    {
+        if (!BuildersClubFurni.UnlocksWithoutFurni(_room!.HiddenByBuildersClub, _items!.Items.Any(item => item.Item.BuildersClub)))
+            return;
+
+        await UnlockFromBuildersClubAsync();
+        await GrainFactory.GetGrain<IPlayerGrain>(_room.OwnerId).SendAsync(new NotificationDialogMessageComposer(RoomUnlocked, []).ToMessage());
+    }
+
+    private async Task SaveBuildersClubLockAsync()
+    {
+        var room = _room!;
+        await using var db = await dbFactory.CreateDbContextAsync();
+        await db.Rooms.Where(r => r.Id == room.Id).ExecuteUpdateAsync(set => set
+            .SetProperty(r => r.HiddenByBuildersClub, room.HiddenByBuildersClub)
+            .SetProperty(r => r.DoorBeforeBuildersClub, room.DoorBeforeBuildersClub)
+            .SetProperty(r => r.State, room.State));
+    }
+
+    private void BroadcastBuildersClubLock()
+    {
+        Broadcast(new RoomInfoUpdatedComposer(_room!.Id));
         Broadcast(RoomVisualizationSettingsComposer.From(Visualization(_room, _model!)));
         Broadcast(new RoomChatSettingsMessageComposer(ChatSettings()));
     }
@@ -198,6 +238,7 @@ public sealed partial class RoomGrain
 
     private const string VisitDeniedForOwner = "builders_club.visit_denied_for_owner";
     private const string RoomLocked = "builders_club.room_locked";
+    private const string RoomUnlocked = "builders_club.room_unlocked";
     private const string UsernameParameter = "USERNAME";
 
     /// <summary>Tells a player how many Builders Club items they have out, wherever they are.</summary>

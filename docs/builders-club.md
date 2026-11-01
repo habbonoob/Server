@@ -17,6 +17,14 @@ set, and the index and page requests answer in whichever mode the client asks in
   the client knows them by a code starting `builders_club` or `loyalty_bc`.
 - Every warehouse offer has `rentofferid -1`, so renting and buying out are gone.
 
+## The trial lock, measured on Habbo (2026-11-01)
+
+- While locked, the room info says door 3 (invisible) but the room settings still say the door the room really has, with
+  the hidden flag set; the settings window shows "This room has been locked!" in place of the door choices.
+- Removing a piece that is not the last unlocks nothing. Removing the last one sends `builders_club.room_unlocked` ("The
+  room has been restored to its original access rights") to the builder, then RoomInfoUpdated and the room look and chat
+  settings to the room, and the room info says its own door again.
+
 ## From the client (October 2026), not measured
 
 Placement can't be tried on Habbo without a membership. These rules come from the client's own checks
@@ -29,6 +37,7 @@ Placement can't be tried on Habbo without a membership. These rules come from th
 - With no membership time left (the "trial", or a lapsed member in grace), no one but staff may be in the room.
   The first piece asks `room.confirm.hide_room` (`BuildersClubPlacementWarning`, which the client sends again
   confirmed) and hides the room from the navigator.
+- A door chosen by staff while the room is locked is the door it goes back to. Membership time unlocks it the same way.
 - A room holding Builders Club furni takes no visitors while its owner has no membership time left. The visitor
   gets `builders_club.visit_denied_for_visitor` and the owner `builders_club.visit_denied_for_owner`.
 
@@ -40,7 +49,6 @@ Placement can't be tried on Habbo without a membership. These rules come from th
 - The visitor is sent back with `CloseConnection` after the notification. What Habbo sends is unknown.
 - The hidden rooms are unhidden, with `builders_club.membership_renewed`, at the owner's first login with
   membership time. Habbo learns of a renewal from its website; when it tells the player is unknown.
-- `builders_club.room_locked` isn't sent.
 - A membership bought in the catalog (`seed/builders_club_memberships.json` names each offer's days and tier) goes on
   top of the time left, never lowers the tier, unhides the rooms, and is answered with the new status and
   `membership_made` (no time left before) or `membership_extended`. Habbo's answer is not captured.

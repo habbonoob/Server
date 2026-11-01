@@ -142,8 +142,12 @@ public sealed class Room
     /// <summary>The navigator may list the room under its dynamic categories.</summary>
     public bool AllowNavigatorDynamicCategories { get; set; } = true;
 
-    /// <summary>A builders club room hidden while its builder's membership has lapsed.</summary>
+    /// <summary>Locked by building on the Builders Club free trial: its door is invisible until the room is unlocked.</summary>
     public bool HiddenByBuildersClub { get; set; }
+
+    /// <summary>While locked by the Builders Club, the door the room goes back to when unlocked. Null for a room locked before
+    /// this was kept, whose door is not known.</summary>
+    public RoomState? DoorBeforeBuildersClub { get; set; }
 
     /// <summary>How many may wait in line outside when the room is full; none, and a full room is full.</summary>
     public int QueueLimit { get; set; }

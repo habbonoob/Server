@@ -117,8 +117,14 @@ internal sealed class PostAuthenticationSequence(
     private async Task UnlockBuildersClubRoomsAsync(
         GatewaySessionContext context, Guid playerId, BuildersClubView buildersClub, CancellationToken ct)
     {
-        if (buildersClub.SecondsLeft <= 0 || await subscriptions.UnhideBuildersClubRoomsAsync(playerId, ct) == 0)
+        if (buildersClub.SecondsLeft <= 0)
             return;
+        var locked = await subscriptions.GetBuildersClubLockedRoomsAsync(playerId, ct);
+        if (locked.Count == 0)
+            return;
+
+        foreach (var roomId in locked)
+            await grains.GetGrain<Habbo.Silo.Abstractions.Rooms.IGameRoomGrain>(roomId).UnlockForBuildersClubMemberAsync();
 
         await context.SendAsync(new NotificationDialogMessageComposer(BuildersClubRenewed,
             [new NotificationParameterData(FurniLimitParameter, buildersClub.FurniLimit.ToString(System.Globalization.CultureInfo.InvariantCulture))]), ct);

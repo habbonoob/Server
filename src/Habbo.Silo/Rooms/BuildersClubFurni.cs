@@ -1,3 +1,4 @@
+using Habbo.Domain.Rooms;
 using Habbo.Infrastructure;
 using Habbo.Silo.Abstractions.Rooms;
 using Habbo.Silo.Abstractions.Subscriptions;
@@ -29,4 +30,13 @@ public static class BuildersClubFurni
     public static bool MayBuildWithVisitors(bool trial, int visitors) => !trial || visitors == 0;
 
     public static bool HasRoomFor(int borrowed, int limit) => borrowed < limit;
+
+    /// <summary>A room locked for the trial unlocks when the last Builders Club furni has left it.</summary>
+    public static bool UnlocksWithoutFurni(bool locked, bool holdsBorrowedFurni) => locked && !holdsBorrowedFurni;
+
+    /// <summary>The door a room goes back to when unlocked: the one it had. A room locked before that was kept has lost it to
+    /// the lock's invisible door, and opens: left invisible, it would still look locked. A door staff have set since stays.
+    /// </summary>
+    public static RoomState DoorWhenUnlocked(RoomState? remembered, RoomState current) =>
+        remembered ?? (current == RoomState.Invisible ? RoomState.Open : current);
 }

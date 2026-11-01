@@ -18,7 +18,6 @@ public interface ISubscriptionService
     /// <summary>The Builders Club furni the player has out, which their club limit counts.</summary>
     Task<int> CountBuildersClubFurniAsync(Guid playerId, CancellationToken ct = default);
 
-    /// <summary>Shows the player's rooms that building on the trial hid in the navigator again, now that they have
-    /// membership time; how many there were.</summary>
-    Task<int> UnhideBuildersClubRoomsAsync(Guid playerId, CancellationToken ct = default);
+    /// <summary>The player's rooms that building on the trial locked.</summary>
+    Task<IReadOnlyList<int>> GetBuildersClubLockedRoomsAsync(Guid playerId, CancellationToken ct = default);
 }

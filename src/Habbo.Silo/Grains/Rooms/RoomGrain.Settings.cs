@@ -82,7 +82,8 @@ public sealed partial class RoomGrain
             _room.Id,
             _room.Name,
             _room.Description,
-            (int)_room.State,
+            // while locked the window shows the room's own door, which the lock overrides: saving keeps it
+            (int)Door,
             _room.CategoryId,
             _room.MaxUsers,
             roomOptions.Value.MaxVisitorsLimit,
@@ -106,6 +107,11 @@ public sealed partial class RoomGrain
             _room.HiddenByBuildersClub));
         return Task.CompletedTask;
     }
+
+    /// <summary>The door the room's people chose, whatever a Builders Club lock has made of it for now.</summary>
+    private RoomState Door => _room!.HiddenByBuildersClub
+        ? BuildersClubFurni.DoorWhenUnlocked(_room.DoorBeforeBuildersClub, _room.State)
+        : _room.State;
 
     private RoomChatSettingsData ChatSettings() => new(
         _room!.ChatMode, _room.ChatBubbleWidth, _room.ChatScrollSpeed, _room.ChatHearRange, _room.ChatFloodSensitivity);
@@ -147,9 +153,9 @@ public sealed partial class RoomGrain
         // what the window offers, and nothing else: these go out to every visitor's client as they are
         _room.Name = settingsRules.Name(name);
         _room.Description = settingsRules.Description(description);
-        if (state != _room.State)
+        if (state != Door)
             GrainFactory.GetGrain<IPlayerGrain>(playerId).ReachAchievementAsync(AchievementNames.SelfModDoorModeSeen, 1).Ignore();
-        _room.State = state;
+        SetDoor(state);
         if (update.Password.Length > 0)
             _room.Password = update.Password.Length > Room.PasswordMaxLength ? update.Password[..Room.PasswordMaxLength] : update.Password;
         _room.MaxUsers = settingsRules.MaxVisitors(update.MaximumVisitors);
@@ -272,10 +278,22 @@ public sealed partial class RoomGrain
         Broadcast(new RoomInfoUpdatedComposer(_room.Id));
     }
 
+    /// <summary>The door of the room; a Builders Club lock holds it until the room is unlocked.</summary>
+    private void SetDoor(RoomState door)
+    {
+        if (_room!.HiddenByBuildersClub)
+            _room.DoorBeforeBuildersClub = door;
+        else
+            _room.State = door;
+    }
+
     public async Task<bool> DeleteAsync(PlayerData player)
     {
         if (_room is null || _entities is null || _items is null || !MayManage(player))
             return false;
+
+        // a room on its way out is not unlocked when its furni goes
+        _room.HiddenByBuildersClub = false;
 
         foreach (var entity in _entities.Entities.ToList())
             await KickAsync(entity);
