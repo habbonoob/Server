@@ -20,7 +20,8 @@ public sealed class Subscription
     /// what makes a former member different from someone who never joined.</summary>
     public DateTimeOffset ExpiresAt { get; set; }
 
-    /// <summary>How many periods have been paid for beyond the one running now.</summary>
+    /// <summary>How many periods have been paid for beyond the one running now. Not read: what the client
+    /// is told is worked out from <see cref="ExpiresAt"/>.</summary>
     public int PeriodsSubscribedAhead { get; set; }
 
     /// <summary>How many periods the player has been a member for in total.</summary>

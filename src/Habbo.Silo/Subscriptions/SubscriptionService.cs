@@ -20,18 +20,35 @@ public sealed class SubscriptionService(IDbContextFactory<AppDbContext> dbFactor
             .FirstOrDefaultAsync(row => row.UserId == playerId && row.ProductName == productName, ct);
 
         var now = DateTimeOffset.UtcNow;
-        if (subscription is null)
-            return new SubscriptionView(productName, 0, 0, 0, false, false, 0, 0, 0, 0);
+        return subscription is null
+            ? new SubscriptionView(productName, 0, 0, 0, false, false, 0, 0, 0, 0)
+            : ClubStatus(subscription, now);
+    }
 
+    /// <summary>The length of one period as the client counts it: it shows a member
+    /// periodsSubscribedAhead * 31 + daysToPeriodEnd days (com/sulake/habbo/toolbar/extensions/purse/PurseClubArea.as:92,
+    /// com/sulake/habbo/catalog/viewer/widgets/ClubBuyCatalogWidget.as:96, build WIN63-202611031222-591562852).</summary>
+    public const int DaysPerPeriod = 31;
+
+    /// <summary>A membership as the client is told it. The days left are counted in whole days, a day begun
+    /// counting as one, and split into the period running now (1 to 31 days) and the full periods after it.
+    /// A new 31-day box is therefore 31 days and 0 periods ahead, with 44639 minutes left a moment after
+    /// buying (habbo.com, October 2026). The client takes a member with 0 days to be out of the club
+    /// (com/sulake/habbo/navigator/IncomingMessages.as:370, same build), so the last day still counts as one.</summary>
+    public static SubscriptionView ClubStatus(Subscription subscription, DateTimeOffset now)
+    {
         var remaining = subscription.ExpiresAt - now;
         if (remaining < TimeSpan.Zero)
             remaining = TimeSpan.Zero;
 
+        var daysLeft = (int)((remaining.Ticks + TimeSpan.TicksPerDay - 1) / TimeSpan.TicksPerDay);
+        var periodsAhead = daysLeft == 0 ? 0 : (daysLeft - 1) / DaysPerPeriod;
+
         return new SubscriptionView(
             subscription.ProductName,
-            (int)remaining.TotalDays,
+            daysLeft - periodsAhead * DaysPerPeriod,
             subscription.MemberPeriods,
-            subscription.PeriodsSubscribedAhead,
+            periodsAhead,
             // Having a row at all means they joined once, whether or not it still runs.
             HasEverBeenMember: true,
             IsVip: subscription.IsActive(now),
