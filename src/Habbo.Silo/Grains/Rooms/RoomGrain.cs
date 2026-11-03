@@ -546,14 +546,20 @@ public sealed partial class RoomGrain(
             entity.RoomIndex, text, await gestures.DetectAsync(text), await ChatStyleAsync(entity, styleId), Links: [], trackingId);
 
         // a keyword trigger may hide what it hears: then only the speaker sees it
+        IEnumerable<RoomEntityStore.RoomEntity> listeners = [];
         if (_wired?.Hides(entity, text) == true)
             sink.TrySend(entity.SessionGuid, HiddenChatEcho(message).ToMessage());
         else if (recipient is not null)
-            SendChat(message, kind, [entity, recipient], toSpectators: false);
+            SendChat(message, kind, listeners = [entity, recipient], toSpectators: false);
         else if (kind == RoomChatKind.Shout)
-            SendChat(message, kind, _entities!.Entities, toSpectators: true);
+            SendChat(message, kind, listeners = _entities!.Entities, toSpectators: true);
         else
-            SendChat(message, kind, WithinHearing(entity), toSpectators: true);
+            SendChat(message, kind, listeners = WithinHearing(entity), toSpectators: true);
+
+        // whoever hears it turns their head toward the speaker on the next tick: Habbo turns the head, the client only
+        // shows the direction the server sends (AvatarLogic.as:258, :270, build WIN63-202611031222)
+        foreach (var listener in listeners)
+            _entities!.Heard(listener, entity);
 
         if (_wired is not null)
             await _wired.UserSaidAsync(entity, text, (int)kind, styleId);
