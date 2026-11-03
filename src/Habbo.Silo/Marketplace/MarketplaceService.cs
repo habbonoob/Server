@@ -168,6 +168,7 @@ public sealed class MarketplaceService(
         await db.SaveChangesAsync();
         await transaction.CommitAsync();
 
+        await ForgetOpenOffersAsync();
         await messenger.SendAsync(player.Id, FurniListRemoveMultipleComposer.Items(items.Select(i => i.Id)));
         await messenger.SendAsync(player.Id, new MarketplaceMakeOfferResultComposer(MarketplaceMakeOfferResultComposer.Posted));
     }
@@ -246,6 +247,21 @@ public sealed class MarketplaceService(
             var data = await furniData.LoadAsync(db, offers.Select(o => o.Item!).ToList());
             _open = (now, offers, data);
             return (offers, data);
+        }
+        finally
+        {
+            _openLock.Release();
+        }
+    }
+
+    /// <summary>Drops the loaded open offers once some have changed, so the next search (the client asks again after a
+    /// buy) shows the change rather than what was on sale a moment before.</summary>
+    private async Task ForgetOpenOffersAsync()
+    {
+        await _openLock.WaitAsync();
+        try
+        {
+            _open = null;
         }
         finally
         {
@@ -354,7 +370,7 @@ public sealed class MarketplaceService(
 
     /// <summary>Takes the offers off the marketplace, their items back to the seller's inventory; the ids of the items
     /// that came back. An offer sold since it was loaded stays: the sale is the buyer's, and its revenue the seller's.</summary>
-    private static async Task<List<int>> TakeBackAsync(AppDbContext db, List<MarketplaceOffer> offers)
+    private async Task<List<int>> TakeBackAsync(AppDbContext db, List<MarketplaceOffer> offers)
     {
         // an offer goes only with its item coming back: one transaction for both, so neither happens alone
         var returned = new List<int>();
@@ -373,6 +389,8 @@ public sealed class MarketplaceService(
         }
 
         await transaction.CommitAsync();
+        if (returned.Count > 0)
+            await ForgetOpenOffersAsync();
         return returned;
     }
 
@@ -432,6 +450,7 @@ public sealed class MarketplaceService(
             return;
         }
 
+        await ForgetOpenOffersAsync();
         await buyer.AnnounceItemsAsync([offer.ItemId!.Value]);
         await grains.GetGrain<IPlayerGrain>(offer.SellerId).ProgressAchievementAsync(AchievementNames.MarketplaceSales, 1);
         await messenger.SendAsync(player.Id, new MarketplaceBuyOfferResultComposer(MarketplaceBuyOfferResultComposer.Bought, offerId, offer.Price, offerId));
