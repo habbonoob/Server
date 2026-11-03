@@ -118,6 +118,10 @@ public interface IPlayerGrain : IGrainWithGuidKey
     /// <summary>Every currency's balance (ActivityPoints).</summary>
     Task SendActivityPointsAsync();
 
+    /// <summary>The emerald balance (EmeraldBalance). Emeralds are held as the activity-point currency
+    /// UserCurrency.Emeralds, so the calls below spend and give them too, telling the player with this.</summary>
+    Task SendEmeraldBalanceAsync();
+
     /// <summary>The balance of one activity-point currency.</summary>
     Task<int> GetActivityPointsAsync(int type);
 

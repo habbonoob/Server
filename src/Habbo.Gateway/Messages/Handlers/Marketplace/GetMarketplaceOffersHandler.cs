@@ -11,9 +11,9 @@ internal sealed class GetMarketplaceOffersHandler(IMarketplaceService service) :
         if (context.Session.Player is not { } player)
             return false;
 
-        // before September 2026 each limited edition number was listed on its own
+        // before September 2026 each limited edition number was listed on its own; before November 2026 there were no NFTs
         await service.SendOffersAsync(player, message.MinPrice, message.MaxPrice, message.SearchQuery, message.SortOrder,
-            message.CombineUniques ?? false);
+            message.CombineUniques ?? false, message.OfferSource);
         return true;
     }
 }

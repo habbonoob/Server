@@ -130,7 +130,7 @@ public class ReleaseLayoutTests
     public void AUsableItemIsAFloorItemToMarch2026AndSaysWhetherItWasUsedToSeptember2026()
     {
         var offer = new MarketplaceOfferData(5, MarketplaceOfferData.Open, MarketplaceOfferData.Legacy(MarketplaceOfferData.UsableItem),
-            MarketplaceOfferData.UsableItem, 4987, Crackable(3, 20000), null, null, null, Used: true, 4000, 60, 0, 1);
+            MarketplaceOfferData.UsableItem, null, 4987, null, Crackable(3, 20000), null, null, null, Used: true, 4000, 60, 0, 1);
         var composer = new MarketPlaceOffersComposer([offer], 1);
 
         var march = new MessageReader(Payload(composer, ClientReleases.March2026));
@@ -146,7 +146,7 @@ public class ReleaseLayoutTests
     public void ASoldOwnOfferSaysWhenItSoldToSeptember2026()
     {
         var offer = new MarketplaceOwnOfferData(5, MarketplaceOfferData.Sold, MarketplaceOfferData.WallItem, MarketplaceOfferData.WallItem,
-            4001, null, "2005", null, null, null, 65000, 0, 65000, StatusTime: 1_790_000_000_000);
+            null, 4001, null, null, "2005", null, null, null, 65000, 0, 65000, StatusTime: 1_790_000_000_000);
         var composer = new MarketPlaceOwnOffersComposer(100, [offer]);
 
         var march = Payload(composer, ClientReleases.March2026);

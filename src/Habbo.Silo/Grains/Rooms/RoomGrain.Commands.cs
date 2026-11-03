@@ -43,8 +43,8 @@ public sealed partial class RoomGrain
     public Task<bool> IsAsleepAsync(Guid playerId) => Task.FromResult(_entities?.Find(playerId) is { Asleep: true });
 
     /// <summary>Staff give (or with a negative amount take) a currency: ":give &lt;currency&gt; &lt;amount&gt;
-    /// &lt;username | room | hotel&gt;", the currency by the hotel's name for it (credits, duckets, diamonds, stars) or its
-    /// number. The giver is told how it went.</summary>
+    /// &lt;username | room | hotel&gt;", the currency by the hotel's name for it (credits, emeralds, duckets, diamonds, stars) or
+    /// its number. The giver is told how it went.</summary>
     private async Task GiveCurrencyAsync(RoomEntityStore.RoomEntity giver, string argument)
     {
         var parts = argument.Split(' ', StringSplitOptions.RemoveEmptyEntries);

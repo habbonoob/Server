@@ -131,6 +131,12 @@ public static class ClientMessages
     public const ushort WiredLinkDeleteNetworkMessageEvent = 2 * ServerHeaders.ReleaseStride + 2731;
     public const ushort WiredLinkGetConnectionsMessageEvent = 2 * ServerHeaders.ReleaseStride + 2300;
 
+    // Added by November 2026 (ClientReleases.November2026): ServerHeaders.ReleaseStride times its place, 4 (after
+    // WIN63-202610151745's 3), plus the release's own id.
+    public const ushort MakeNftMarketplaceOfferMessageEvent = 4 * ServerHeaders.ReleaseStride + 3923;
+    public const ushort BuyNftMarketplaceOfferMessageEvent = 4 * ServerHeaders.ReleaseStride + 2733;
+    public const ushort GetNftMarketplaceItemStatsMessageEvent = 4 * ServerHeaders.ReleaseStride + 1364;
+
     public const ushort GetCatalogIndexEvent = 2933;
     public const ushort GetCatalogPageEvent = 3793;
     public const ushort PurchaseFromCatalogEvent = 1962;
