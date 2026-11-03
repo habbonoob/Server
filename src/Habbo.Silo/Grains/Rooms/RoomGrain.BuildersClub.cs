@@ -34,6 +34,11 @@ public sealed partial class RoomGrain
         var definition = await LoadBorrowedDefinitionAsync(db, placement, ItemType.Floor);
         if (definition is null || !_items.CanPlaceFloorItem(0, definition, x, y, rotation, _entities.HasAvatarAt))
             return;
+        if (_items.RisesAboveMaxAltitude(0, definition, x, y))
+        {
+            SendTo(playerId, CantSetItem());
+            return;
+        }
         if (_items.Items.Count(i => i.Item.Definition!.Type == ItemType.Floor) >= _room.FloorItemLimit)
         {
             SendTo(playerId, FurniLimitReached());

@@ -581,6 +581,11 @@ public sealed partial class RoomGrain(
         if (item is null || !(IsController(playerId) || RentsTiles(playerId, TilesAt(item.Definition!, x, y, rotation)))
             || !_items.CanPlaceFloorItem(0, item.Definition!, x, y, rotation, _entities.HasAvatarAt))
             return;
+        if (_items.RisesAboveMaxAltitude(0, item.Definition!, x, y))
+        {
+            SendTo(playerId, CantSetItem());
+            return;
+        }
         if (_items.Items.Count(i => i.Item.Definition!.Type == ItemType.Floor) >= _room.FloorItemLimit)
         {
             SendTo(playerId, FurniLimitReached());
@@ -682,7 +687,17 @@ public sealed partial class RoomGrain(
         var renterMove = placed.Item.OwnerId == playerId && RentsTiles(playerId, RoomItemStore.Footprint(placed))
                          && RentsTiles(playerId, TilesAt(placed.Item.Definition!, x, y, rotation));
         var (fromX, fromY, fromRotation) = (placed.X, placed.Y, placed.Rotation);
-        if ((IsController(playerId) || renterMove) && await MovePlacedFloorItemAsync(placed, x, y, rotation, wired: null))
+        if (!IsController(playerId) && !renterMove)
+            return;
+        if (_items.RisesAboveMaxAltitude(itemId, placed.Item.Definition!, x, y))
+        {
+            // the mover's client leaves the furni where it was dragged until told otherwise: Habbo puts it back where it
+            // stands first, then shows the bubble
+            SendTo(playerId, new ObjectUpdateMessageComposer(FloorItemData.From(RoomItemStore.ToWireData(placed), withOwnerName: false)));
+            SendTo(playerId, CantSetItem());
+            return;
+        }
+        if (await MovePlacedFloorItemAsync(placed, x, y, rotation, wired: null))
         {
             if (fromX != x || fromY != y)
                 TrackAction(playerId, RewardTrackActions.MoveItem);
@@ -935,9 +950,15 @@ public sealed partial class RoomGrain(
     private static NotificationDialogMessageComposer FurniLimitReached() =>
         new(FurniPlacementErrorType, [new NotificationParameterData(NotificationMessageKey, MaxFurnitureText)]);
 
+    /// <summary>The bubble that says the furni can't go there: what Habbo answers a hand placement or move that would
+    /// stack it too high.</summary>
+    private static NotificationDialogMessageComposer CantSetItem() =>
+        new(FurniPlacementErrorType, [new NotificationParameterData(NotificationMessageKey, CantSetItemText)]);
+
     private const string FurniPlacementErrorType = "furni_placement_error";
     private const string NotificationMessageKey = "message";
     private const string MaxFurnitureText = "${room.error.max_furniture}";
+    private const string CantSetItemText = "${room.error.cant_set_item}";
 
     // ---------- the wired menu ----------
 

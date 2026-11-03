@@ -284,11 +284,14 @@ public sealed class RoomDirectoryService(
         return (owned, player.ClubLevel > ClubLevel.None ? roomOptions.Value.ClubRoomLimit : roomOptions.Value.RoomLimit);
     }
 
-    public async Task ToggleStaffPickAsync(PlayerData player, int roomId, bool staffPick)
+    /// <summary>Picks the room for staff picks, or drops it. The client sends the flag as it shows it, not the one
+    /// wanted (RoomInfoViewCtrl.onStaffPick only flips its button's caption first), so the room gets the other.</summary>
+    public async Task ToggleStaffPickAsync(PlayerData player, int roomId, bool isStaffPick)
     {
         if (!permissions.Has(player, PermissionNames.NavigatorStaffPick))
             return;
 
+        var staffPick = !isStaffPick;
         await using var db = await dbFactory.CreateDbContextAsync();
         if (await db.Rooms.Where(r => r.Id == roomId).ExecuteUpdateAsync(s => s.SetProperty(r => r.IsStaffPick, staffPick)) == 0)
             return;
