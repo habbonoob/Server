@@ -33,7 +33,8 @@ public interface IRoomDirectoryService
     /// <summary>Whether the player may make another room; when not, they are told their limit.</summary>
     Task<bool> EnsureCanCreateRoomAsync(PlayerData player);
 
-    Task ToggleStaffPickAsync(PlayerData player, int roomId, bool staffPick);
+    /// <summary>Flips the room's staff pick; <paramref name="isStaffPick"/> is the flag the client shows now.</summary>
+    Task ToggleStaffPickAsync(PlayerData player, int roomId, bool isStaffPick);
 
     Task UpdateThumbnailAsync(PlayerData player, int roomId, int backgroundImageId, int frontImageId, int foregroundImageId);
 
