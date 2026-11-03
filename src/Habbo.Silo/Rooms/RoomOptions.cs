@@ -28,8 +28,9 @@ public sealed class RoomOptions
     /// <summary>How long a visitor stays idle before falling asleep, in a room that sets no time of its own.</summary>
     public int IdleSleepSeconds { get; set; } = 300;
 
-    /// <summary>How long a visitor stays idle before being sent out, in a room that sets no time of its own.</summary>
-    public int IdleAutokickSeconds { get; set; } = 1800;
+    /// <summary>How long a visitor stays idle before being sent out, in a room that sets no time of its own: 15 minutes,
+    /// as Habbo's room settings give it (habbo.com, October 2026: 900 in every room settings reply).</summary>
+    public int IdleAutokickSeconds { get; set; } = 900;
 
     /// <summary>The chat style a command's answer is whispered in: 1, "generic", the hotel's own bubble.</summary>
     public int CommandReplyChatStyle { get; set; } = 1;

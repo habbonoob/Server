@@ -71,11 +71,11 @@ public sealed class NavigatorSearchGrain(
         return blocks;
     }
 
-    /// <summary>"Show more" on a block: that block alone, as long as a search lists. Null when the code is no block's.</summary>
+    /// <summary>"Show more" on a block: that block alone, as long as "Show more" lists. Null when the code is no block's.</summary>
     private async Task<List<NavigatorSearchBlock>?> ShowMoreAsync(
         Guid requesterId, string code, string filter, Dictionary<string, int> viewModes)
     {
-        var limit = options.Value.SearchResultLimit;
+        var limit = options.Value.ShowMoreResultLimit;
         var definition = code switch
         {
             _ when code.StartsWith(CategoryPrefix, StringComparison.Ordinal) =>

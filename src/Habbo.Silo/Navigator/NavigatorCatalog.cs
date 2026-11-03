@@ -127,6 +127,10 @@ public sealed class NavigatorOptions
     /// <summary>How many rooms one of the old navigator's searches lists.</summary>
     public int SearchResultLimit { get; set; } = 50;
 
+    /// <summary>How many rooms "Show more" on a block lists, as Habbo has (habbo.com, October 2026: 75 rooms on popular,
+    /// a category and a text search, each with more rooms to show).</summary>
+    public int ShowMoreResultLimit { get; set; } = 75;
+
     /// <summary>How many of a competition's rooms one page lists.</summary>
     public int CompetitionPageSize { get; set; } = 20;
 
