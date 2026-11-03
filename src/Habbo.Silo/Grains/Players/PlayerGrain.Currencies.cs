@@ -1,12 +1,14 @@
 using Habbo.Domain.Users;
 using Habbo.Infrastructure;
+using Habbo.Protocol.Messages.Outgoing.Collectibles;
 using Habbo.Protocol.Messages.Outgoing.Inventory.Purse;
 using Habbo.Protocol.Messages.Outgoing.Notifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Habbo.Silo.Grains.Players;
 
-/// <summary>The activity-point currencies: duckets, diamonds and the rest.</summary>
+/// <summary>The activity-point currencies: duckets, diamonds and the rest; and emeralds, held as one under a type of
+/// their own (<see cref="UserCurrency.Emeralds"/>) but told apart, by EmeraldBalance, and never listed with them.</summary>
 public sealed partial class PlayerGrain
 {
     public async Task SendActivityPointsAsync()
@@ -14,8 +16,21 @@ public sealed partial class PlayerGrain
         await using var db = await dbFactory.CreateDbContextAsync();
         var balances = await BalancesAsync(db);
         Send(new ActivityPointsMessageComposer(
-            balances.Select(balance => new ActivityPointData(balance.Type, balance.Amount)).ToList()));
+            balances.Where(balance => balance.Type != UserCurrency.Emeralds)
+                .Select(balance => new ActivityPointData(balance.Type, balance.Amount)).ToList()));
     }
+
+    public async Task SendEmeraldBalanceAsync()
+    {
+        await using var db = await dbFactory.CreateDbContextAsync();
+        Send(new EmeraldBalanceMessageComposer((await CurrencyAsync(db, UserCurrency.Emeralds)).Amount));
+    }
+
+    /// <summary>Tells the player a balance changed: emeralds as their own balance, any other as an activity point.</summary>
+    private void SendBalanceChange(int type, int balance, int change) =>
+        Send(type == UserCurrency.Emeralds
+            ? new EmeraldBalanceMessageComposer(balance)
+            : new HabboActivityPointNotificationMessageComposer(balance, change, type));
 
     public async Task<int> GetActivityPointsAsync(int type)
     {
@@ -45,7 +60,7 @@ public sealed partial class PlayerGrain
 
         RecordTransaction(db, type, -amount, reason);
         await db.SaveChangesAsync();
-        Send(new HabboActivityPointNotificationMessageComposer(await AmountAsync(db, type), -amount, type));
+        SendBalanceChange(type, await AmountAsync(db, type), -amount);
         return true;
     }
 
@@ -64,7 +79,7 @@ public sealed partial class PlayerGrain
         RecordTransaction(db, type, change, reason);
         await db.SaveChangesAsync();
         var balance = await AmountAsync(db, type);
-        Send(new HabboActivityPointNotificationMessageComposer(balance, change, type));
+        SendBalanceChange(type, balance, change);
         return balance;
     }
 

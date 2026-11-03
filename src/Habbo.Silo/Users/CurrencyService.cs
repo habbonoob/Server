@@ -1,4 +1,5 @@
 using System.Globalization;
+using Habbo.Domain.Users;
 using Habbo.Infrastructure;
 using Habbo.Silo.Abstractions.Hotel;
 using Habbo.Silo.Abstractions.Players;
@@ -8,7 +9,7 @@ using Orleans;
 
 namespace Habbo.Silo.Users;
 
-/// <summary>Giving players currency: credits or any activity-point currency, by the name the hotel calls it.</summary>
+/// <summary>Giving players currency: credits, emeralds or any activity-point currency, by the name the hotel calls it.</summary>
 public sealed class CurrencyService(
     IDbContextFactory<AppDbContext> dbFactory,
     IGrainFactory grains,
@@ -20,16 +21,22 @@ public sealed class CurrencyService(
 
     private const string CreditsName = "credits";
 
+    /// <summary>What emeralds are called (either): they are held as <see cref="UserCurrency.Emeralds"/>, which the
+    /// player grain spends and gives as an activity point but tells the player of as their own balance.</summary>
+    private static readonly string[] EmeraldNames = ["emeralds", "emerald"];
+
     /// <summary>The variable naming a seasonal currency's type, as the client reads it ("stars" for 101).</summary>
     private const string SeasonalNameVariable = "seasonalcurrency.id.";
 
-    /// <summary>The type of a currency named as the hotel names it: credits, a currency's own name (duckets,
+    /// <summary>The type of a currency named as the hotel names it: credits, emeralds, a currency's own name (duckets,
     /// diamonds), a seasonal currency's (stars), or its number; null for none.</summary>
     public async Task<int?> ResolveAsync(string name)
     {
         name = name.Trim().ToLowerInvariant();
         if (name == CreditsName)
             return Credits;
+        if (EmeraldNames.Contains(name))
+            return UserCurrency.Emeralds;
         if (int.TryParse(name, NumberStyles.Integer, CultureInfo.InvariantCulture, out var number))
             return number;
 

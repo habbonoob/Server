@@ -25,6 +25,14 @@ public sealed class ItemDefinition
     public int ClassId { get; set; }
 
     public required string ClassName { get; set; }
+
+    /// <summary>How an NFT's class name starts: the client takes such furni for an NFT (GroupItem.isNft), sold on the
+    /// NFT marketplace for emeralds and never on the credit one.</summary>
+    public const string NftClassPrefix = "nft_";
+
+    /// <summary>Whether furni of this class name is an NFT.</summary>
+    public static bool IsNftClass(string className) => className.StartsWith(NftClassPrefix, StringComparison.Ordinal);
+
     public ItemType Type { get; set; } = ItemType.Floor;
     public int XDim { get; set; } = 1;
     public int YDim { get; set; } = 1;

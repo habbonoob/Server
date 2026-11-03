@@ -12,6 +12,8 @@ public static class ClientReleases
 
     public const string October2026 = "WIN63-202610131318-860371703";
 
+    public const string November2026 = "WIN63-202611031222-591562852";
+
     /// <summary>Orders two releases by build time; names that carry none are ordered as text.</summary>
     public static int Compare(string a, string b)
     {

@@ -20,7 +20,13 @@ public sealed class MarketplaceOffer
     public int DefinitionId { get; set; }
     public ItemDefinition? Definition { get; set; }
 
-    /// <summary>What the buyer pays.</summary>
+    /// <summary>An NFT offer (November 2026's NFT marketplace): priced, and paid out, in emeralds rather than credits,
+    /// and paid out as it sells, so it is redeemed from the start of its sale and never waits to be collected. (Paying
+    /// out as it sells: habbo.com's help page says the seller receives the emeralds, less the fee, when another player
+    /// buys; unrecorded.)</summary>
+    public bool IsNft { get; set; }
+
+    /// <summary>What the buyer pays: credits, or for an NFT emeralds.</summary>
     public int Price { get; set; }
 
     /// <summary>What the seller receives: the price less the selling fee.</summary>

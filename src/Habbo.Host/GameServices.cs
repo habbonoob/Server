@@ -153,6 +153,7 @@ public static class GameServices
         services.Configure<RoomOptions>(configuration.GetSection("Rooms"));
         services.Configure<TradingOptions>(configuration.GetSection("Trading"));
         services.Configure<Habbo.Silo.Marketplace.MarketplaceOptions>(configuration.GetSection("Marketplace"));
+        services.AddSingleton<Habbo.Silo.Marketplace.NftProducts>();
         services.AddSingleton<IMarketplaceService, Habbo.Silo.Marketplace.MarketplaceService>();
         services.Configure<Habbo.Silo.Recycler.RecyclerOptions>(configuration.GetSection("Recycler"));
         services.AddSingleton<IRecyclerService, Habbo.Silo.Recycler.RecyclerService>();

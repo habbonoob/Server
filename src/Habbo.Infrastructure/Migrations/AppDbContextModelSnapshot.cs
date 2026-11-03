@@ -2617,6 +2617,9 @@ namespace Habbo.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("ExpiresAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<bool>("IsNft")
+                        .HasColumnType("boolean");
+
                     b.Property<int?>("ItemId")
                         .HasColumnType("integer");
 

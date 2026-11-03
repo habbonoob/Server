@@ -230,6 +230,12 @@ public static class ServerMessages
     public const ushort WiredLinkConnectionsMessageComposer = 2 * ServerHeaders.ReleaseStride + 3962;
     public const ushort WiredLinkInvalidatedMessageComposer = 2 * ServerHeaders.ReleaseStride + 999;
 
+    // Added by November 2026 (ClientReleases.November2026): ServerHeaders.ReleaseStride times its place, 4 (after
+    // WIN63-202610151745's 3), plus the release's own id.
+    public const ushort NftMarketplaceMakeOfferResultMessageComposer = 4 * ServerHeaders.ReleaseStride + 2487;
+    public const ushort NftMarketplaceBuyResultMessageComposer = 4 * ServerHeaders.ReleaseStride + 3940;
+    public const ushort NftMarketplaceItemStatsMessageComposer = 4 * ServerHeaders.ReleaseStride + 2153;
+
     public const ushort BanInfoMessageComposer = 1421;
     public const ushort BannedUsersFromRoomComposer = 3184;
     public const ushort BlockUserUpdateMessageComposer = 3554;
