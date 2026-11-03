@@ -36,6 +36,10 @@ public static class WiredFurni
         _ => (x - 1, y - 1),
     };
 
+    /// <summary>Whether the item is a floor switch, which only an avatar beside it can switch.</summary>
+    public static bool IsFloorSwitch(RoomItemStore.PlacedItem item) =>
+        item.Item.Definition!.InteractionName == Items.Interactions.FloorSwitchInteraction.Name;
+
     /// <summary>Whether the item is a wired antenna, which signals go through.</summary>
     public static bool IsClickTile(RoomItemStore.PlacedItem item) =>
         item.Item.Definition!.InteractionName == Items.Interactions.ClickTileInteraction.Name;

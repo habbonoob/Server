@@ -135,13 +135,15 @@ public partial class RoomWiredTests
             Games.OnEvent = Wired.GameEventAsync;
         }
 
-        public RoomItemStore.PlacedItem Furni(int x, int y, string className = "lamp", string logic = "furniture_multistate")
+        public RoomItemStore.PlacedItem Furni(int x, int y, string className = "lamp", string logic = "furniture_multistate",
+            string? interaction = null)
         {
             var definition = new ItemDefinition
             {
                 Id = className.GetHashCode(),
                 ClassName = className,
                 Logic = logic,
+                Interaction = interaction,
                 CanWalk = true,
                 CanStackOn = true,
                 StackHeight = 0.5,
@@ -339,6 +341,26 @@ public partial class RoomWiredTests
 
         await room.StepAsync(user, 3, 1);
 
+        Assert.Equal("1", lamp.Data.State);
+    }
+
+    [Theory]
+    [InlineData("wf_floor_switch1")]
+    [InlineData("wf_floor_switch2")]
+    public async Task TogglingLeavesAFloorSwitchAsItIs(string className)
+    {
+        // Habbo (habbo.com, October 2026): Toggle Furni State left wf_floor_switch1 as it was while the lamp picked
+        // with it switched; furnidata says floor switches can only be operated from an adjacent tile
+        var room = new Room();
+        var plate = room.Furni(3, 1, "plate");
+        var floorSwitch = room.Furni(6, 1, className, interaction: FloorSwitchInteraction.Name);
+        var lamp = room.Furni(7, 1);
+        room.Box(1, 1, "wf_trg_walks_on_furni", Trigger, Picks(plate));
+        room.Box(1, 1, "wf_act_toggle_state", Effect, Picks(floorSwitch, lamp));
+
+        await room.StepAsync(room.User(2, 1), 3, 1);
+
+        Assert.Equal("0", floorSwitch.Data.State);
         Assert.Equal("1", lamp.Data.State);
     }
 
