@@ -713,9 +713,6 @@ public sealed partial class RoomWired(
         return ConditionsPass(stack, run);
     }
 
-    /// <summary>Lets the selectors choose, lowest first: a selector adds what it chooses, or, as a
-    /// filter, keeps only what it chooses of what the ones below chose; inverted, it chooses
-    /// everything it would not.</summary>
     /// <summary>Whether the stack's conditions let it run: all of them, unless a condition
     /// evaluation add-on asks for another count of those it applies to.</summary>
     private static bool ConditionsPass(List<WiredBox> stack, WiredRun run)

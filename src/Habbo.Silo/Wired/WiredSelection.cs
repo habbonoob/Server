@@ -3,13 +3,15 @@ using Habbo.Silo.Wired.Selectors;
 
 namespace Habbo.Silo.Wired;
 
-/// <summary>Runs a stack's selectors, lowest first, each adding to what the stack works on — or,
-/// as a filter, keeping only what it also chooses; inverted, choosing everything it would not.</summary>
+/// <summary>Runs a stack's selectors: first those that add what they choose to what the stack works on, lowest
+/// first, then the filters, which keep only what they also choose; inverted, a selector chooses everything it would
+/// not. A filter narrows what the others chose wherever it stands in the stack: habbo.com, October 2026, a Furni In
+/// Area filter under the Furni Picks selector it filters still kept only the picks in its area.</summary>
 public static class WiredSelection
 {
     public static void Run(IReadOnlyList<WiredBox> stack, WiredRun run)
     {
-        foreach (var box in stack)
+        foreach (var box in stack.Where(box => !box.Settings.IsFilter).Concat(stack.Where(box => box.Settings.IsFilter)))
         {
             switch (box.Type)
             {
