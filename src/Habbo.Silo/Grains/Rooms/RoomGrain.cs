@@ -691,6 +691,9 @@ public sealed partial class RoomGrain(
             return;
         if (_items.RisesAboveMaxAltitude(itemId, placed.Item.Definition!, x, y))
         {
+            // the mover's client leaves the furni where it was dragged until told otherwise: Habbo puts it back where it
+            // stands first, then shows the bubble
+            SendTo(playerId, new ObjectUpdateMessageComposer(FloorItemData.From(RoomItemStore.ToWireData(placed), withOwnerName: false)));
             SendTo(playerId, CantSetItem());
             return;
         }
