@@ -114,6 +114,29 @@ public class RoomStoreTests
         }
     }
 
+    private static readonly ItemDefinition Pillar = new()
+    {
+        Id = 64, ClassName = "rare_icecream", XDim = 1, YDim = 1, StackHeight = 9.9, CanStackOn = true,
+    };
+
+    [Fact]
+    public void AHandPlacementMayNotRiseAboveTheMaximumAltitude()
+    {
+        var store = new RoomItemStore(Model(), Interactions);
+        var top = store.Add(Item(Pillar), FurniDataView.Plain, 4, 4, rotation: 0);
+        for (var i = 1; i < 8; i++)
+            top = store.Add(Item(Pillar), FurniDataView.Plain, 4, 4, rotation: 0);
+        Assert.Equal(79.2, store.SurfaceAt(4, 4), precision: 6);
+
+        Assert.False(store.RisesAboveMaxAltitude(0, Coin, 4, 4));   // top 79.36
+        Assert.True(store.RisesAboveMaxAltitude(0, Table, 4, 4));   // top 80.1
+        Assert.True(store.RisesAboveMaxAltitude(0, Pillar, 4, 4));  // top 89.1
+        Assert.False(store.RisesAboveMaxAltitude(0, Pillar, 5, 4)); // on the floor beside it
+
+        // the top pillar turned or put back where it stands does not stack on itself
+        Assert.False(store.RisesAboveMaxAltitude(top.Id, Pillar, 4, 4));
+    }
+
     [Fact]
     public void FootprintSwapsDimensionsWhenRotated()
     {

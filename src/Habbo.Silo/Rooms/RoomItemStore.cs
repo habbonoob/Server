@@ -407,6 +407,12 @@ public sealed class RoomItemStore(RoomModel model, FurniInteractionRegistry inte
     /// <summary>The highest a floor item may stand, as wired's altitude slider reaches: 80.</summary>
     public const double MaxAltitude = 80.0;
 
+    /// <summary>Whether a floor item put down or moved by hand to the tile would reach above <see cref="MaxAltitude"/>:
+    /// Habbo refuses it ("You can't place that there") when its top would pass 80, the client's own
+    /// CustomStackHeightWidget.MAX_HEIGHT (habbo.com, October 2026: a top of 79.40 went down, 80.05 was refused).</summary>
+    public bool RisesAboveMaxAltitude(int itemId, ItemDefinition definition, int x, int y) =>
+        SurfaceAt(x, y, itemId) + definition.StackHeight > MaxAltitude;
+
     public IEnumerable<PlacedItem> FloorItemsOn(int x, int y) => FloorItemsAt(x, y, null).OrderBy(item => item.Z);
 
     /// <summary>The surface an item offers: where it stands, plus how tall it is.</summary>
