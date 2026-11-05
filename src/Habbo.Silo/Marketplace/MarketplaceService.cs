@@ -55,6 +55,10 @@ public sealed class MarketplaceService(
     private const string BulkOfferLimitVariable = "marketplace.bulkOfferLimit";
     private const int ClientBulkOfferLimit = 500;
 
+    /// <summary>The most of a seller's own offers the client keeps of a list (MarketPlaceOwnOffersParser, build
+    /// WIN63-202611031222-591562852): the list is sent up to that, not cut to a search's length.</summary>
+    private const int ClientOwnOffersLimit = 500;
+
     private MarketplaceOptions Rules => options.Value;
 
     public Task SendConfigurationAsync(PlayerData player) =>
@@ -304,7 +308,7 @@ public sealed class MarketplaceService(
 
         // what the sales not yet collected are worth, whichever kind is listed
         var waiting = await db.MarketplaceOffers.Where(o => o.SellerId == player.Id && o.SoldAt != null && !o.Redeemed).SumAsync(o => o.Revenue);
-        await messenger.SendAsync(player.Id, new MarketPlaceOwnOffersComposer(waiting, offers.Take(Rules.ListLimit).Select(o =>
+        await messenger.SendAsync(player.Id, new MarketPlaceOwnOffersComposer(waiting, offers.Take(ClientOwnOffersLimit).Select(o =>
         {
             var (type, stuff, extra, serial, size, used) = Describe(o.Item, o.Definition!,
                 o.ItemId is { } itemId && data.TryGetValue(itemId, out var view) ? view : FurniDataView.Plain);

@@ -33,6 +33,7 @@ public sealed class MarketplaceOptions
 
     public int HalfTaxLimit { get; set; }
 
-    /// <summary>The most item types one search lists.</summary>
-    public int ListLimit { get; set; } = 500;
+    /// <summary>The most item types one search lists; the total found is sent with them, as Habbo does (habbo.com,
+    /// October and November 2026: 250 rows with totals of 299 and 10903).</summary>
+    public int ListLimit { get; set; } = 250;
 }
