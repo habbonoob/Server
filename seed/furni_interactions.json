@@ -50,6 +50,8 @@
     "wf_antenna2": "wired_antenna",
     "wf_label": "wired_label",
     "wf_link": "wired_link",
+    "wf_floor_switch1": "wired_floor_switch",
+    "wf_floor_switch2": "wired_floor_switch",
     "bonusbag26_1": "crackable",
     "bonusbag26_2": "crackable",
     "bonusbag26_3": "crackable",

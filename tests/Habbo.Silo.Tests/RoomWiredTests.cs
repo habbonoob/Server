@@ -135,13 +135,15 @@ public partial class RoomWiredTests
             Games.OnEvent = Wired.GameEventAsync;
         }
 
-        public RoomItemStore.PlacedItem Furni(int x, int y, string className = "lamp", string logic = "furniture_multistate")
+        public RoomItemStore.PlacedItem Furni(int x, int y, string className = "lamp", string logic = "furniture_multistate",
+            string? interaction = null)
         {
             var definition = new ItemDefinition
             {
                 Id = className.GetHashCode(),
                 ClassName = className,
                 Logic = logic,
+                Interaction = interaction,
                 CanWalk = true,
                 CanStackOn = true,
                 StackHeight = 0.5,
@@ -342,6 +344,26 @@ public partial class RoomWiredTests
         Assert.Equal("1", lamp.Data.State);
     }
 
+    [Theory]
+    [InlineData("wf_floor_switch1")]
+    [InlineData("wf_floor_switch2")]
+    public async Task TogglingLeavesAFloorSwitchAsItIs(string className)
+    {
+        // Habbo (habbo.com, October 2026): Toggle Furni State left wf_floor_switch1 as it was while the lamp picked
+        // with it switched; furnidata says floor switches can only be operated from an adjacent tile
+        var room = new Room();
+        var plate = room.Furni(3, 1, "plate");
+        var floorSwitch = room.Furni(6, 1, className, interaction: FloorSwitchInteraction.Name);
+        var lamp = room.Furni(7, 1);
+        room.Box(1, 1, "wf_trg_walks_on_furni", Trigger, Picks(plate));
+        room.Box(1, 1, "wf_act_toggle_state", Effect, Picks(floorSwitch, lamp));
+
+        await room.StepAsync(room.User(2, 1), 3, 1);
+
+        Assert.Equal("0", floorSwitch.Data.State);
+        Assert.Equal("1", lamp.Data.State);
+    }
+
     [Fact]
     public async Task AnEffectOnAnotherTileIsNotPartOfTheStack()
     {
@@ -476,6 +498,26 @@ public partial class RoomWiredTests
 
         Assert.Equal((7, 3), (alice.X, alice.Y));
         Assert.Equal((4, 3), (bob.X, bob.Y));
+    }
+
+    [Theory]
+    [InlineData(false, "0", "0", "1")]
+    [InlineData(true, "1", "1", "0")]
+    public async Task AFilterSelectorBelowItsSeedStillNarrowsIt(bool invert, string table, string lamp, string chair)
+    {
+        // Habbo (habbo.com, October 2026): a Furni In Area filter under the Furni Picks selector it narrows still
+        // keeps only the picked chair in its area; inverted, only the table and the lamp outside it
+        var room = new Room();
+        var plate = room.Furni(3, 1, "plate");
+        var picked = new[] { room.Furni(4, 2, "table"), room.Furni(5, 2, "lamp"), room.Furni(6, 2, "chair") };
+        room.Box(0, 3, "wf_trg_walks_on_furni", Trigger, Picks(plate));
+        room.Box(0, 3, "wf_slc_furni_area", Selector, new FurniWired { IntParams = [6, 2, 1, 1], IsFilter = true, IsInvert = invert });
+        room.Box(0, 3, "wf_slc_furni_picks", Selector, Picks(picked));
+        room.Box(0, 3, "wf_act_toggle_state", Effect, new FurniWired { FurniSources = [WiredSources.SelectedFurni] });
+
+        await room.StepAsync(room.User(2, 1), 3, 1);
+
+        Assert.Equal([table, lamp, chair], picked.Select(item => item.Data.State));
     }
 
     [Fact]
