@@ -33,6 +33,9 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
     /// <summary>How many ticks after a roller's slide the rider's status is told.</summary>
     private const int RolledUpdates = 2;
 
+    /// <summary>How many ticks a head turned toward chat stays turned: Habbo turns it back 4984 to 5017 ms later.</summary>
+    public const int HeadBackTicks = 10;
+
     /// <summary>An idle time that never comes.</summary>
     public const int Never = 0;
 
@@ -329,6 +332,27 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
                     StatusOf(entity, afterSlide: heldBySlide));
                 entity.RolledUpdatesLeft = entity.Walking && !heldBySlide ? 0 : entity.RolledUpdatesLeft - 1;
             }
+
+            // a head turned toward chat goes back to the body, asleep or not, and so does one a look turned since
+            var turned = entity.HeadBackInTicks > 0 && --entity.HeadBackInTicks == 0 && entity.HeadDirection != entity.BodyDirection;
+            if (turned)
+                entity.HeadDirection = entity.BodyDirection;
+
+            // a line heard and a look asked for since the last tick; on the tick a walk ends either is told in the arrival's update
+            if (entity.HeardFrom is { } speaker)
+            {
+                entity.HeardFrom = null;
+                turned |= HearFrom(entity, speaker.X, speaker.Y);
+            }
+
+            if (entity.LookTarget is { } target)
+            {
+                entity.LookTarget = null;
+                turned |= Look(entity, target.X, target.Y);
+            }
+
+            if (turned)
+                update = update is null ? CurrentStatus(entity) : update with { HeadDirection = entity.HeadDirection, BodyDirection = entity.BodyDirection };
 
             // a bot or a pet never nods off, or overstays, like a user does
             if (entity.Bot is null && entity.Pet is null)
@@ -709,9 +733,9 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         entity.HeadDirection = entity.BodyDirection;
     }
 
-    /// <summary>Turns the entity to face a tile, as a click on someone does: a standing entity turns
-    /// all of itself, a sitting one only its head, a lying or walking one not at all. Null when
-    /// nothing turned.</summary>
+    /// <summary>Turns the entity to face a tile at once, for the room's own turns (a pet or bot put down facing
+    /// whoever placed it, a hand item given): a standing entity turns all of itself, a sitting one only its head, a
+    /// lying or walking one not at all. Null when nothing turned. A user's own LookTo is <see cref="LookToNextTick"/>.</summary>
     public AvatarUpdateData? LookTo(RoomEntity entity, int x, int y)
     {
         if ((entity.X == x && entity.Y == y) || entity.Laying || entity.Path.Count > 0)
@@ -726,6 +750,75 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
             entity.BodyDirection = direction;
         return CurrentStatus(entity);
     }
+
+    /// <summary>A user looks at a tile (LookTo, sent when they click someone). Habbo answers on its next tick, 128 to
+    /// 580 ms later (habbo.com, October 2026), so the turn waits for <see cref="Tick"/>.</summary>
+    public void LookToNextTick(RoomEntity entity, int x, int y) => entity.LookTarget = (x, y);
+
+    /// <summary>A user heard a line (talk, a shout, or a whisper to them): their head turns toward the speaker on the next
+    /// tick, as on habbo.com. The speaker never turns, nor do bots and pets.</summary>
+    public void Heard(RoomEntity listener, RoomEntity speaker)
+    {
+        if (listener != speaker && listener.Bot is null && listener.Pet is null)
+            listener.HeardFrom = (speaker.X, speaker.Y);
+    }
+
+    /// <summary>Turns a listener's head toward a line, as habbo.com does (October 2026). Within two eighths of the body
+    /// (up to 90 degrees clockwise, 135 anticlockwise) the head turns one eighth that way, never more, at any distance; from
+    /// straight ahead it goes back to the body; from further round, behind, nothing happens. It turns back
+    /// <see cref="HeadBackTicks"/> later, and a line meanwhile starts that over. Sleeping or walking listeners do not
+    /// turn. A chair or a bed holds the head still, but a line it would have turned to still gets one unchanged
+    /// UserUpdate, and nothing turns back. True when the room should be told.</summary>
+    private bool HearFrom(RoomEntity entity, int x, int y)
+    {
+        if (entity.Asleep || entity.Walking || (entity.X == x && entity.Y == y))
+            return false;
+
+        var turn = Turned(entity.BodyDirection, LookDirectionOf(entity.X, entity.Y, x, y));
+        if (Math.Abs(turn) > 2)
+            return false;
+        if (HeldByFurni(entity))
+            return turn != 0;
+
+        if (turn != 0)
+            entity.HeadBackInTicks = HeadBackTicks;
+        var head = (entity.BodyDirection + Math.Sign(turn) + 8) % 8;
+        if (entity.HeadDirection == head)
+            return false;
+
+        entity.HeadDirection = head;
+        return true;
+    }
+
+    /// <summary>Turns the entity to look at a tile as habbo.com does (October 2026). On a chair or a bed nothing turns, yet
+    /// a look elsewhere than the head points is still answered with the unchanged directions. Standing or sitting on the
+    /// floor, the head alone turns to a tile within one eighth of the body; further, body and head turn together. The
+    /// sit pose has no diagonal, so a floor sitter's body then takes the straight direction clockwise of it (south-west
+    /// gives body 6, north-west body 0; clockwise fits all four samples, the rule behind it is not known). True when the
+    /// room should be told.</summary>
+    private bool Look(RoomEntity entity, int x, int y)
+    {
+        if ((entity.X == x && entity.Y == y) || entity.Walking)
+            return false;
+
+        var direction = LookDirectionOf(entity.X, entity.Y, x, y);
+        if (HeldByFurni(entity))
+            return direction != entity.HeadDirection;
+
+        var (head, body) = (entity.HeadDirection, entity.BodyDirection);
+        entity.HeadDirection = direction;
+        if (Math.Abs(Turned(entity.BodyDirection, direction)) > 1)
+            entity.BodyDirection = entity.Sitting && direction % 2 == 1 ? (direction + 1) % 8 : direction;
+        return entity.HeadDirection != head || entity.BodyDirection != body;
+    }
+
+    /// <summary>Sitting on a seat or lying down: a look turns neither head nor body (habbo.com: on a chair and on a bed;
+    /// lying on the floor is taken to be the same). One sitting on the floor is not held.</summary>
+    private bool HeldByFurni(RoomEntity entity) =>
+        entity.Laying || (entity.Sitting && items.SeatHeightAt(entity.X, entity.Y) is not null);
+
+    /// <summary>How far from one direction to another, in eighths clockwise: -3 to 4.</summary>
+    private static int Turned(int from, int to) => ((to - from) % 8 + 11) % 8 - 3;
 
     /// <summary>Settles an avatar sitting or lying again after the furniture under it changed: turned the way a seat or
     /// bed rotated to, at the height it now offers, or standing up when it went. Null when it neither sits nor lies.</summary>
@@ -866,6 +959,20 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         _ => (-1, -1),
     };
 
+    /// <summary>The direction to look from one tile toward another, as Habbo works it out: the angle clockwise from north,
+    /// rounded up to the next eighth. On habbo.com (October 2026) three tiles west and two south is 6, where the nearest
+    /// eighth is 5, and one east and three south is 4, where the signs of the offset give 3. A listener's head turns
+    /// toward chat by the same eighths.</summary>
+    public static int LookDirectionOf(int fromX, int fromY, int toX, int toY)
+    {
+        var degrees = Math.Atan2(toX - fromX, fromY - toY) * 180 / Math.PI;
+        if (degrees < 0)
+            degrees += 360;
+
+        // a tile offset on an exact eighth gives an exact angle; rounding keeps it from landing a hair above and going up
+        return (int)Math.Ceiling(Math.Round(degrees, 6) / 45) % 8;
+    }
+
     private static int DirectionOf(int fromX, int fromY, int toX, int toY) =>
         (Math.Sign(toX - fromX), Math.Sign(toY - fromY)) switch
         {
@@ -934,6 +1041,16 @@ public sealed class RoomEntityStore(RoomModel model, RoomItemStore items)
         public required double Z { get; set; }
         public required int HeadDirection { get; set; }
         public required int BodyDirection { get; set; }
+
+        /// <summary>The tile a LookTo asked to face, turned to on the next tick; null when none waits.</summary>
+        public (int X, int Y)? LookTarget { get; set; }
+
+        /// <summary>Where the last line heard since the last tick was said from; null when none.</summary>
+        public (int X, int Y)? HeardFrom { get; set; }
+
+        /// <summary>Ticks until a head turned toward chat goes back to the body; 0 when it is not waiting to.</summary>
+        public int HeadBackInTicks { get; set; }
+
         public Queue<(int X, int Y)> Path { get; set; } = new();
 
         /// <summary>Where the walk is headed, kept so it can be routed again when somebody

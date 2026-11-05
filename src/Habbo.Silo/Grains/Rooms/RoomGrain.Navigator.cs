@@ -135,16 +135,6 @@ public sealed partial class RoomGrain
         return Task.CompletedTask;
     }
 
-    public async Task ClickCharacterAsync(Guid playerId, int roomIndex)
-    {
-        if (_entities?.Find(playerId) is not { } clicker || _entities.FindByIndex(roomIndex) is not { } clicked || clicked == clicker)
-            return;
-
-        await WakeAsync(clicker);
-        if (_entities.LookTo(clicker, clicked.X, clicked.Y) is { } update)
-            Broadcast(UserUpdateMessageComposer.From([update]));
-    }
-
     public async Task RecordEntrySourceAsync(Guid playerId, string category, string position)
     {
         if (_entities?.Find(playerId) is null || _room is null)

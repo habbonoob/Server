@@ -152,7 +152,7 @@ public interface IGameRoomGrain : IGrainWithIntegerKey
     /// that: the wired hears it, and says whether the avatar menu may open.</summary>
     Task ClickUserAsync(Guid playerId, int roomIndex);
 
-    /// <summary>The user turns to face a tile.</summary>
+    /// <summary>The user looks at a tile: they turn toward it on the room's next tick.</summary>
     Task LookToAsync(Guid playerId, int x, int y);
 
     /// <summary>1 = sit (on a sittable tile), 0 = stand.</summary>
@@ -293,9 +293,6 @@ public interface IGameRoomGrain : IGrainWithIntegerKey
 
     /// <summary>Staff picked the room, or unpicked it.</summary>
     Task StaffPickChangedAsync(bool staffPick);
-
-    /// <summary>A plain click on another avatar: one's own avatar turns to them.</summary>
-    Task ClickCharacterAsync(Guid playerId, int roomIndex);
 
     /// <summary>The visitor came in from a promoted category, at this place in it.</summary>
     Task RecordEntrySourceAsync(Guid playerId, string category, string position);

@@ -546,14 +546,20 @@ public sealed partial class RoomGrain(
             entity.RoomIndex, text, await gestures.DetectAsync(text), await ChatStyleAsync(entity, styleId), Links: [], trackingId);
 
         // a keyword trigger may hide what it hears: then only the speaker sees it
+        IEnumerable<RoomEntityStore.RoomEntity> listeners = [];
         if (_wired?.Hides(entity, text) == true)
             sink.TrySend(entity.SessionGuid, HiddenChatEcho(message).ToMessage());
         else if (recipient is not null)
-            SendChat(message, kind, [entity, recipient], toSpectators: false);
+            SendChat(message, kind, listeners = [entity, recipient], toSpectators: false);
         else if (kind == RoomChatKind.Shout)
-            SendChat(message, kind, _entities!.Entities, toSpectators: true);
+            SendChat(message, kind, listeners = _entities!.Entities, toSpectators: true);
         else
-            SendChat(message, kind, WithinHearing(entity), toSpectators: true);
+            SendChat(message, kind, listeners = WithinHearing(entity), toSpectators: true);
+
+        // whoever hears it turns their head toward the speaker on the next tick: Habbo turns the head, the client only
+        // shows the direction the server sends (AvatarLogic.as:258, :270, build WIN63-202611031222)
+        foreach (var listener in listeners)
+            _entities!.Heard(listener, entity);
 
         if (_wired is not null)
             await _wired.UserSaidAsync(entity, text, (int)kind, styleId);
@@ -1890,19 +1896,19 @@ public sealed partial class RoomGrain(
 
         await WakeAsync(clicker);
         var (openMenu, turn) = await _wired.UserClickedAsync(clicker, clicked);
-        if (turn && _entities.LookTo(clicker, clicked.X, clicked.Y) is { } update)
-            Broadcast(UserUpdateMessageComposer.From([update]));
+        if (turn)
+            _entities.LookToNextTick(clicker, clicked.X, clicked.Y);
         SendTo(playerId, new WiredClickUserResponseComposer(roomIndex, openMenu));
     }
 
-    public async Task LookToAsync(Guid playerId, int x, int y)
+    /// <summary>The turn comes on the next tick (<see cref="RoomEntityStore.LookToNextTick"/>). Looking is not doing
+    /// something: on habbo.com a user clicking others still fell asleep 5:00 minutes after their last walk (October 2026),
+    /// so the idle time runs on.</summary>
+    public Task LookToAsync(Guid playerId, int x, int y)
     {
-        if (_entities?.Find(playerId) is not { } entity)
-            return;
-
-        await WakeAsync(entity);
-        if (_entities.LookTo(entity, x, y) is { } update)
-            Broadcast(UserUpdateMessageComposer.From([update]));
+        if (_entities?.Find(playerId) is { } entity)
+            _entities.LookToNextTick(entity, x, y);
+        return Task.CompletedTask;
     }
 
     private async Task TickAsync()
